@@ -5,11 +5,23 @@
 /* Optional pure CSS for now */
 html,
 body {
-  padding-top: env(safe-area-inset-top);
-  background-color: #FFD98E;
-  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: env(safe-area-inset-top); /* only affects top safe area */
+  background-color: #FFD98E; /* same as your theme-color */
+  z-index: 9999;
+  pointer-events: none;
+}
 
 html {
   font-size: 1px; /* 1rem = 1px, now 314px = 314rem = w-[314px] */
