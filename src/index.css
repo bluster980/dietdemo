@@ -3,9 +3,13 @@
 @tailwind utilities;
 
 /* Optional pure CSS for now */
+html,
 body {
+  padding-top: env(safe-area-inset-top);
+  background-color: #FFD98E;
   overflow-x: hidden;
 }
+
 
 html {
   font-size: 1px; /* 1rem = 1px, now 314px = 314rem = w-[314px] */
