@@ -11,8 +11,10 @@ const Otpverification2 = ({ generatedOTP, mobileNumber }) => {
     const navigate = useNavigate();
 
     const handleVerify = () => {
-        if (enteredOTP === generatedOTP) {
+        const hardcodedOTP = "1234"; // Replace with the actual OTP generation logic
+        if (enteredOTP === hardcodedOTP) {
             alert("OTP Verified Successfully!");
+            navigate("/genderselect")
         } else {
             alert("Incorrect OTP!");
         }

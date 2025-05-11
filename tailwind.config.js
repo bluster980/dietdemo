@@ -15,6 +15,8 @@ export default {
         palanquindark: ['Palanquin Dark', 'sans-serif'],
         mada: ['Mada', 'sans-serif'],
         poppins: ['Poppins', 'sans-serif'],
+        palanquin: ['Palanquin', 'sans-serif'],
+        jetbrainsmono: ['JetBrains Mono', 'sans-serif'],
       },
     },
   },

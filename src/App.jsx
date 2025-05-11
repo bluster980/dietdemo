@@ -1,9 +1,14 @@
 // src/App.jsx
 import React, { useState } from 'react';
+// import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Welcome from './pages/Welcome';
 import Otpverification1 from './pages/Otpverification1';
 import Otpverification2 from './pages/Otpverification2';
+import Genderselect from './pages/Genderselect';
+import Questionnaire from './pages/Questionnaire';
+import Weightselect from './pages/Weightselect';
+import Heightselect from './pages/Heightselect';
 
 function App() {
   const [generatedOTP, setGeneratedOTP] = useState("");
@@ -34,9 +39,15 @@ function App() {
             />
           }
         />
+        <Route path="/genderselect" element={<Genderselect />} />
+        <Route path="/weightselect" element={<Weightselect />} />
+        <Route path="/heightselect" element={<Heightselect />} />
+        <Route path="/questionnaire" element={<Questionnaire />} />
       </Routes>
     </>
   );
 }
 
 export default App;
+
+
