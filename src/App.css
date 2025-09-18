@@ -40,3 +40,8 @@
 .read-the-docs {
   color: #888;
 }
+
+.__react-toast,
+.__react-toast * {
+  font-size: 16px !important;
+}

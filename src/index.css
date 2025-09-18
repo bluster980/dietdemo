@@ -26,3 +26,163 @@ body::before {
 html {
   font-size: 1px; /* 1rem = 1px, now 314px = 314rem = w-[314px] */
 }
+/* React Datepicker fix for layout and spacing */
+.react-datepicker {
+  width: 300px;
+  font-size: 13px;
+  z-index: 50;
+}
+
+.react-datepicker *,
+.react-datepicker *::before,
+.react-datepicker *::after {
+  box-sizing: border-box;
+}
+
+/* Ensure month layout doesn't collapse */
+.react-datepicker__month {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 5px;
+  width: 100%;
+}
+
+/* Week rows have proper height */
+.react-datepicker__week {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  height: 32px; /* critical for fixing vertical collapse */
+}
+
+/* Each day gets a width + height + line height */
+.react-datepicker__day {
+  width: 36px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  margin: 0 1px;
+}
+
+.react-datepicker__current-month {
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  padding: 4px 0;
+}
+
+.react-datepicker__day-names {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  margin-bottom: 4px;
+}
+
+.react-datepicker__day-name {
+  width: 36px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 5px;
+  margin-top: 15px;
+}
+
+.react-datepicker-popper[data-placement^="bottom"] {
+  /* transform: translateX(58px) !important; */
+  transform: translateY(110px) !important;
+}
+
+*:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.loader {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #ddd;
+  border-top: 4px solid #ff752c;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Target the toast content by its role */
+[role="status"] {
+  font-size: 14px !important;
+  font-family: 'Palanquin', sans-serif !important;
+  color: #000000 !important; /* Optional: if you want to adjust text color */
+}
+
+.preview-container {
+  position: relative;
+  display: inline-block;
+  width: 300px; /* adjust as needed */
+  height: 300px;
+}
+
+.preview-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fluid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+
+.qna-progress {
+  position: relative;
+  overflow: hidden;
+}
+
+.qna-progress::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0; right: 0; left: 0;
+  /* subtle sheen – visible mostly on unfilled soft-coral region */
+  background-image: linear-gradient(
+    120deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.18) 12%,
+    rgba(255,255,255,0) 24%
+  );
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  background-position: -100% 0;
+  animation: qnaShimmer 10s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes qnaShimmer {
+  0%   { background-position: -100% 0; }
+  50%  { background-position: 0% 0; }
+  100% { background-position: 100% 0; }
+}
+
+/* Accessibility: honor reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .qna-progress::after { animation: none; }
+}
+
+
+.ellipsis-dots {
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: bottom;
+  width: 0ch;
+  animation: ellipsis 900ms steps(4, end) infinite;
+}
+.ellipsis-dots::after { content: "…"; }
+@keyframes ellipsis { to { width: 1.5ch; } }
