@@ -17,7 +17,11 @@ app.use(bodyParser.json({ limit: '100mb' }));
 ensureUploadsDir();
 
 app.get('/', (req, res) => {
-  res.send('Hello World');
+  res.send('Hello, World!');
+});
+
+app.get('/health', (req, res) => {
+  res.send('Health is okay');
 });
 
 app.post('/encode', encodeImage);
