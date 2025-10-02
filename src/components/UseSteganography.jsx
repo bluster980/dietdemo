@@ -25,7 +25,7 @@ const UseSteganography = () => {
       const secretBase64 = await toBase64(secretImageFile);
       console.timeEnd("toBase64 secret");
 
-      const res = await fetch("http://localhost:5000/encode", {
+      const res = await fetch("https://dietdelta.onrender.com/encode", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -58,7 +58,7 @@ const UseSteganography = () => {
 
   const decodeFromUrl = async (decodeUrl) => {
     try {
-      const res = await fetch("http://localhost:5000/decodeFromUrl", {
+      const res = await fetch("https://dietdelta.onrender.com/decodeFromUrl", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ imageUrl: decodeUrl }),
@@ -66,7 +66,7 @@ const UseSteganography = () => {
 
       const data = await res.json();
       if (data.success) {
-        const decodedUrl = `http://localhost:5000${data.decodedFile}`;
+        const decodedUrl = `https://dietdelta.onrender.com${data.decodedFile}`;
         return { success: true, decodedImageUrl: decodedUrl };
       } else {
         return {
