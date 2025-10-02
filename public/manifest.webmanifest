@@ -1,10 +1,10 @@
 {
-    "name": "My Fitness App",
-    "short_name": "FitnessApp",
+    "name": "Diet Delta",
+    "short_name": "DietDelta",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#FFD98E",
-    "theme_color": "#FFD98E",
+    "background_color": "#FFFFFF",
+    "theme_color": "#FFFFFF",
     "orientation": "portrait",
     "icons": [
         {
