@@ -25,6 +25,9 @@ export default defineConfig({
         theme_color: '#FFFFFF',
         background_color: '#ffffff',
         display: 'standalone',
+        workbox: {
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        },
         scope: '/',
         start_url: '/',
         icons: [
