@@ -173,7 +173,7 @@ const Userverification = () => {
           >
             <div
               className="pe_signin_button mt-[0px] text-[22px]"
-              data-client-id={import.meta.env.CLIENT_ID_PHONE_OTP}
+              data-client-id={String(import.meta.env.CLIENT_ID_PHONE_OTP)}
               data-color="#FF7675"
             ></div>
           </div>
