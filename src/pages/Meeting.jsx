@@ -159,6 +159,7 @@ const Meeting = () => {
       content: fullContent,
       sender_id: userData.user_id,
       receiver_id: trainerUserId,
+      answer: `This Meeting is Scheduled by ${userData.name} on ${fullContent}.`,
     });
 
     if (!response.success) {

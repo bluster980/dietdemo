@@ -1,3 +1,5 @@
+const USER_CACHE_KEY = 'userData';
+
 export const userData = {
   name: '',
   mobile_number: '',
@@ -17,6 +19,19 @@ export const userData = {
 
 export function updateUserFieldLocally(key, value) {
   userData[key] = value;
+}
+
+export function patchUserCache(field, value) {
+  try {
+    const raw = localStorage.getItem(USER_CACHE_KEY);
+    const current = raw && raw !== 'undefined' ? JSON.parse(raw) : {};
+    const next = { ...current, [field]: value };
+    localStorage.setItem(USER_CACHE_KEY, JSON.stringify(next));
+    return next;
+  } catch (e) {
+    console.warn('userData patch failed:', e);
+    return null;
+  }
 }
 
 export function getUserData() {

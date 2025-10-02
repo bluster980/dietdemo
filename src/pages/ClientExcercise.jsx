@@ -1,74 +1,97 @@
-import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { React, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import ProfileEditPen from "../assets/profileeditpen.svg";
 import oatmeal from "../assets/oatmeal.png";
 import BackArrow from "../assets/backarrow.svg";
 import Search from "../assets/search.svg";
 import WorkoutCard from "../components/WorkoutCard";
+import {
+  fetchAllExercises,
+  upsertWorkoutPlansBulk,
+} from "../utils/supabaseQueries";
+import toast from "react-hot-toast";
 
-const exercise = {
-  exercise_name: "Incline Bench Press",
-  target: "Chest",
-  reps: "10-15",
-  sets: "3",
-  rest: "1 min",
-  gif_url: "Incline Bench Press",
-};
-const exercise1 = {
-  exercise_name: "Decline Cable Fly",
-  target: "Chest",
-  reps: "10-15",
-  sets: "3",
-  rest: "1 min",
-  gif_url: "Decline Cable Fly",
-};
-const exercise2 = {
-  exercise_name: "Cable Fly",
-  target: "Chest",
-  reps: "10-15",
-  sets: "3",
-  rest: "1 min",
-  gif_url: "Cable Fly",
-};
-const exercise3 = {
-  exercise_name: "Pec Dec Fly",
-  target: "Chest",
-  reps: "10-15",
-  sets: "3",
-  rest: "1 min",
-  gif_url: "Pec Dec Fly",
-};
-const exercise4 = {
-  exercise_name: "Incline Dumbell Fly",
-  target: "Chest",
-  reps: "10-15",
-  sets: "3",
-  rest: "1 min",
-  gif_url: "Incline Dumbell Fly",
-};
+// const exercise = {
+//   exercise_name: "Incline Bench Press",
+//   target: "Chest",
+//   reps: "10-15",
+//   sets: "3",
+//   rest: "1 min",
+//   gif_url: "Incline Bench Press",
+// };
+// const exercise1 = {
+//   exercise_name: "Decline Cable Fly",
+//   target: "Chest",
+//   reps: "10-15",
+//   sets: "3",
+//   rest: "1 min",
+//   gif_url: "Decline Cable Fly",
+// };
+// const exercise2 = {
+//   exercise_name: "Cable Fly",
+//   target: "Chest",
+//   reps: "10-15",
+//   sets: "3",
+//   rest: "1 min",
+//   gif_url: "Cable Fly",
+// };
+// const exercise3 = {
+//   exercise_name: "Pec Dec Fly",
+//   target: "Chest",
+//   reps: "10-15",
+//   sets: "3",
+//   rest: "1 min",
+//   gif_url: "Pec Dec Fly",
+// };
+// const exercise4 = {
+//   exercise_name: "Incline Dumbell Fly",
+//   target: "Chest",
+//   reps: "10-15",
+//   sets: "3",
+//   rest: "1 min",
+//   gif_url: "Incline Dumbell Fly",
+// };
 
-const allExercises = [exercise, exercise1, exercise2, exercise3, exercise4];
+// const allExercises = [exercise, exercise1, exercise2, exercise3, exercise4];
 
 const ClientExcercise = () => {
+  const location = useLocation();
+  const routeUserId = location.state?.user_id;
   // Replace your existing state with this
   const navigate = useNavigate();
-  const [isActiveDay, setActiveDay] = useState("FRI");
+  const [isActiveDay, setActiveDay] = useState("Fri");
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [editing, setEditing] = useState({});
+  const [allExercises, setAllExercises] = useState([]);
+
+  const userId = routeUserId;
+  console.log("####", userId);
+
+  useEffect(() => {
+    const fetchExercises = async () => {
+      const { data, error } = await fetchAllExercises();
+      if (error) {
+        console.error("Error fetching exercises:", error.message);
+      } else {
+        setAllExercises(data);
+      }
+    };
+    fetchExercises();
+  }, []);
 
   const filteredMeals = allExercises.filter((exObj) =>
     exObj.exercise_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const [dayExercises, setDayExercises] = useState({
-    MON: [],
-    TUE: [],
-    WED: [],
-    THU: [],
-    FRI: [],
-    SAT: [],
-    SUN: [],
+    Mon: [],
+    Tue: [],
+    Wed: [],
+    Thu: [],
+    Fri: [],
+    Sat: [],
+    Sun: [],
   });
 
   const selectedNamesForDay = new Set(
@@ -105,6 +128,42 @@ const ClientExcercise = () => {
     }));
   };
 
+  async function handleSaveAll() {
+  if (!userId) {
+    toast.error('Missing user');
+    return;
+  }
+
+  // Build a single rows array for all seven days
+  const rows = [];
+  for (const day of Object.keys(dayExercises)) {
+    const list = dayExercises[day];
+    if (!list || list.length === 0) continue;
+    for (const ex of list) {
+      rows.push({
+        user_id: userId,
+        day_of_week: day,
+        exercise_name: ex.exercise_name,
+        reps: ex.reps,
+        sets: ex.sets,
+      });
+    }
+  }
+
+  if (rows.length === 0) {
+    toast('Nothing to save');
+    return;
+  }
+
+  const { error } = await upsertWorkoutPlansBulk(rows);
+  if (error) {
+    console.error('Save error:', error.message);
+    toast.error('Failed to save');
+  } else {
+    toast.success('All days saved');
+  }
+}
+
   return (
     <div
       className="relative flex flex-col justify-between items-center"
@@ -128,7 +187,7 @@ const ClientExcercise = () => {
         />
       </div>
       <div className="w-[92%] flex justify-end mt-[50px]">
-        <div className="flex justify-center items-center w-[56px] h-[23px] rounded-[8px] bg-white border border-[#E9ECEF]">
+        <div className="flex justify-center items-center w-[56px] h-[23px] rounded-[8px] bg-white border border-[#E9ECEF]" onClick={handleSaveAll}>
           <ProfileEditPen className="h-[15px] w-[15px] ml-[px]" />
           <button className="z-1 h-full mb-[2px] ml-[2px] justify-center items-center text-[#6C757D] font-urbanist font-semibold text-[14px]">
             Save
@@ -150,7 +209,7 @@ const ClientExcercise = () => {
         </div>
       </div>
       <div className="w-full flex justify-center items-center gap-x-[10px] mt-[8px]">
-        {["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"].map((day, index) => (
+        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, index) => (
           <div
             key={index}
             className={`w-[11%] h-[54px] rounded-[8px] ${

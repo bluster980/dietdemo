@@ -11,15 +11,6 @@ import { motion, AnimatePresence, color } from 'framer-motion';
 const BottomSheet = ({ isOpen, onClose, onWeightSubmitSuccess }) => {
   const [weightInput, setWeightInput] = useState('');
   const { userData, setUserData } = useUser();
-  
-  // if (isLoading) {
-  //   return <div className="text-center text-[25px] py-10 text-gray-500">Loading...</div>;
-  // }
-
-  // if (!userData) {
-  //   return <div className="text-center text-[25px] mt-10 text-gray-500">Loading...</div>;
-  // }
-
 
    const handleWeightSubmit = async () => {
     if (!userData) {
@@ -34,7 +25,7 @@ const BottomSheet = ({ isOpen, onClose, onWeightSubmitSuccess }) => {
     }
 
     try {
-      const { data, error } = await updateUserField(userData.user_id, 'weight', weight);
+      const { data, error } = await updateUserField(userData.user_id, {weight: weight});
       if (error) {
         toast.error('❌ Error updating weight: ' + error.message);
         return;

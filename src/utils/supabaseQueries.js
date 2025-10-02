@@ -19,26 +19,20 @@ export async function insertUser(userObj) {
   return { data: data ? data[0] : null, error }; // return the first user inserted
 }
 
-export async function updateUserField(userId, field, value) {
-    if (!userId || !field || value === undefined) {
-      console.warn("Invalid parameters to updateUserField", { userId, field, value });
-      return { data: null, error: "Invalid parameters" };
-    }
-
-    const { data, error } = await supabase
-      .from('users')
-      .update({ [field]: value })
-      .eq('user_id', userId)
-      .select(); // 👈 This will return the newly inserted user(s) with all fields, including user_id
-  
-    if (error) {
-      console.error('Error updating user:', error.message);
-    } else {
-      console.log('User updated:', data);
-      // toast.success("User updated successfully!", { duration: 5000 });
-    }
-  
-    return { data: data ? data[0] : null, error }; // return the first user inserted
+export async function updateUserField(userId, partial) {
+  console.log('Updating user Supabase Function:', userId, partial);
+  if (!userId) return { data: null, error: new Error('Missing userId') };
+  const { data, error } = await supabase
+    .from('users')
+    .update(partial)
+    .eq('user_id', userId)
+    .select(); // Prefer: return=representation is auto when using .select()
+  if (error) {
+    console.error('Error updating user:', error);
+  } else {
+    console.log('User updated:', data);
+  }
+  return { data: data?.[0] ?? null, error };
 }
 
 export async function insertWeightRecord(weightObj) {
@@ -74,19 +68,20 @@ export async function fetchWeightRecords(userId) {
 }
 
 
-export async function insertTrainer(trainerObj) {
+export async function insertTrainerId(userId, trainerId) {
   const { data, error } = await supabase
     .from('trainers')
-    .insert([trainerObj])
-    .select(); // 👈 This will return the newly inserted user(s) with all fields, including user_id
+    .update({ trainer_id: trainerId })
+    .eq('user_id', userId)
+    .select('trainer_id');
 
   if (error) {
-    console.error('Error inserting trainer:', error.message);
+    console.error('Error inserting trainer ID:', error.message);
   } else {
-    console.log('✅ Trainer inserted:', data);
+    console.log('✅ Trainer ID inserted:', data);
   }
 
-  return { data: data ? data[0] : null, error }; // return the first user inserted
+  return { data, error };
 }
 
 
@@ -115,6 +110,34 @@ export async function fetchWorkoutPlans(userId) {
       console.error('Error fetching workout plans:', error.message);
     } else {
       console.log('✅ Workout plans fetched:', data);
+    }
+  
+    return { data, error };
+}
+
+export async function fetchAllExercises() {
+    const { data, error } = await supabase
+      .from('exercises')
+      .select('*');
+  
+    if (error) {
+      console.error('Error fetching exercises:', error.message);
+    } else {
+      console.log('✅ Exercises fetched:', data);
+    }
+  
+    return { data, error };
+}
+
+export async function fetchAllMeals() {
+    const { data, error } = await supabase
+      .from('meals')
+      .select('*');
+  
+    if (error) {
+      console.error('Error fetching meals:', error.message);
+    } else {
+      console.log('✅ Meals fetched:', data);
     }
   
     return { data, error };
@@ -157,11 +180,11 @@ export async function fetchUserWorkoutWithDetails(user_id) {
     .select(`
       day_of_week,
       exercise_name,
+      reps,
+      sets,
       exercises (
         exercise_name,
         target,
-        reps,
-        sets,
         rest,
         gif_url
       )
@@ -176,12 +199,10 @@ export async function fetchUserDietWithDetails(user_id) {
   const { data, error } = await supabase
     .from('dietplans')
     .select(`
-      day_of_week,
       meal_name,
       meal_time,
       quantity,
       meals (
-        meal_name,
         calories,
         protein,
         carbs,
@@ -217,7 +238,7 @@ export const createQnaNotification = async ({ content, sender_id, receiver_id })
   return { success: true, data };
 };
 
-export const createMeetingNotification = async ({ content, sender_id, receiver_id }) => {
+export const createMeetingNotification = async ({ content, sender_id, receiver_id, answer }) => {
   const time = getLocalTimeString();
   const { data, error } = await supabase
     .from('notifications')
@@ -227,7 +248,7 @@ export const createMeetingNotification = async ({ content, sender_id, receiver_i
         sender_id,
         receiver_id,
         time: time, // server timestamp
-        answer: null,
+        answer: answer,
         type: 'meeting'
       }
     ]);
@@ -315,9 +336,38 @@ export async function fetchUserNotifications(userId) {
   return { data, error };
 }
 
+export async function fetchTrainerNotifications(trainerUserId) {
+  const { data, error } = await supabase
+    .from('notifications')
+    .select('notify_id, type, content, time, sender_id, receiver_id, answer')
+    .eq('receiver_id', trainerUserId)
+    .order('time', { ascending: false });
+  return { data, error };
+}
+
+export async function updateQnaAnswer(notifyId, answerText) {
+  const { data, error } = await supabase
+    .from('notifications')
+    .update({ answer: answerText })
+    .eq('notify_id', notifyId)
+    .select()
+    .single();
+  return { data, error };
+}
+
 export async function getUserFromDb(userId) {
   const { data, error } = await supabase
     .from('users')
+    .select('*')
+    .eq('user_id', userId)
+    .single();
+
+  return { data, error };
+}
+
+export async function getTrainerFromDb(userId) {
+  const { data, error } = await supabase
+    .from('trainers')
     .select('*')
     .eq('user_id', userId)
     .single();
@@ -350,10 +400,9 @@ export async function upsertUserStreakRow({ userId, lastActiveDate, currentStrea
 }
 
 
-export async function upsertDietPlanEntry(supabase, {userId, dayOfWeek, mealName, mealTime, quantity }) {
+export async function upsertDietPlanEntry(supabase, {userId, mealName, mealTime, quantity }) {
   const payload = {
     user_id: userId,
-    day_of_week: dayOfWeek,
     meal_name: mealName,
     meal_time: mealTime,
     quantity,
@@ -362,7 +411,7 @@ export async function upsertDietPlanEntry(supabase, {userId, dayOfWeek, mealName
   const { data, error } = await supabase
     .from('dietplans')
     .upsert(payload, {
-      onConflict: 'user_id,day_of_week,meal_name,meal_time',
+      onConflict: 'user_id,meal_name,meal_time',
       ignoreDuplicates: false,
     })
     .select()
@@ -503,3 +552,52 @@ export async function updatePlanExpiry(userId, expiryDate) {
   }
   return { data, error: null };
 }
+
+
+export async function upsertWorkoutPlansBulk(rows) {
+  // rows: [{ user_id, day_of_week, exercise_name, reps, sets }, ...]
+  const { data, error } = await supabase
+    .from('workoutplans')
+    .upsert(rows, { onConflict: 'user_id,day_of_week,exercise_name' })
+    .select(); // return affected rows if you need them
+
+  return { data, error };
+}
+
+export async function upsertDietPlansBulk(rows) {
+  // rows: [{ user_id, meal, food, calories }, ...]
+  const { data, error } = await supabase
+    .from('dietplans')
+    .upsert(rows, { onConflict: 'user_id,meal_name, meal_time' })
+    .select(); // return affected rows if you need them
+
+  return { data, error };
+}
+
+export async function userAgeNotNull(userId) {
+  // Ensure Authorization header is sent by your supabase client (global fetch wrapper)
+  const { data, error } = await supabase
+    .from('users')
+    .select('age')
+    .eq('user_id', userId)
+    .limit(1)
+    .maybeSingle();
+
+  if (error) return { data: { exists: false }, error };
+
+  const exists = data && data.age !== null && data.age !== undefined;
+  return { data: { exists }, error: null };
+}
+
+export async function trainerIdDecided(userId) {
+  // Ensure Authorization header is sent by your supabase client (global fetch wrapper)
+  const { data, error } = await supabase
+    .from('trainers')
+    .select('trainer_id')
+    .eq('user_id', userId)
+    .limit(1)
+    .maybeSingle();
+    
+  return {data, error};
+}
+

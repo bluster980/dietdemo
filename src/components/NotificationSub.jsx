@@ -1,10 +1,26 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import oatmeal from "../assets/oatmeal.png";
 import { parseNotification, formatTime } from "../utils/notificationHelpers";
 
-const NotificationSub = ({ notification }) => {
+const NotificationSub = ({ notification, role, onSaveAnswer }) => {
   const { type, title, query } = parseNotification(notification.content);
   const timeStr = formatTime(notification.time);
+  const [answer, setAnswer] = useState(notification.answer || '');
+  const [isEditing, setIsEditing] = useState(() => !notification.answer); 
+  const isTrainerQna = role === 'trainer' && notification.type === 'qna';
+
+  useEffect(() => {
+    // When switching to another notification, reset local state
+    setAnswer(notification.answer || '');
+    setIsEditing(!notification.answer);
+  }, [notification?.notify_id, notification?.answer]);
+
+  const handleSave = async () => {
+    const ok = await onSaveAnswer?.(notification.notify_id, answer);
+    if (ok) setIsEditing(false);          // hide input after success
+  };
+
   return (
     <div className="flex justify-center items-center mt-[8px]">
       <div
@@ -53,6 +69,23 @@ const NotificationSub = ({ notification }) => {
               </span>
             </div>
           </div>
+      {isTrainerQna && isEditing ? (
+        <div className="mt-3 h-[300px]">
+          <textarea
+            className="w-[95%] h-[93%] border rounded rounded-[5px] p-2 text-[14px] text-[#2D3436]"
+            placeholder="Write your answer..."
+            value={answer}
+            onChange={e => setAnswer(e.target.value)}
+          />
+          <button
+            className="mt-[5px] px-[5px] h-[7%] rounded rounded-[5px] bg-[#FF7675] text-white text-[12px]"
+            onClick={handleSave}
+            disabled={!answer.trim()}
+          >
+            Save
+          </button>
+        </div>
+      ) : null}
         </div>
       </div>
     </div>

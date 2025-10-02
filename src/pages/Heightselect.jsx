@@ -6,7 +6,7 @@ import Rulervertical from "../components/Rulervertical";
 import man from "../assets/man.png";
 import woman from "../assets/woman.png";
 import { useGender } from "../context/GenderContext";
-import { updateUserFieldLocally } from "../utils/userOnboarding";
+import { updateUserFieldLocally, patchUserCache } from "../utils/userOnboarding";
 
 const Heightselect = () => {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ const Heightselect = () => {
   const [height, setHeight] = useState(134);
 
   const onHeightSubmit = (height) => {
+    patchUserCache('height', height);
     updateUserFieldLocally("height", height);
     navigate("/questionnaire");
   };
@@ -94,7 +95,7 @@ const Heightselect = () => {
           <div className="w-full flex justify-center mt-[35px]">
             <PrimaryButton
               text="CONFIRM"
-              onClick={() => onHeightSubmit(height)}
+              onClick={() => onHeightSubmit(height-3)}
               customStyle={{
                 width: "93%",
                 height: "52px",

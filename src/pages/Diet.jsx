@@ -86,12 +86,11 @@ const Diet = () => {
           console.log('Fetched diet plan:', data);
 
           const grouped = data.reduce((acc, item) => {
-            const { day_of_week, meal_time, meals } = item;
+            const { meal_time, meals } = item;
 
-            if (!acc[day_of_week]) acc[day_of_week] = {};
-            if (!acc[day_of_week][meal_time]) acc[day_of_week][meal_time] = [];
+            if (!acc[meal_time]) acc[meal_time] = [];
 
-            if (meals) acc[day_of_week][meal_time].push(meals); // Only push if exists
+            if (meals) acc[meal_time].push(meals); // Only push if exists
 
             return acc;
           }, {});

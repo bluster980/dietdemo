@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const { encodeImage, decodeFromImageUrl, ensureUploadsDir } = require('./Steganography');
+const { jwtCreation } = require('./PhoneVerification')
 
 const app = express();
 const PORT = 5000;
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
 app.post('/encode', encodeImage);
 app.post('/decodeFromUrl', decodeFromImageUrl);
+app.post('/jwtcreation', jwtCreation)
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

@@ -67,6 +67,7 @@ const ClientDietCard = ({
       fat: f,
       isScaled: true,
     });
+    setQty("");
   };
 
   return (
@@ -81,7 +82,7 @@ const ClientDietCard = ({
         <div className="flex flex-col ml-[12px] mt-[5px]">
           <div className="text-[18px] font-urbanist  w-[90%] h-[35px]">
             <span className="font-semibold text-[#2D3436]">
-              {meal.mealName}
+              {meal.meal_name}
             </span>
             <div className="flex items-center gap-x-[5px]">
               <Dietfire />

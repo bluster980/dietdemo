@@ -5,7 +5,8 @@ import PrimaryButton from "../components/PrimaryButton";
 import man from "../assets/man.png";
 import woman from "../assets/woman.png";
 import { useGender } from "../context/GenderContext";
-import { updateUserFieldLocally } from "../utils/userOnboarding";
+import { updateUserFieldLocally, patchUserCache } from "../utils/userOnboarding";
+
 
 const Genderselect = () => {
   const navigate = useNavigate();
@@ -13,9 +14,12 @@ const Genderselect = () => {
 
   const handleSelectGender = (gender) => {
     setSelectedGender(gender);
+    patchUserCache('gender', gender);
+    updateUserFieldLocally('gender', gender);
   };
 
   const onGenderSelect = (selectedGender) => {
+    patchUserCache('gender', selectedGender);
     updateUserFieldLocally("gender", selectedGender);
     navigate("/Weightselect");
   };

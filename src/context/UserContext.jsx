@@ -1,6 +1,6 @@
 // UserContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { getUserFromDb } from '../utils/supabaseQueries';
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { getUserFromDb, getTrainerFromDb } from "../utils/supabaseQueries";
 
 const UserContext = createContext();
 
@@ -18,58 +18,101 @@ export const UserProvider = ({ children }) => {
       // Try localStorage first, for fast load
       let parsed;
       try {
-        const storedUserData = localStorage.getItem('userData');
-        if (storedUserData && storedUserData !== 'undefined') {
+        const storedUserData = localStorage.getItem("userData");
+        if (storedUserData && storedUserData !== "undefined") {
           parsed = JSON.parse(storedUserData);
           if (parsed && parsed.user_id) {
             setUserDataState(parsed);
           }
         }
       } catch (err) {
-        console.error('Failed to parse stored userData:', err);
+        console.error("Failed to parse stored userData:", err);
       }
 
       //  Always fallback to fresh DB fetch (if user_id is present)
-      if (parsed && parsed.user_id) {
+      const uid = localStorage.getItem("user_id");
+      const token = localStorage.getItem("access_token");
+      if ((!parsed || !parsed.user_id) && uid && token) {
+        const { data, error } = await getUserFromDb(uid); // ensure this attaches Authorization + apikey
+        if (data) {
+          setUserDataState(data);
+          localStorage.setItem("userData", JSON.stringify(data));
+        } else if (error) {
+          console.warn("Failed to fetch from DB:", error);
+        }
+      } else if (parsed?.user_id) {
+        // Even if we had cached data, refresh from DB to stay current
         const { data, error } = await getUserFromDb(parsed.user_id);
         if (data) {
-          setUserDataState(data); // Update context
-          localStorage.setItem('userData', JSON.stringify(data)); // Sync localStorage
+          setUserDataState(data);
+          localStorage.setItem("userData", JSON.stringify(data));
         } else if (error) {
-          console.warn('Failed to fetch from DB:', error);
+          console.warn("Failed to fetch from DB:", error);
         }
       }
+
       setIsLoading(false);
     };
     fetchUserData();
   }, []);
 
-
-
   // Sync setUserData with localStorage
   const setUserData = (data) => {
-    if (!data || typeof data !== 'object' || !data.user_id) {
-      console.warn('[UserContext] ❌ Invalid userData being set:', data);
-      return; // Prevent saving "undefined" again
-    }
-
+    if (!data || typeof data !== "object" || !data.user_id) return;
     setUserDataState(data);
-    localStorage.setItem('userData', JSON.stringify(data));
+    localStorage.setItem("userData", JSON.stringify(data));
   };
 
+  const refreshUser = useCallback(async () => {
+    const uid = localStorage.getItem("user_id");
+    const token = localStorage.getItem("access_token");
+    if (!uid || !token) return { data: null, error: "missing-credentials" };
+    const { data, error } = await getUserFromDb(uid); // must attach apikey + Authorization
+    if (data) setUserData(data);
+    return { data, error };
+  }, []);
+
+  const refreshTrainer = useCallback(async () => {
+    const uid = localStorage.getItem("user_id");
+    const token = localStorage.getItem("access_token");
+    if (!uid || !token) return { data: null, error: "missing-credentials" };
+    const { data, error } = await getTrainerFromDb(uid); // must attach apikey + Authorization
+    if (data) setUserData(data);
+    return { data, error };
+  }, []);
+
+  useEffect(() => {
+    const bootstrap = async () => {
+      setIsLoading(true);
+      // fast path from cache
+      const stored = localStorage.getItem("userData");
+      if (stored && stored !== "undefined") {
+        try {
+          const parsed = JSON.parse(stored);
+          if (parsed?.user_id) setUserDataState(parsed);
+        } catch {
+          console.error("Failed to parse stored userData:", stored);
+        }
+      }
+      // always refresh from DB if credentials exist
+      await refreshUser();
+      setIsLoading(false);
+    };
+    bootstrap();
+  }, [refreshUser]);
 
   const calculateCalories = (weight, height, age, gender, profession) => {
     if (!weight || !height || !age || !gender || !profession) {
-      console.error('calculateCalories: invalid argument(s)');
+      console.error("calculateCalories: invalid argument(s)");
       return;
     }
 
     let lifestyle = 1.2;
-    if (profession === 'moderate') lifestyle = 1.55;
-    else if (profession === 'heavy') lifestyle = 1.725;
+    if (profession === "moderate") lifestyle = 1.55;
+    else if (profession === "heavy") lifestyle = 1.725;
 
     let calories;
-    if (gender === 'man') {
+    if (gender === "man") {
       calories = (10 * weight + 6.25 * height - 5 * age + 5) * lifestyle;
     } else {
       calories = (10 * weight + 6.25 * height - 5 * age - 161) * lifestyle;
@@ -79,31 +122,36 @@ export const UserProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const storedTime = localStorage.getItem('lastQnaTime');
+    const storedTime = localStorage.getItem("lastQnaTime");
     if (storedTime) setLastQnaTime(storedTime);
   }, []);
 
   useEffect(() => {
     if (lastQnaTime) {
-      localStorage.setItem('lastQnaTime', lastQnaTime);
+      localStorage.setItem("lastQnaTime", lastQnaTime);
     }
   }, [lastQnaTime]);
 
   useEffect(() => {
-    const storedDate = localStorage.getItem('lastMeetingDate');
+    const storedDate = localStorage.getItem("lastMeetingDate");
     if (storedDate) setLastMeetingDate(storedDate);
   }, []);
 
   useEffect(() => {
     if (lastMeetingDate) {
-      localStorage.setItem('lastMeetingDate', lastMeetingDate);
+      localStorage.setItem("lastMeetingDate", lastMeetingDate);
     }
   }, [lastMeetingDate]);
 
-
   // Recalculate calories when userData changes
   useEffect(() => {
-    if (userData?.weight && userData?.height && userData?.age && userData?.gender && userData?.profession) {
+    if (
+      userData?.weight &&
+      userData?.height &&
+      userData?.age &&
+      userData?.gender &&
+      userData?.profession
+    ) {
       calculateCalories(
         userData.weight,
         userData.height,
@@ -115,11 +163,24 @@ export const UserProvider = ({ children }) => {
   }, [userData]);
 
   return (
-    <UserContext.Provider value={{ userData, setUserData, calculatedCalories, calculateCalories, isLoading, lastQnaTime, setLastQnaTime, lastMeetingDate, setLastMeetingDate }}>
+    <UserContext.Provider
+      value={{
+        userData,
+        setUserData,
+        calculatedCalories,
+        calculateCalories,
+        isLoading,
+        lastQnaTime,
+        setLastQnaTime,
+        lastMeetingDate,
+        setLastMeetingDate,
+        refreshUser,
+        refreshTrainer,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
 };
 
 export const useUser = () => useContext(UserContext);
-

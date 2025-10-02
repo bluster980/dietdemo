@@ -5,6 +5,7 @@ import NotificationBell from "../assets/notificationbell.svg";
 import Search from "../assets/search.svg";
 import ClientCard from "../components/ClientCard";
 import BackArrow from "../assets/backarrow.svg";
+import Notification from "./Notification";
 import NotificationCard from "../components/NotificationCard";
 import LetterBox from "../assets/letterbox.svg";
 import {
@@ -13,6 +14,7 @@ import {
   acceptClientRequest,
   rejectClientRequest,
   removeClientFromTrainer,
+  trainerIdDecided,
 } from "../utils/supabaseQueries";
 import SlothSleeping from "../assets/slothsleeping.json";
 import Lottie from "lottie-react";
@@ -52,56 +54,104 @@ const Clientmanage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [openDropdownClient, setOpenDropdownClient] = useState(null);
   const [clientRequests, setClientRequests] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
 
-  const trainerId = localStorage.getItem("trainer_id");
+  // const trainerId = localStorage.getItem("trainer_id");
+  // const trainerUserId = localStorage.getItem("user_id");
+  const trainerId = typeof window !== "undefined" ? localStorage.getItem("trainer_id") : null;
+  const trainerUserId = typeof window !== "undefined" ? localStorage.getItem("user_id") : null;
 
-  useEffect(() => {
-    let ignore = false; // avoid race conditions on rapid trainer change
-    const fetchClients = async () => {
+
+  useEffect (() => {
+    if (!trainerId){
+      trainerIdDecided(trainerUserId).then((res) => {
+        if (res.data.exists) {
+          localStorage.setItem("trainer_id", res.data.trainer_id);
+          loadList(isClientRequest ? "requests" : "clients");
+        }
+      });
+    }
+  });
+
+  const loadList = async (kind /* 'clients' | 'requests' */) => {
+    if (!trainerId) return;
+
+    if (kind === "clients") {
       const { data, error } = await fetchClientsForTrainer(trainerId);
       if (error) {
         console.error("fetchClientsForTrainer failed:", error.message);
         return;
       }
-      if (ignore) return;
-      // Normalize to ClientCard shape
       const normalized = (data || []).map((u) => ({
-        user_id: u.user_id, // unique key
+        user_id: u.user_id,
         name: u.name ?? "Unknown",
         mobile_number: u.mobile_number ?? "",
         subscription_expiry: formatDdMmYyyy(u.subscription_expiry),
         days: daysRemainingFromToday(u.subscription_expiry),
-        raw: u, // keep original row if needed
+        raw: u,
       }));
       setAllClients(normalized);
-    };
-    if (trainerId) fetchClients();
-    return () => {
-      ignore = true;
-    };
-  }, [trainerId]);
-
-  useEffect(() => {
-    let ignore = false; // avoid race conditions on rapid trainer change
-    const fetchClientRequests = async () => {
+    } else {
       const { data, error } = await fetchClientRequestForTrainer(trainerId);
       if (error) {
         console.error("fetchClientRequestForTrainer failed:", error.message);
         return;
       }
-      if (ignore) return;
       setClientRequests(data || []);
-    };
-    if (trainerId) fetchClientRequests();
-    return () => {
-      ignore = true;
-    };
-  });
+    }
+  };
+
+  useEffect(() => {
+    // Initial fetch for whichever tab is active on mount
+    loadList(isClientRequest ? "requests" : "clients");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // useEffect(() => {
+  //   let ignore = false; // avoid race conditions on rapid trainer change
+  //   const fetchClients = async () => {
+  //     const { data, error } = await fetchClientsForTrainer(trainerId);
+  //     if (error) {
+  //       console.error("fetchClientsForTrainer failed:", error.message);
+  //       return;
+  //     }
+  //     if (ignore) return;
+  //     // Normalize to ClientCard shape
+  //     const normalized = (data || []).map((u) => ({
+  //       user_id: u.user_id, // unique key
+  //       name: u.name ?? "Unknown",
+  //       mobile_number: u.mobile_number ?? "",
+  //       subscription_expiry: formatDdMmYyyy(u.subscription_expiry),
+  //       days: daysRemainingFromToday(u.subscription_expiry),
+  //       raw: u, // keep original row if needed
+  //     }));
+  //     setAllClients(normalized);
+  //   };
+  //   if (trainerId) fetchClients();
+  //   return () => {
+  //     ignore = true;
+  //   };
+  // }, [trainerId]);
+
+  // useEffect(() => {
+  //   let ignore = false; // avoid race conditions on rapid trainer change
+  //   const fetchClientRequests = async () => {
+  //     const { data, error } = await fetchClientRequestForTrainer(trainerId);
+  //     if (error) {
+  //       console.error("fetchClientRequestForTrainer failed:", error.message);
+  //       return;
+  //     }
+  //     if (ignore) return;
+  //     setClientRequests(data || []);
+  //   };
+  //   if (trainerId) fetchClientRequests();
+  //   return () => {
+  //     ignore = true;
+  //   };
+  // });
 
   const filteredClients = allClients.filter((clientObj) =>
-    (clientObj.name || "")
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase())
+    (clientObj.name || "").toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleUpdateClient = (clientId, updatedData) => {
@@ -111,8 +161,16 @@ const Clientmanage = () => {
   };
 
   function handleClientRequest() {
-    setIsClientRequest((prevState) => !prevState);
+    setIsClientRequest((prev) => {
+      const next = !prev;
+      loadList(next ? "requests" : "clients");
+      return next;
+    });
   }
+
+  const handleNotification = () => {
+    setShowNotification(!showNotification);
+  };
 
   return (
     <div
@@ -187,11 +245,25 @@ const Clientmanage = () => {
         <div
           className="mb-[10px] flex justify-center items-center w-[51px] h-[51px] rounded-[50%] border border-[#E9ECEF] bg-white"
           style={{ boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)" }}
-          // onClick={handleNotification}
+          onClick={handleNotification}
         >
           <NotificationBell />
         </div>
       </div>
+      {showNotification && (
+        <motion.div
+          className="flex justify-center items-center z-[90] absolute bg-black/50 w-[100%] h-[100%]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <Notification
+            trainerUserId={trainerUserId}
+            role="trainer"
+            onClose={() => setShowNotification(false)}
+          />
+        </motion.div>
+      )}
       <div className="gap-x-[10px] flex items-center justify-start w-[94%] h-[43px] border border-[#E9ECEF] rounded-[50px] mt-[10px] bg-white">
         <Search className="ml-[12px]" />
         <p className="flex text-center text-[20px] font-urbanist text-[#565656] w-[86%]">
@@ -255,15 +327,14 @@ const Clientmanage = () => {
                   isClientRequest={true}
                   onAcceptClick={async () => {
                     await acceptClientRequest(req.user_id, trainerId);
-                    setClientRequests((reqs) =>
-                      reqs.filter((r) => r.user_id !== req.user_id)
-                    );
+                    await Promise.all([
+                      loadList("requests"),
+                      loadList("clients"),
+                    ]); // remove from requests and appear in clients
                   }}
                   onRejectClick={async () => {
                     await rejectClientRequest(req.user_id, trainerId);
-                    setClientRequests((reqs) =>
-                      reqs.filter((r) => r.user_id !== req.user_id)
-                    );
+                    await loadList("requests"); // just remove from requests
                   }}
                 />
               ))
@@ -300,14 +371,14 @@ const Clientmanage = () => {
                   onCloseDropdown={() => setOpenDropdownClient(null)}
                   onUpdateClient={handleUpdateClient}
                   onActionClick={(action) =>
-                    console.log(`Client ${clientObj.user_id}: clicked ${action}`)
+                    console.log(
+                      `Client ${clientObj.user_id}: clicked ${action}`
+                    )
                   }
                   isClientRequest={false}
                   onRemoveClient={async () => {
                     await removeClientFromTrainer(clientObj.user_id);
-                    setAllClients((clients) =>
-                      clients.filter((c) => c.user_id !== clientObj.user_id)
-                    );
+                    await loadList("clients"); // refresh the clients list
                   }}
                 />
               ))

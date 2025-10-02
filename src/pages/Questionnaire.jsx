@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import PrimaryButton from "../components/PrimaryButton";
 import { useNavigate } from "react-router-dom";
 import BackArrow from "../assets/backarrow.svg";
-import { getUserData } from "../utils/userOnboarding";
-import { insertUser, insertWeightRecord } from "../utils/supabaseQueries";
+// import { getUserData } from "../utils/userOnboarding";
+import { updateUserField, insertWeightRecord } from "../utils/supabaseQueries";
 import { updateUserFieldLocally } from "../utils/userOnboarding";
 import { useUser } from "../context/UserContext";
 import CurrentTime from "../components/CurrentTime";
@@ -56,36 +56,84 @@ const Questionnaire = () => {
     updateUserFieldLocally("diet_preference", form.diet);
     updateUserFieldLocally("age", form.age);
 
+    const userId = localStorage.getItem("user_id");
+    const token = localStorage.getItem("access_token");
+    if (!userId || !token) {
+      // Redirect back to verification if missing
+      navigate("/userverification", { replace: true });
+      return;
+    }
+
     if (validateForm()) {
-      const userObj = getUserData();
-      const { data: insertedUser } = await insertUser(userObj);
-      if (insertedUser) {
-        setUserData(insertedUser);
-        localStorage.setItem("user_id", insertedUser.user_id);
-
-        // add weight record three attributes in weightObj first is user_id second is date and third is weight_record
-        const weightObj = {
-          user_id: insertedUser.user_id,
-          date: getLocalDateString(0),
-          weight_record: userObj.weight,
-        };
-
-        const weightObj1 = {
-          user_id: insertedUser.user_id,
-          date: getLocalDateString(1),
-          weight_record: userObj.weight + 3,
-        };
-
-        const weightObj2 = {
-          user_id: insertedUser.user_id,
-          date: getLocalDateString(2),
-          weight_record: userObj.weight - 7,
-        };
-        await insertWeightRecord(weightObj);
-        await insertWeightRecord(weightObj1);
-        await insertWeightRecord(weightObj2);
-        navigate("/diary");
+      const storedUser = JSON.parse(localStorage.getItem('userData') || '{}');
+      
+      // const userObj = getUserData();
+      // console.log("before inserting DB", storedUser);
+      const { data, error } = await updateUserField(userId, {
+        gender: storedUser.gender,
+        weight: storedUser.weight,
+        height: storedUser.height,
+        training_time: form.trainTime,
+        profession: form.profession,
+        goal: form.goal,
+        diet_preference: form.diet,
+        age: form.age,
+      });
+      if(data) {
+        console.log("after inserting DB", data);
       }
+      if (error) {
+        console.error("Update failed:", error);
+        return;
+      }
+      if (!data) {
+        console.warn(
+          "No row updated; check RLS, Authorization header, and filters"
+        );
+        return;
+      }
+      // console.error("Error updating user:", error.message);
+      setUserData(data);
+      const weightObj = {
+        user_id: userId,
+        date: getLocalDateString(0),
+        weight_record: storedUser.weight,
+      };
+      await insertWeightRecord(weightObj);
+      // if (error) {
+      //   console.error("Error updating user:", error.message);
+      // } else {
+      //   console.log("✅ User updated:", data);
+      // }
+      navigate("/Diary");
+      // const { data: insertedUser } = await insertUser(userObj);
+      // if (insertedUser) {
+      //   setUserData(insertedUser);
+      //   localStorage.setItem("user_id", insertedUser.user_id);
+
+      //   // add weight record three attributes in weightObj first is user_id second is date and third is weight_record
+      //   const weightObj = {
+      //     user_id: insertedUser.user_id,
+      //     date: getLocalDateString(0),
+      //     weight_record: userObj.weight,
+      //   };
+
+      //   const weightObj1 = {
+      //     user_id: insertedUser.user_id,
+      //     date: getLocalDateString(1),
+      //     weight_record: userObj.weight + 3,
+      //   };
+
+      //   const weightObj2 = {
+      //     user_id: insertedUser.user_id,
+      //     date: getLocalDateString(2),
+      //     weight_record: userObj.weight - 7,
+      //   };
+      //   await insertWeightRecord(weightObj);
+      //   await insertWeightRecord(weightObj1);
+      //   await insertWeightRecord(weightObj2);
+      //   navigate("/diary");
+      // }
     }
   };
 

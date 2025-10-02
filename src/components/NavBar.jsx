@@ -8,20 +8,23 @@ import PlusCross from '../assets/pluscross.svg';
 // eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion';
 
+
 const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+
   const currentPath = location.pathname;
-  const isDiary = currentPath === '/diary';
+  const isActiveDiary = activeTab === 'Diary';
 
   const tabs = [
     { title: 'Diary', Icon: DiaryIcon, path: '/diary' },
     { title: 'Workout', Icon: WorkoutIcon, path: '/workout' },
-    ...(isDiary ? [{ title: 'Spacer', Icon: () => <div className="h-[35px] w-[45px]" /> }] : []),
+    ...(isActiveDiary ? [{ title: 'Spacer', Icon: () => <div className="h-[35px] w-[45px]" /> }] : []),
     { title: 'Diet', Icon: DietIcon, path: '/diet' },
     { title: 'Profile', Icon: ProfileIcon, path: '/profile' },
   ];
+
 
   const handleClick = (title, path) => {
     if (title === 'FAB') {
@@ -32,11 +35,13 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
     }
   };
 
+
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50">
 
+
   {/* FAB Shadow - render this first so it's lowest */}
-  {isDiary && (
+  {isActiveDiary && (
     <div
       className="absolute z-[70] w-[80px] h-[80px] bottom-0 mb-[25px] bg-white flex items-center justify-center transition-opacity duration-300"
       style={{
@@ -47,6 +52,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
       }}
     />
   )}
+
 
   {/* Navbar - higher than shadow, lower than FAB */}
   <div
@@ -100,6 +106,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
     })}
   </div>
 
+
   {/* FAB - topmost */}
   {activeTab === 'Diary' && (
     <div
@@ -137,7 +144,9 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
   )}
 </div>
 
+
   );
 };
+
 
 export default NavigationBar;

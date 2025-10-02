@@ -22,7 +22,6 @@ import Meeting from './pages/Meeting';
 import Upload from './pages/Upload';
 import ImagePicker from './components/ImagePicker';
 import BottomSheet from './components/BottomSheet';
-import OtpDemo from './pages/OtpDemo';
 import ClientCard from './components/ClientCard';
 import ClientDietCard from './components/ClientDietCard';
 import Clientmanage from './pages/Clientmanage';
@@ -67,6 +66,7 @@ function App() {
             />
           }
         />
+        
         <Route path="/genderselect" element={<Genderselect />} />
         <Route path="/weightselect" element={<Weightselect />} />
         <Route path="/heightselect" element={<Heightselect />} />

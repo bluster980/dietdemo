@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../components/PrimaryButton";
 import BackArrow from "../assets/backarrow.svg";
 import Trainerverificationlogo from "../assets/trainerverificationlogo.svg";
-import { isTrainerIdAvailable, insertTrainer } from "../utils/supabaseQueries";
-import { getUserData } from "../utils/userOnboarding";
+import { isTrainerIdAvailable, insertTrainerId } from "../utils/supabaseQueries";
+// import { getUserData } from "../utils/userOnboarding";
 // import {updateTrainerField} from '../utils/trainerOnboarding'
 
 const Trainerverification = () => {
@@ -70,19 +70,20 @@ const Trainerverification = () => {
     const trainerId = await validateTrainerId();
     if (!trainerId) return;
 
-    const userObj = getUserData(); // should have mobile_number
-    const trainerObj = {
-      mobile_number: userObj.mobile_number,
-      trainer_id: trainerId,
-    };
+    const userId = localStorage.getItem("user_id");
+    if (!userId) {
+      setError("Something went wrong. Please try again. about user_id");
+      return;
+    }
 
-    const { data } = await insertTrainer(trainerObj);
+    const { data } = await insertTrainerId(userId, trainerId);
+    console.log("Trainer Verification Data", data[0]);
     if (data) {
-      localStorage.setItem("trainer_id", trainerId);
-      localStorage.setItem("user_id", data.user_id);
+      console.log("Trainer Verification Data", data);
+      localStorage.setItem("trainer_id", data[0].trainer_id);
       navigate("/trainer/manageclient");
     } else {
-      setError("Something went wrong. Please try again.");
+      setError("Something went wrong. Please try again. else part");
     }
   };
 

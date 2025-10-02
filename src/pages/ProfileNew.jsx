@@ -141,18 +141,20 @@ const ProfileNew = () => {
   };
 
   const handleUserFieldUpdate = async (field, value) => {
-    const { data, error } = await updateUserField(
-      userData.user_id,
-      field,
-      value
-    );
-    if (data && data[field] !== undefined) {
-      const updatedUserData = { ...userData, [field]: data[field] };
+    const partial = { [field]: value };
+    const { data, error } = await updateUserField(userData.user_id, partial);
+    if (error) {
+      console.warn("Failed to update field:", field, { error });
+      return;
+    }
+
+    if (data) {
+      const updatedUserData = { ...userData, ...data };
       setUserData(updatedUserData);
       toast.success("User updated successfully!", { duration: 5000 });
       localStorage.setItem("userData", JSON.stringify(updatedUserData));
     } else {
-      console.warn("Failed to update field:", field, { data, error });
+      console.warn("No data returned after update for field:", field);
     }
   };
 
@@ -187,6 +189,7 @@ const ProfileNew = () => {
       if (!error) {
         toast.success("Request sent to trainer!", { duration: 2500 });
       } else {
+        console.error(error);
         toast.error("Could not send request.");
       }
       return; // do NOT update users.trainer_id directly
@@ -341,7 +344,7 @@ const ProfileNew = () => {
                       onChange={(e) =>
                         handleProfileChange("age", e.target.value)
                       }
-                      className="ml-[5px] text-[#909497] font-urbanist text-[13px] border border-gray-300 rounded px-1 w-[20px]"
+                      className="ml-[5px] text-[#2D3436] font-urbanist text-[13px] border border-gray-300 rounded px-1 w-[20px]"
                     />
                   ) : (
                     <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]">

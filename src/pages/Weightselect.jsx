@@ -6,7 +6,7 @@ import Ruler from "../components/Ruler";
 import man from "../assets/man.png";
 import woman from "../assets/woman.png";
 import { useGender } from "../context/GenderContext";
-import { updateUserFieldLocally } from "../utils/userOnboarding";
+import { updateUserFieldLocally, patchUserCache } from "../utils/userOnboarding";
 
 const Weightselect = () => {
   const navigate = useNavigate();
@@ -15,6 +15,7 @@ const Weightselect = () => {
   const [weight, setWeight] = useState(35);
 
   const onWeightSubmit = (weight) => {
+    patchUserCache("weight", weight);
     updateUserFieldLocally("weight", weight);
     navigate("/Heightselect");
   };
@@ -92,7 +93,7 @@ const Weightselect = () => {
           <div className="w-full flex justify-center mt-[25px]">
             <PrimaryButton
               text="CONFIRM"
-              onClick={() => onWeightSubmit(weight)}
+              onClick={() => onWeightSubmit(weight-5)}
               customStyle={{
                 width: "90%",
                 height: "52px",

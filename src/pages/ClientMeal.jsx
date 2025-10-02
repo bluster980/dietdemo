@@ -1,77 +1,98 @@
-import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { React, useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import BackArrow from "../assets/backarrow.svg";
 import oatmeal from "../assets/oatmeal.png";
 import ProfileEditPen from "../assets/profileeditpen.svg";
 import Search from "../assets/search.svg";
 import ClientDietCard from "../components/ClientDietCard";
+import { fetchAllMeals, upsertDietPlansBulk } from "../utils/supabaseQueries";
+import toast from "react-hot-toast";
 
-const meal = {
-  mealName: "Grilled Salad",
-  calories: 350,
-  protein: 30,
-  carbs: 10,
-  fat: 15,
-};
+// const meal = {
+//   meal_name: "Grilled Salad",
+//   calories: 350,
+//   protein: 30,
+//   carbs: 10,
+//   fat: 15,
+// };
 
-const meal1 = {
-  mealName: "Grilled Chicken Salad",
-  calories: 350,
-  protein: 10,
-  carbs: 10,
-  fat: 35,
-};
+// const meal1 = {
+//   meal_name: "Grilled Chicken Salad",
+//   calories: 350,
+//   protein: 10,
+//   carbs: 10,
+//   fat: 35,
+// };
 
-const meal2 = {
-  mealName: "Oatmeal with milk",
-  calories: 350,
-  protein: 10,
-  carbs: 20,
-  fat: 15,
-};
+// const meal2 = {
+//   meal_name: "Oatmeal with milk",
+//   calories: 350,
+//   protein: 10,
+//   carbs: 20,
+//   fat: 15,
+// };
 
-const meal3 = {
-  mealName: "Chicken Salad",
-  calories: 350,
-  protein: 30,
-  carbs: 10,
-  fat: 15,
-};
+// const meal3 = {
+//   meal_name: "Chicken Salad",
+//   calories: 350,
+//   protein: 30,
+//   carbs: 10,
+//   fat: 15,
+// };
 
-const meal4 = {
-  mealName: "Boiled Egg Whites",
-  calories: 350,
-  protein: 30,
-  carbs: 10,
-  fat: 15,
-};
+// const meal4 = {
+//   meal_name: "Boiled Egg Whites",
+//   calories: 350,
+//   protein: 30,
+//   carbs: 10,
+//   fat: 15,
+// };
 
-const meal5 = {
-  mealName: "Rice With chicken",
-  calories: 350,
-  protein: 30,
-  carbs: 10,
-  fat: 15,
-};
+// const meal5 = {
+//   meal_name: "Rice With chicken",
+//   calories: 350,
+//   protein: 30,
+//   carbs: 10,
+//   fat: 15,
+// };
 
-const meal6 = {
-  mealName: "Sabji And Roti",
-  calories: 350,
-  protein: 30,
-  carbs: 10,
-  fat: 15,
-};
+// const meal6 = {
+//   meal_name: "Sabji And Roti",
+//   calories: 350,
+//   protein: 30,
+//   carbs: 10,
+//   fat: 15,
+// };
 
-const allMeals = [meal, meal1, meal2, meal3, meal4, meal5, meal6];
+// const allMeals = [meal, meal1, meal2, meal3, meal4, meal5, meal6];
 
 const ClientMeal = () => {
+  const location = useLocation();
+  const routeUserId = location.state?.user_id;
   const navigate = useNavigate();
   const [isActiveTime, setActiveTime] = useState("Snacks");
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  // const [editing, setEditing] = useState({});
+  const [allMeals, setAllMeals] = useState([]);
+
+  const userId = routeUserId;
+  // console.log("####", userId);
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      const { data, error } = await fetchAllMeals();
+      if (error) {
+        console.error("Error fetching meals:", error.message);
+      } else {
+        setAllMeals(data);
+      }
+    };
+    fetchMeals();
+  }, []);
 
   const filteredMeals = allMeals.filter((mealObj) =>
-    mealObj.mealName.toLowerCase().includes(searchQuery.toLowerCase())
+    mealObj.meal_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
   const [timeMeals, setTimeMeals] = useState({
     Breakfast: [],
@@ -87,7 +108,7 @@ const ClientMeal = () => {
   const addMeal = (mealToAdd) => {
     setTimeMeals((prev) => {
       const isDuplicate = prev[isActiveTime].some(
-        (ex) => ex.mealName === mealToAdd.mealName
+        (ml) => ml.meal_name === mealToAdd.meal_name
       );
       if (isDuplicate) return prev;
       return {
@@ -101,10 +122,45 @@ const ClientMeal = () => {
     setTimeMeals((prev) => ({
       ...prev,
       [isActiveTime]: prev[isActiveTime].filter(
-        (ex) => ex.mealName !== mealToRemove.mealName
+        (ml) => ml.meal_name !== mealToRemove.meal_name
       ),
     }));
   };
+
+  async function handleSaveAll() {
+    if (!userId) {
+      toast.error("Missing user");
+      return;
+    }
+
+    // build a single rows array for all 4 timeMeals
+    const rows = [];
+    for (const time of Object.keys(timeMeals)) {
+      const list = timeMeals[time];
+      if (!list || list.length === 0) continue;
+      for (const ml of list) {
+        rows.push({
+          user_id: userId,
+          meal_name: ml.meal_name,
+          meal_time: time,
+          quantity: ml.qty,
+        });
+      }
+    }
+
+    if (rows.length === 0) {
+      toast("Nothing to save");
+      return;
+    }
+
+    const { error } = await upsertDietPlansBulk(rows);
+    if (error) {
+      console.error("Save error:", error.message);
+      toast.error(error.message);
+    } else {
+      toast.success("Saved successfully");
+    }
+  }
 
   return (
     <div
@@ -129,7 +185,7 @@ const ClientMeal = () => {
         />
       </div>
       <div className="w-[92%] flex justify-end mt-[50px]">
-        <div className="flex justify-center items-center w-[56px] h-[23px] rounded-[8px] bg-white border border-[#E9ECEF]">
+        <div className="flex justify-center items-center w-[56px] h-[23px] rounded-[8px] bg-white border border-[#E9ECEF]" onClick={handleSaveAll}>
           <ProfileEditPen className="h-[15px] w-[15px] ml-[px]" />
           <button className="z-1 h-full mb-[2px] ml-[2px] justify-center items-center text-[#6C757D] font-urbanist font-semibold text-[14px]">
             Save
@@ -151,7 +207,7 @@ const ClientMeal = () => {
         </div>
       </div>
       <div className="w-full flex justify-center items-center gap-x-[5px] mt-[8px]">
-        {["Breakfast", "Lunch", "Snacks", "Dinner"].map((time, index) => (
+        {["Breakfast", "Lunch", "Dinner", "Snacks"].map((time, index) => (
           <div
             key={index}
             className={`w-[22%] h-[54px]  rounded-[8px] ${
@@ -209,7 +265,7 @@ const ClientMeal = () => {
         <div className="flex flex-col items-center">
           {filteredMeals.map((mealObj) => (
             <ClientDietCard
-              key={mealObj.mealName}
+              key={mealObj.meal_name}
               meal={mealObj}
               addButton={true}
               mode="select"
@@ -231,7 +287,7 @@ const ClientMeal = () => {
             <div className="flex flex-col justify-center items-center">
               {timeMeals[isActiveTime].map((meal) => (
                 <ClientDietCard
-                  key={`${isActiveTime}-${meal.mealName}`}
+                  key={`${isActiveTime}-${meal.meal_name}`}
                   meal={meal}
                   addButton={"preview"}
                   mode="preview"

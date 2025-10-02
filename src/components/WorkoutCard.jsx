@@ -12,10 +12,12 @@ const WorkoutCard = ({
   onAdd,
   onRemove,
   onBeginEdit,
+  viewMode = "trainer-select",
 }) => {
   const [repsInput, setRepsInput] = useState("");
   const [setsInput, setSetsInput] = useState("");
 
+  const isClientView = viewMode === "client-view";
   const isSelectAndEditing =
     mode === "select" && isEditing && !isSelectedForDay;
 
@@ -47,12 +49,17 @@ const WorkoutCard = ({
   const beginEdit = () => onBeginEdit?.();
 
   // Choose display values: when selected for day, show exercise.reps/sets (saved in parent)
-  const repsDisplay = isSelectAndEditing
-    ? repsInput
-    : exercise.reps ?? repsInput;
-  const setsDisplay = isSelectAndEditing
-    ? setsInput
-    : exercise.sets ?? setsInput;
+   const repsDisplay = isClientView
+    ? exercise.reps
+    : isSelectAndEditing
+      ? repsInput
+      : exercise.reps ?? repsInput;
+
+  const setsDisplay = isClientView
+    ? exercise.sets
+    : isSelectAndEditing
+      ? setsInput
+      : exercise.sets ?? setsInput;
 
   return (
     <div className="flex flex-col justify-center items-center mt-[12px]">
@@ -74,12 +81,16 @@ const WorkoutCard = ({
                 {exercise.target}
               </span>
             </p>
-            {isSelectAndEditing ? (
-              <div className="flex items-center">
-                <span className="text-[#6C757D] font-urbanist text-[16px]">
-                  {" "}
-                  Reps:{" "}
+            {isClientView ? (
+              <p className="flex">
+                <span className="text-[#6C757D] font-urbanist text-[16px]"> Reps: </span>
+                <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
+                  {repsDisplay}
                 </span>
+              </p>
+            ) : isSelectAndEditing ? (
+              <div className="flex items-center">
+                <span className="text-[#6C757D] font-urbanist text-[16px]"> Reps: </span>
                 <input
                   type="text"
                   className="ml-[6px] w-[70px] h-[24px] px-[6px] rounded-[6px] border border-[#E9ECEF] text-[#2D3436] font-urbanist text-[15px] font-medium outline-none"
@@ -91,21 +102,22 @@ const WorkoutCard = ({
               </div>
             ) : (
               <p className="flex">
-                <span className="text-[#6C757D] font-urbanist text-[16px]">
-                  {" "}
-                  Reps:{" "}
-                </span>
+                <span className="text-[#6C757D] font-urbanist text-[16px]"> Reps: </span>
                 <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
                   {repsDisplay}
                 </span>
               </p>
             )}
-            {isSelectAndEditing ? (
-              <div className="flex items-center">
-                <span className="text-[#6C757D] font-urbanist text-[16px]">
-                  {" "}
-                  Sets:{" "}
+            {isClientView ? (
+              <p className="flex">
+                <span className="text-[#6C757D] font-urbanist text-[16px]"> Sets: </span>
+                <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
+                  {setsDisplay}
                 </span>
+              </p>
+            ) : isSelectAndEditing ? (
+              <div className="flex items-center">
+                <span className="text-[#6C757D] font-urbanist text-[16px]"> Sets: </span>
                 <input
                   type="number"
                   min="1"
@@ -118,10 +130,7 @@ const WorkoutCard = ({
               </div>
             ) : (
               <p className="flex">
-                <span className="text-[#6C757D] font-urbanist text-[16px]">
-                  {" "}
-                  Sets:{" "}
-                </span>
+                <span className="text-[#6C757D] font-urbanist text-[16px]"> Sets: </span>
                 <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
                   {setsDisplay}
                 </span>
@@ -146,28 +155,20 @@ const WorkoutCard = ({
               className="w-[250px] h-[155px] rounded-[10px]"
             />
           </div>
-          {addButton && (
+          {!isClientView && addButton && (
             <div
               className="z-1 absolute top-[3px] right-[-5px] h-[20px] w-[20px] rounded-[10px] mt-[5px]"
               style={{
                 boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.15)",
-                opacity:
-                  mode === "select" && (!isSelectAndEditing || !isValid)
-                    ? 0.5
-                    : 1,
-                pointerEvents:
-                  mode === "select" && (!isSelectAndEditing || !isValid)
-                    ? "none"
-                    : "auto",
+                opacity: mode === "select" && (!isSelectAndEditing || !isValid) ? 0.5 : 1,
+                pointerEvents: mode === "select" && (!isSelectAndEditing || !isValid) ? "none" : "auto",
               }}
               onClick={(e) => {
                 e.stopPropagation();
                 if (mode === "select") return handleAddClick(e);
                 return onRemove?.(e);
               }}
-              aria-disabled={
-                mode === "select" && (!isSelectAndEditing || !isValid)
-              }
+              aria-disabled={mode === "select" && (!isSelectAndEditing || !isValid)}
             >
               <AddPlus
                 style={

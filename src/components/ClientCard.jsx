@@ -150,10 +150,11 @@ const ClientCard = ({
       return;
     }
 
-    onUpdateClient(field, {
+    onUpdateClient(client.user_id, {
       subscription_expiry: `${d}-${m}-${y}`, // if your list expects dd-mm-yyyy display
       days,
     });
+
     setIsEditingExpiry(false);
   };
 
@@ -192,7 +193,7 @@ const ClientCard = ({
       </div>
 
       <div
-        className="relative flex w-[385px] h-[104px] border border-[#E9ECEF] rounded-[10px] bg-white"
+        className="relative flex w-[400px] h-[104px] border border-[#E9ECEF] rounded-[10px] bg-white"
         onClick={onClick}
         style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.04)" }}
       >
@@ -212,7 +213,7 @@ const ClientCard = ({
                   <div
                     className="h-[25px] w-[50px] bg-white border border-[#FFC2BE] flex justify-center items-center rounded-[5px] mt-[8px]"
                     onClick={() => {
-                      handleSaveEdit(client.id);
+                      handleSaveEdit();
                       setIsEditingExpiry(false);
                     }}
                   >
@@ -338,7 +339,7 @@ const ClientCard = ({
           >
             <div
               className="flex items-center mt-[10px] gap-x-[10px] ml-[10px]"
-              onClick={() => navigate("/trainer/clientmeal")}
+              onClick={() => navigate('/trainer/clientmeal', { state: { user_id: client.user_id, name: client.name } })}
               style={{ color: "#B7B4B7" }}
             >
               <DietDemo />
@@ -348,7 +349,7 @@ const ClientCard = ({
             </div>
             <div
               className="flex items-center mt-[8px] gap-x-[10px] ml-[10px]"
-              onClick={() => navigate("/trainer/clientexcercise")}
+              onClick={() => navigate('/trainer/clientexcercise', { state: { user_id: client.user_id, name: client.name } })}
               style={{ color: "#B7B4B7" }}
             >
               <WorkoutMod />
