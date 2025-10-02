@@ -26,7 +26,7 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         workbox: {
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+          maximumFileSizeToCacheInBytes: 5000000
         },
         scope: '/',
         start_url: '/',
