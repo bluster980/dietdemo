@@ -43,7 +43,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
   {/* FAB Shadow - render this first so it's lowest */}
   {isActiveDiary && (
     <div
-      className="absolute z-[70] w-[80px] h-[80px] bottom-0 mb-[25px] bg-white flex items-center justify-center transition-opacity duration-300"
+      className="absolute z-[70] w-[80px] h-[80px] bottom-0 mb-[15px] bg-white flex items-center justify-center transition-opacity duration-300"
       style={{
         left: '50%',
         transform: 'translateX(-50%)',
@@ -56,7 +56,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
 
   {/* Navbar - higher than shadow, lower than FAB */}
   <div
-    className="relative z-[80] h-[85px] w-full flex justify-around items-center bg-white"
+    className="relative z-[80] h-[75px] w-full flex justify-around items-center bg-white"
     style={{
       borderTopLeftRadius: '40px',
       borderTopRightRadius: '40px',
@@ -92,7 +92,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
           {/* underline */}
           {!isSpacer && (
             <div
-              className={`absolute bottom-[6px] h-[2px] rounded-full transition-all duration-200 ${
+              className={`absolute bottom-[10px] h-[2px] rounded-full transition-all duration-200 ${
                 currentPath.startsWith(tab.path) ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
@@ -110,7 +110,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
   {/* FAB - topmost */}
   {activeTab === 'Diary' && (
     <div
-      className="absolute z-[90] bottom-[25px] w-[80px] h-[80px] bg-white flex items-center justify-center transition-opacity duration-300"
+      className="absolute z-[90] bottom-[15px] w-[80px] h-[80px] bg-white flex items-center justify-center transition-opacity duration-300"
       style={{
         left: '50%',
         transform: 'translateX(-50%)',
