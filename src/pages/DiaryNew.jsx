@@ -166,7 +166,7 @@ const DiaryNew = () => {
       >
         <div className="flex justify-between items-end">
           <h1
-            className="text-[#2D3436] font-semibold font-urbanist text-[28px] mt-[20px]"
+            className="text-[#2D3436] font-semibold font-urbanist text-[28px] mt-[30px]"
             style={{
               lineHeight: "1",
               textAlign: "left",

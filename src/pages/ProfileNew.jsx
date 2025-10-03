@@ -514,11 +514,11 @@ const ProfileNew = () => {
             </div>
             <div className="flex flex-col">
               <div className="flex items-center justify-between">
-                <span className="text-[#2D3436] font-urbanist text-[22px] ml-[20px] mt-[10px]">
+                <span className="text-[#2D3436] font-urbanist text-[22px] ml-[20px] mt-[9px]">
                   My Goals
                 </span>
                 {!isEditingProfile2 ? (
-                  <div className="flex mr-[10px] mt-[15px] justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]">
+                  <div className="flex mr-[10px] mt-[14px] justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]">
                     <ProfileEditPen
                       className="h-[15px] w-[15px] ml-[px]"
                       style={{ color: "#6C757D" }}
@@ -532,7 +532,7 @@ const ProfileNew = () => {
                   </div>
                 ) : (
                   <div
-                    className="flex mr-[10px] mt-[10px] justify-center items-center w-[60px] h-[23px] rounded-[11px] bg-[#FF7675] "
+                    className="flex mr-[10px] mt-[9px] justify-center items-center w-[60px] h-[23px] rounded-[11px] bg-[#FF7675] "
                     style={{
                       boxShadow: "0px 6px 18px rgba(255, 118, 117, 0.30)",
                     }}
@@ -544,7 +544,7 @@ const ProfileNew = () => {
                     <button
                       onClick={handleDone2}
                       disabled={!userData || !isModified}
-                      className="z-1 h-full ml-[2px] justify-center items-center text-[#ffffff] font-urbanist font-bold text-[12px] mt-[-2px]"
+                      className="z-1 h-full ml-[2px] justify-center items-center text-[#ffffff] font-urbanist font-bold text-[12px] mt-[-3px]"
                     >
                       {isEditingProfile2 ? "Done" : "Edit"}
                     </button>
@@ -641,7 +641,7 @@ const ProfileNew = () => {
             </div>
             <div className="flex flex-col">
               <div
-                className="flex justify-between items-center mt-[10px] px-[10px]"
+                className="flex justify-between items-center mt-[9px] px-[10px]"
                 onClick={() => navigate("/profile/qna")}
               >
                 <div className="flex items-start">
@@ -667,7 +667,7 @@ const ProfileNew = () => {
               </div>
 
               <div
-                className="flex justify-between items-center mt-[10px] px-[10px]"
+                className="flex justify-between items-center mt-[9px] px-[10px]"
                 onClick={() => navigate("/profile/meeting")}
               >
                 <div className="flex items-start">
@@ -693,7 +693,7 @@ const ProfileNew = () => {
                 <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]"></div>
               </div>
 
-              <div className="flex justify-between items-center mt-[10px] px-[10px]">
+              <div className="flex justify-between items-center mt-[9px] px-[10px]">
                 <div className="flex items-start">
                   <ProfileDarkMode
                     className="h-[27px] w-[27px] mt-[10px]"
@@ -716,7 +716,7 @@ const ProfileNew = () => {
               </div>
 
               <div
-                className="flex justify-between items-center mt-[10px] px-[10px]"
+                className="flex justify-between items-center mt-[9px] px-[10px]"
                 onClick={() => navigate("/profile/upload")}
               >
                 <div className="flex items-start">
