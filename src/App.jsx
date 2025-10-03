@@ -44,7 +44,7 @@ function App() {
   return (
     <>
       {/* Safe-area status bar background patch */}
-      <div className="fixed top-0 left-0 right-0 h-[env(safe-area-inset-top)] bg-[#FFD98E] z-50 pointer-events-none" />
+      <div className="fixed top-0 left-0 right-0 h-[env(safe-area-inset-top)] bg-[#FFFFFF] z-50 pointer-events-none" />
 
       <Routes>
         <Route path="/" element={<Welcome />} />

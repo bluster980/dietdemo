@@ -96,12 +96,12 @@ const WorkoutNew = () => {
             height: "30px",
             position: "absolute",
             display: "flex",
-            top: "40px",
+            top: "10px",
             left: "5px",
             zIndex: 1,
           }}
         />
-        <div className="flex flex-col mt-[80px]">
+        <div className="flex flex-col mt-[50px]">
           <DayDate onDateChange={handleDateChange} />
         </div>
         <div

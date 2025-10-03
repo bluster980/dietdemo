@@ -193,7 +193,7 @@ const Profile = () => {
         <div
             className="flex flex-col justify-between items-center"
             style={{
-                background: 'linear-gradient(to bottom, #FFD98E 0%, #FFFFFF 24%)',
+                background: 'linear-gradient(to bottom, #FFFFFF 0%, #FFFFFF 24%)',
             }}
         >
           <div className="flex flex-col">

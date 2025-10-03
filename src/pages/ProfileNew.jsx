@@ -248,14 +248,14 @@ const ProfileNew = () => {
             height: "30px",
             position: "absolute",
             display: "flex",
-            top: "40px",
+            top: "10px",
             left: "5px",
             zIndex: 1,
           }}
         />
       </div>
       {profileData && (
-        <div className="flex flex-col mt-[80px]">
+        <div className="flex flex-col mt-[50px]">
           <div
             className="h-[115px] w-[385px] bg-white rounded-[10px] border border-1 border-[#E9ECEF] justify-center items-center"
             style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)" }}
