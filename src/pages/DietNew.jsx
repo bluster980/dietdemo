@@ -104,7 +104,7 @@ const Diet = () => {
           <DayDate onDateChange={handleDateChange} />
         </div>
         <div
-          className="flex flex-col w-full h-[73vh] overflow-y-scroll mt-4"
+          className="flex flex-col w-full h-[76vh] overflow-y-scroll mt-4"
           style={{
             scrollbarWidth: "thin",
             scrollbarColor: "transparent transparent",
