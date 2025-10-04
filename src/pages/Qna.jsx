@@ -290,7 +290,7 @@ const Qna = () => {
           width: "100%",
           maxWidth: 600,
           margin: "50 auto",
-          height: 70, // compact bar
+          height: 40, // compact bar
           display: "flex",
           alignItems: "end",
           position: "relative",

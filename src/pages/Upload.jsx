@@ -297,7 +297,7 @@ const Upload = () => {
           width: "100%",
           maxWidth: 600,
           margin: "0 auto",
-          height: 70, // compact bar
+          height: 40, // compact bar
           display: "flex",
           alignItems: "end",
           position: "relative",

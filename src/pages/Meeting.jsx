@@ -190,7 +190,7 @@ const Meeting = () => {
           width: "100%",
           maxWidth: 600,
           margin: "0 auto",
-          height: 70,
+          height: 40,
           display: "flex",
           alignItems: "end",
           position: "relative",
