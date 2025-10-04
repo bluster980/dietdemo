@@ -103,12 +103,12 @@ const Userverification = () => {
             height: "30px",
             position: "absolute",
             display: "flex",
-            top: "40px",
+            top: "20px",
             left: "5px",
           }}
         />
       </div>
-      <div className="flex flex-col items-center mt-[80px]">
+      <div className="flex flex-col items-center mt-[50px]">
         <Userverificationlogo
           style={{
             width: "100%",

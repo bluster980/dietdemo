@@ -269,7 +269,7 @@ const Upload = () => {
       boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
       padding: "0px 12px 20px ",
       boxSizing: "border-box",
-      minHeight: "calc(100vh - 260px)",
+      minHeight: "calc(100vh - 240px)",
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-start",

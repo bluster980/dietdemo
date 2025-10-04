@@ -18,7 +18,7 @@ const Welcome = () => {
       }}
     >
 
-      <div className="flex flex-col items-center mt-[150px]">
+      <div className="flex flex-col items-center mt-[120px]">
         <div
           style={{
             width: '100%',

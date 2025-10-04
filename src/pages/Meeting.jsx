@@ -122,7 +122,7 @@ const Meeting = () => {
       boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
       padding: "22px 12px 10px 12px",
       boxSizing: "border-box",
-      minHeight: "calc(100vh - 260px)",
+      minHeight: "calc(100vh - 230px)",
       display: "flex",
       flexDirection: "column",
       justifyContent: "flex-start",
