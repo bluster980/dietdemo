@@ -99,10 +99,10 @@ async function jwtCreation(req, res) {
     const token = jwt.sign(
       { sub: user_id, role: "authenticated" },
       SUPABASE_LEGACY_JWT_SECRET,
-      { algorithm: "HS256", expiresIn: "1h" } // or ES256 with kid if you configured asymmetric keys
+      { algorithm: "HS256", expiresIn: "30d" } // or ES256 with kid if you configured asymmetric keys
     );
     console.log("token from phoneverification", token);
-    console.log("user_id from phoneverification", user_id);
+    console.log("user_id from phoneverification", user_id); 
 
     return res.json({ access_token: token, user_id });
   } catch (err) {

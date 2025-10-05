@@ -186,3 +186,36 @@ html {
 }
 .ellipsis-dots::after { content: "…"; }
 @keyframes ellipsis { to { width: 1.5ch; } }
+
+/* slide-in container transitions */
+.slide-container {
+  will-change: transform, opacity;
+  transition: transform 220ms ease-out, opacity 220ms ease-out;
+}
+
+.enter-left {
+  transform: translateX(0);
+  opacity: 1;
+  animation: slideFromRight 220ms ease-out;
+}
+
+.enter-right {
+  transform: translateX(0);
+  opacity: 1;
+  animation: slideFromLeft 220ms ease-out;
+}
+
+.enter-none {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+@keyframes slideFromRight {
+  from { transform: translateX(20px); opacity: 0.001; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+@keyframes slideFromLeft {
+  from { transform: translateX(-20px); opacity: 0.001; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
