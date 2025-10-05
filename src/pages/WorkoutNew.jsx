@@ -132,9 +132,7 @@ const WorkoutNew = () => {
       style={{ background: "#FFFFFF" }}
     >
       <div className="flex flex-col">
-        <img
-          src={BackArrow}
-          alt="Back"
+        <BackArrow
           onClick={() => navigate(-1)}
           style={{
             width: "30px",
