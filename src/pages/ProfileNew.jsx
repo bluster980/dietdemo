@@ -18,6 +18,7 @@ import NavigationBar from "../components/NavBar";
 import ToggleButton from "../components/ToggleButton";
 import CroppableImagePicker from "../components/CroppableImagePicker/CroppableImagePicker";
 import { useUser } from "../context/UserContext";
+import { useTheme } from "../context/ThemeProvider";
 import {
   updateUserField,
   isTrainerIdAvailable,
@@ -38,16 +39,15 @@ const ProfileNew = () => {
   const { userData, calculatedCalories, isLoading } = useUser();
   const [tempTrainerId, setTempTrainerId] = useState("");
   const [targetedCalories, setTargetedCalories] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // const [isDarkMode, setIsDarkMode] = useState(false);
 
   // const [showCropper, setShowCropper] = useState(false);
   const croppableRef = useRef(null);
   const { setUserData } = useUser();
+  const { theme, setTheme } = useTheme();
+  const isDarkMode = theme === "dark";
 
-  const toggleDarkMode = () => {
-    // console.log(isDarkMode);
-    setIsDarkMode(!isDarkMode);
-  };
+  const toggleDarkMode = () => setTheme(isDarkMode ? "light" : "dark");
 
   const calculateTargetedCalories = (
     weight,
@@ -236,7 +236,7 @@ const ProfileNew = () => {
     <div
       className="flex flex-col justify-between items-center"
       style={{
-        background: " #FFFFFF",
+        background: "var(--bg)",
       }}
     >
       <div className="flex flex-col">
@@ -251,14 +251,15 @@ const ProfileNew = () => {
             top: "10px",
             left: "5px",
             zIndex: 1,
+            color: "var(--edit-button-text)",
           }}
         />
       </div>
       {profileData && (
         <div className="flex flex-col mt-[50px]">
           <div
-            className="h-[115px] w-[385px] bg-white rounded-[10px] border border-1 border-[#E9ECEF] justify-center items-center"
-            style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)" }}
+            className="h-[115px] w-[385px] rounded-[10px] border border-1 border-[#E9ECEF] justify-center items-center"
+            style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)" }}
           >
             <div className="flex">
               <div className="flex flex-col">
@@ -320,7 +321,7 @@ const ProfileNew = () => {
                 ) : (
                   <div className="flex flex-col mt-[5px] ml-[5px]">
                     <div className="flex items-center">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]">
+                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
                         {profileData.name}
                       </span>
                       {userData?.is_pro_user ? (
@@ -329,7 +330,7 @@ const ProfileNew = () => {
                         </div>
                       ) : null}
                     </div>
-                    <span className="text-[#6C757D] font-urbanist text-[13px] mt-[-3px]">
+                    <span className="text-[#6C757D] font-urbanist text-[13px] mt-[-3px]" style={{color: "var(--faded-text)"}}>
                       +91 {profileData.mobile_number}
                     </span>
                   </div>
@@ -347,17 +348,17 @@ const ProfileNew = () => {
                       className="ml-[5px] text-[#2D3436] font-urbanist text-[13px] border border-gray-300 rounded px-1 w-[20px]"
                     />
                   ) : (
-                    <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]">
+                    <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]" style={{color: "var(--general-charcoal-text)"}}>
                       {profileData.age}
                     </span>
                   )}
-                  <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]">
+                  <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]" style={{color: "var(--general-charcoal-text)"}}>
                     {" "}
                     years
                   </span>
 
                   <ProfileBicep className="h-[20px] w-[20px] ml-[10px]" />
-                  <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]">
+                  <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]"  style={{color: "var(--general-charcoal-text)"}}>
                     {profileData.goal}
                   </span>
                 </div>
@@ -374,7 +375,7 @@ const ProfileNew = () => {
                       className="ml-[5px] text-[#2D3436] font-urbanist text-[13px] border border-gray-300 rounded px-1 w-[55px]"
                     />
                   ) : (
-                    <span className="text-[#2D3436] font-urbanist w-[50px] text-[13px] ml-[5px]">
+                    <span className="text-[#2D3436] font-urbanist w-[50px] text-[13px] ml-[5px]" style={{color: "var(--general-charcoal-text)"}}>
                       {profileData.diet_preference}
                     </span>
                   )}
@@ -393,7 +394,7 @@ const ProfileNew = () => {
                       />
                     </>
                   ) : (
-                    <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[px]">
+                    <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[px]" style={{color: "var(--general-charcoal-text)"}}>
                       {userData.trainer_id
                         ? userData.trainer_id
                         : "Trainer's ID"}
@@ -403,14 +404,15 @@ const ProfileNew = () => {
               </div>
               <div className="w-[80px] flex justify-end mt-[10px] ml-[-10px]">
                 {!isEditingProfile ? (
-                  <div className="flex justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]">
+                  <div className="flex justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]" style={{background: "var(--edit-button-bg)", borderColor: "var(--profile-border)"}}>
                     <ProfileEditPen
                       className="h-[15px] w-[15px] ml-[px]"
-                      style={{ color: "#6C757D" }}
+                      style={{ color: "var(--edit-button-text)" }}
                     />
                     <button
                       onClick={() => setIsEditingProfile(true)}
                       className="z-1 h-full ml-[2px] justify-center items-center text-[#6C757D] font-urbanist font-bold text-[12px]"
+                      style={{ color: "var(--edit-button-text)" }}
                     >
                       {isEditingProfile ? "Done" : "Edit"}
                     </button>
@@ -441,40 +443,40 @@ const ProfileNew = () => {
           <div>
             <div
               className="w-[385px] h-[160px] rounded-[10px] border border-1 border-[#E9ECEF] mt-[10px]"
-              style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)" }}
+              style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)" }}
             >
               <div className="flex items-center">
                 <ProfileStatistics className="h-[27px] w-[27px] ml-[10px] mt-[5px]" />
-                <span className="text-[#2D3436] font-urbanist text-[24px] ml-[10px] mt-[3px]">
+                <span className="text-[#2D3436] font-urbanist text-[24px] ml-[10px] mt-[3px]" style={{color: "var(--general-charcoal-text)"}}>
                   Statistics
                 </span>
               </div>
-              <div className="w-full h-[1px] bg-[#F1F3F5]"></div>
+              <div className="w-full h-[1px] bg-[#F1F3F5]" style={{ background: "var(--profile-divider)" }}></div>
               <div className="flex">
                 <div className="flex flex-col">
                   <div className="flex flex-col mt-[8px] ml-[15px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
                       Calories
                     </span>
                     <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]">
+                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
                         {calculatedCalories.toFixed(0)}
                       </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]">
+                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
                         {" "}
                         kcal
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col mt-[8px] ml-[15px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
                       Protein
                     </span>
                     <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]">
+                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
                         {((calculatedCalories * 0.15) / 4).toFixed(0)}
                       </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]">
+                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
                         gm
                       </span>
                     </div>
@@ -482,28 +484,28 @@ const ProfileNew = () => {
                 </div>
                 <div className="flex flex-col ml-[70px]">
                   <div className="flex flex-col mt-[8px] ml-[10px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
                       Weight
                     </span>
                     <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]">
+                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
                         {profileData.weight}
                       </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]">
+                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
                         {" "}
                         kg
                       </span>
                     </div>
                   </div>
                   <div className="flex flex-col mt-[8px] ml-[10px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
                       Height
                     </span>
                     <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]">
+                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
                         {profileData.height}
                       </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]">
+                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
                         {" "}
                         cm
                       </span>
@@ -514,18 +516,19 @@ const ProfileNew = () => {
             </div>
             <div className="flex flex-col">
               <div className="flex items-center justify-between">
-                <span className="text-[#2D3436] font-urbanist text-[22px] ml-[20px] mt-[9px]">
+                <span className="text-[#2D3436] font-urbanist text-[22px] ml-[20px] mt-[9px]" style={{color: "var(--general-charcoal-text)"}}>
                   My Goals
                 </span>
                 {!isEditingProfile2 ? (
-                  <div className="flex mr-[10px] mt-[14px] justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]">
+                  <div className="flex mr-[10px] mt-[14px] justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]" style={{background: "var(--edit-button-bg)", borderColor: "var(--profile-border)"}}>
                     <ProfileEditPen
                       className="h-[15px] w-[15px] ml-[px]"
-                      style={{ color: "#6C757D" }}
+                      style={{ color: "var(--edit-button-text)" }}
                     />
                     <button
                       onClick={() => setIsEditingProfile2(true)}
                       className="z-1 h-full ml-[2px] justify-center items-center text-[#6C757D] font-urbanist font-bold text-[12px] mt-[-2px]"
+                      style={{ color: "var(--edit-button-text)" }}
                     >
                       {isEditingProfile2 ? "Done" : "Edit"}
                     </button>
@@ -553,39 +556,39 @@ const ProfileNew = () => {
               </div>
               <div className="flex justify-start items-center mt-[5px] ml-[25px]">
                 <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]">
+                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
                   {" "}
                   Nutrition:{" "}
                 </span>
                 {profileData.targeted_weight > profileData.weight ? (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                     High Protein
                   </span>
                 ) : (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                     Low Carbs
                   </span>
                 )}
               </div>
               <div className="flex justify-start items-center mt-[5px] ml-[25px]">
                 <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]">
+                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
                   {" "}
                   Goal:{" "}
                 </span>
                 {profileData.targeted_weight > profileData.weight ? (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                     Build Muscle
                   </span>
                 ) : (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                     Weight Loss
                   </span>
                 )}
               </div>
               <div className="flex justify-start items-center mt-[5px] ml-[25px]">
                 <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]">
+                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
                   {" "}
                   Weight:{" "}
                 </span>
@@ -599,41 +602,41 @@ const ProfileNew = () => {
                     className="ml-[4px] text-[#2D3436] font-urbanist font-regular text-[15px] border border-gray-300 rounded px-1 w-[30px]"
                   />
                 ) : (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                     {" "}
                     {profileData.targeted_weight}{" "}
                   </span>
                 )}
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                   {" "}
                   kg{" "}
                 </span>
               </div>
               <div className="flex justify-start items-center mt-[5px] ml-[25px]">
                 <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]">
+                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
                   {" "}
                   Calories:{" "}
                 </span>
 
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                   {" "}
                   {targetedCalories}{" "}
                 </span>
 
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                   {" "}
                   kcal{" "}
                 </span>
               </div>
               <div className="flex justify-start items-center mt-[5px] ml-[25px]">
                 <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]">
+                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
                   {" "}
                   steps:{" "}
                 </span>
 
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]">
+                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
                   {" "}
                   5000{" "}
                 </span>
@@ -647,19 +650,19 @@ const ProfileNew = () => {
                 <div className="flex items-start">
                   <ProfileQna
                     className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "#6C757D" }}
+                    style={{ color: "var(--profile-sub-section-desc)" }}
                   />
                   <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px]">
+                    <span className="text-[#2D3436] font-urbanist text-[20px]" style={{color: "var(--profile-sub-section)"}}>
                       Q&A
                     </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px] mt-[-4px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px] mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
                       Ask your daily questions
                     </span>
                   </div>
                 </div>
                 <BackArrow
-                  style={{ transform: "rotate(180deg)", color: "#6C757D" }}
+                  style={{ transform: "rotate(180deg)", color: "var(--edit-button-text)" }}
                 />
               </div>
               <div className="flex justify-center mt-[10px]">
@@ -673,19 +676,19 @@ const ProfileNew = () => {
                 <div className="flex items-start">
                   <ProfileMeeting
                     className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "#6C757D" }}
+                    style={{ color: "var(--profile-sub-section-desc)" }}
                   />
                   <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px]">
+                    <span className="text-[#2D3436] font-urbanist text-[20px]" style={{color: "var(--profile-sub-section)"}}>
                       Meeting with Trainer
                     </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px] mt-[-4px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px] mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
                       Voice/video call
                     </span>
                   </div>
                 </div>
                 <BackArrow
-                  style={{ transform: "rotate(180deg)", color: "#6C757D" }}
+                  style={{ transform: "rotate(180deg)", color: "var(--edit-button-text)" }}
                 />
               </div>
 
@@ -697,13 +700,13 @@ const ProfileNew = () => {
                 <div className="flex items-start">
                   <ProfileDarkMode
                     className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "#6C757D" }}
+                    style={{ color: "var(--profile-sub-section-desc)" }}
                   />
                   <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px] ">
+                    <span className="text-[#2D3436] font-urbanist text-[20px] " style={{color: "var(--profile-sub-section)"}}>
                       Dark Mode
                     </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px]  mt-[-4px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px]  mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
                       Theme Preferences
                     </span>
                   </div>
@@ -722,19 +725,19 @@ const ProfileNew = () => {
                 <div className="flex items-start">
                   <ProfileUpload
                     className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "#6C757D" }}
+                    style={{ color: "var(--profile-sub-section-desc)" }}
                   />
                   <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px] ">
+                    <span className="text-[#2D3436] font-urbanist text-[20px] " style={{color: "var(--profile-sub-section)"}}>
                       Upload Images
                     </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px]  mt-[-4px]">
+                    <span className="text-[#6C757D] font-urbanist text-[15px]  mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
                       Current Progress
                     </span>
                   </div>
                 </div>
                 <BackArrow
-                  style={{ transform: "rotate(180deg)", color: "#6C757D" }}
+                  style={{ transform: "rotate(180deg)", color: "var(--edit-button-text)" }}
                 />
               </div>
             </div>

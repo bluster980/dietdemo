@@ -219,3 +219,67 @@ html {
   from { transform: translateX(-20px); opacity: 0.001; }
   to   { transform: translateX(0);     opacity: 1; }
 }
+
+
+/* theme.css */
+:root {
+  /* Core */
+  --bg: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #F8F9FA;
+  --text: #2D3436;
+  --text-2: #6C757D;
+  --border: #E9ECEF;
+  --divider: #F1F3F5;
+  --overlay-strong: rgba(0,0,0,0.07);
+  --profile-sub-section: #2D3436; 
+  --profile-sub-section-desc: #6C757D;
+  --goal-list-title: #6C757D;
+  --goal-list-desc: #2D3436;
+  --general-charcoal-text: #2D3436;
+  --faded-text: #6C757D;
+  --profile-border: #E9ECEF;
+  --profile-divider: #F1F3F5;
+  --edit-button-bg: #F8F9FA;
+  --edit-button-text: #6C757D;
+
+  /* Accent */
+  --accent: #12B886;           /* teal */
+  --accent-strong: #0B7285;    /* deep teal */
+  --danger: #FF7675;
+
+  /* Controls */
+  --chip-bg: #E6FCF5;
+  --chip-border: #C3FAE8;
+  --chip-text: #0B7285;
+}
+
+/* AMOLED dark */
+.theme-dark {
+  --bg: #000000;                         /* viewport */
+  --surface: rgba(255,255,255,0.04);     /* cards */
+  --surface-2: rgba(255,255,255,0.06);   /* subtle elevated */
+  --text: rgba(255,255,255,0.87);
+  --text-2: rgba(255,255,255,0.65);
+  --border: rgba(255,255,255,0.08);
+  --divider: rgba(255,255,255,0.08);
+  --overlay-strong: rgba(0,0,0,0.0);     /* usually unused on dark */
+  --profile-sub-section: #FFFFFF; 
+  --profile-sub-section-desc: #D2D2D4;
+  --goal-list-title: #D2D2D4;
+  --goal-list-desc: #FFFFFF;
+  --general-charcoal-text: #FFFFFF;
+  --faded-text: #D2D2D4;
+  --profile-border: #333133;
+  --profile-divider: #333133;
+  --edit-button-bg: #222323;
+  --edit-button-text: #BEBAB9;
+
+  --accent: #12D8A1;                     /* lift for contrast on black */
+  --accent-strong: #2EE6B8;
+  --danger: #FF6B6B;
+
+  --chip-bg: rgba(18, 216, 161, 0.16);
+  --chip-border: rgba(46, 230, 184, 0.36);
+  --chip-text: #2EE6B8;
+}
