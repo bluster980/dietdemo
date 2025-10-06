@@ -242,6 +242,7 @@ html {
   --profile-divider: #F1F3F5;
   --edit-button-bg: #F8F9FA;
   --edit-button-text: #6C757D;
+  --profile-section-card-bg: transparent;
 
   /* Accent */
   --accent: #12B886;           /* teal */
@@ -274,6 +275,7 @@ html {
   --profile-divider: #333133;
   --edit-button-bg: #222323;
   --edit-button-text: #BEBAB9;
+  --profile-section-card-bg: #1A1A1A;
 
   --accent: #12D8A1;                     /* lift for contrast on black */
   --accent-strong: #2EE6B8;

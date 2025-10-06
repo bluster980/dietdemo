@@ -259,7 +259,7 @@ const ProfileNew = () => {
         <div className="flex flex-col mt-[50px]">
           <div
             className="h-[115px] w-[385px] rounded-[10px] border border-1 border-[#E9ECEF] justify-center items-center"
-            style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)" }}
+            style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)", backgroundColor: "var(--profile-section-card-bg)" }}
           >
             <div className="flex">
               <div className="flex flex-col">
@@ -443,7 +443,7 @@ const ProfileNew = () => {
           <div>
             <div
               className="w-[385px] h-[160px] rounded-[10px] border border-1 border-[#E9ECEF] mt-[10px]"
-              style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)" }}
+              style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)", backgroundColor: "var(--profile-section-card-bg)" }}
             >
               <div className="flex items-center">
                 <ProfileStatistics className="h-[27px] w-[27px] ml-[10px] mt-[5px]" />
@@ -666,7 +666,7 @@ const ProfileNew = () => {
                 />
               </div>
               <div className="flex justify-center mt-[10px]">
-                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]"></div>
+                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]" style={{color: "var(--profile-divider)"}}></div>
               </div>
 
               <div
@@ -693,7 +693,7 @@ const ProfileNew = () => {
               </div>
 
               <div className="flex justify-center mt-[10px]">
-                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]"></div>
+                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]" style={{color: "var(--profile-divider)"}}></div>
               </div>
 
               <div className="flex justify-between items-center mt-[9px] px-[10px]">
@@ -715,7 +715,7 @@ const ProfileNew = () => {
               </div>
 
               <div className="flex justify-center mt-[10px]">
-                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]"></div>
+                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]" style={{color: "var(--profile-divider)"}}></div>
               </div>
 
               <div
