@@ -15,7 +15,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import Notification from "./Notification";
 import Fire from "../assets/fire.json";
 import Lottie from "lottie-react";
-import CurrentTime from "../components/CurrentTime"; 
+import CurrentTime from "../components/CurrentTime";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence, color } from "framer-motion";
 Chart.register(ChartDataLabels);
@@ -164,19 +164,20 @@ const DiaryNew = () => {
           background: "#FFFFFF",
         }}
       >
-        <div className="flex justify-between items-end">
+        <div className="flex justify-center items-center h-[55px] w-full mt-[2vh]" style={{paddingLeft: "var(--padding)", paddingRight: "var(--padding)"}}>
           <h1
-            className="text-[#2D3436] font-semibold font-urbanist text-[28px] mt-[30px]"
+            className="flex justify-center items-center text-[#2D3436] font-semibold font-urbanist text-[28px]"
             style={{
               lineHeight: "1",
-              textAlign: "left",
-              width: "325px",
+              // paddingLeft: "var(--card-pad)",
+              width: "86%",
+              fontSize: "var(--fs-title)",
             }}
           >
             Hello, Champ! Complete your daily nutrition
           </h1>
           <div
-            className="mb-[10px] mr-[-5px] flex justify-center items-center w-[51px] h-[51px] rounded-[50%] border border-[#E9ECEF] bg-white"
+            className=" flex justify-center items-center w-[14%] h-full rounded-full border border-[#E9ECEF] bg-white"
             style={{ boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)" }}
             onClick={handleNotification}
           >
@@ -194,16 +195,32 @@ const DiaryNew = () => {
           </motion.div>
         )}
         <div>
-          <div className="items-center mt-[14px]">
-            <div
+          <section
+            className="card w-full border bg-white border-[#E9ECEF] mt-[10px]"
+            style={{
+              // borderColor: "var(--border)",
+              // background: "var(--surface)",
+              borderRadius: "var(--card-radius)",
+              padding: "var(--card-pad)",
+              boxShadow: "0px 4px 14px var(--overlay-strong)",
+              minHeight: "var(--food-height)",
+              //scale to 0.9
+              transform: `scale(var(--resolution))`,
+            }}
+          >
+            <div className="items-center mt-[px]">
+              {/* <div
               className="border bg-white border-[#E9ECEF] border-[1px] rounded-[23px] w-[384px] h-[391px]"
               style={{ boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.08)" }}
-            >
-              <div className="flex justify-between mt-[5px] ml-[15px]">
-                <span className="text-[#2D3436] font-urbanist text-[22px]">
+            > */}
+              <div className="flex justify-between mt-[px] ml-[5px]">
+                <span
+                  className="text-[#2D3436] font-urbanist text-[22px]"
+                  style={{ fontSize: "var(--fs-h2)" }}
+                >
                   Food Log Calories
                 </span>
-                <div className="flex justify-center items-center gap-x-[3px] mr-[15px]">
+                <div className="flex justify-center items-center gap-x-[3px] mr-[5px]">
                   <Lottie
                     animationData={Fire}
                     autoplay={true}
@@ -225,18 +242,24 @@ const DiaryNew = () => {
                     Kcal Remaining
                   </span>
                 </p>
-                <div className="flex ml-[10px] gap-x-[20px]">
+                <div className="flex justify-between ml-[0px] gap-x-[20px]">
                   <div className="flex">
                     <Homeproteinbar className="h-[55px] w-[55px]" />
                     <div className="flex flex-col items-start ml-[10px]">
-                      <span className="text-[#6C757D] font-urbanist text-[15px]">
+                      <span
+                        className="text-[#6C757D] font-urbanist text-[15px]"
+                        style={{ fontSize: "var(--fs-body)" }}
+                      >
                         Protein
                       </span>
                       <div className="flex items-baseline">
                         <span className="text-[#2D3436] font-urbanist font-semibold text-[17px]">
                           {((calculatedCalories * 0.15) / 4).toFixed(0)}
                         </span>
-                        <span className="text-[#6C757D] font-urbanist font-semibold text-[14px] ml-[2px]">
+                        <span
+                          className="text-[#6C757D] font-urbanist font-semibold text-[14px] ml-[2px]"
+                          style={{ fontSize: "var(--fs-small)" }}
+                        >
                           g
                         </span>
                       </div>
@@ -245,14 +268,20 @@ const DiaryNew = () => {
                   <div className="flex">
                     <Homecarbsbar className="h-[55px] w-[55px] " />
                     <div className="flex flex-col items-start ml-[10px]">
-                      <span className="text-[#6C757D] font-urbanist text-[15px]">
+                      <span
+                        className="text-[#6C757D] font-urbanist text-[15px]"
+                        style={{ fontSize: "var(--fs-body)" }}
+                      >
                         Carbs
                       </span>
                       <div className="flex items-baseline">
                         <span className="text-[#2D3436] font-urbanist font-semibold text-[17px]">
                           {((calculatedCalories * 0.6) / 4).toFixed(0)}
                         </span>
-                        <span className="text-[#6C757D] font-urbanist font-semibold text-[14px] ml-[2px]">
+                        <span
+                          className="text-[#6C757D] font-urbanist font-semibold text-[14px] ml-[2px]"
+                          style={{ fontSize: "var(--fs-small)" }}
+                        >
                           g
                         </span>
                       </div>
@@ -261,7 +290,10 @@ const DiaryNew = () => {
                   <div className="flex">
                     <Homefatbar className="h-[55px] w-[55px] " />
                     <div className="flex flex-col items-start ml-[10px]">
-                      <span className="text-[#6C757D] font-urbanist text-[15px]">
+                      <span
+                        className="text-[#6C757D] font-urbanist text-[15px]"
+                        style={{ fontSize: "var(--fs-body)" }}
+                      >
                         Fat
                       </span>
                       <div className="flex items-baseline">
@@ -273,7 +305,10 @@ const DiaryNew = () => {
                             9
                           ).toFixed(0)}
                         </span>
-                        <span className="text-[#6C757D] font-urbanist font-semibold text-[14px] ml-[2px]">
+                        <span
+                          className="text-[#6C757D] font-urbanist font-semibold text-[14px] ml-[2px]"
+                          style={{ fontSize: "var(--fs-small)" }}
+                        >
                           g
                         </span>
                       </div>
@@ -281,14 +316,30 @@ const DiaryNew = () => {
                   </div>
                 </div>
               </div>
+              {/* </div> */}
             </div>
-          </div>
-          <div
-            className="border border-[#E9ECEF] border-[1px] rounded-[23px] w-[384px] h-[262px] mt-[8px]"
-            style={{ boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.08)" }}
+          </section>
+          <section
+            className="card w-full border border-[#E9ECEF] mt-[5px]"
+            style={{
+              borderRadius: "var(--card-radius)",
+              // padding: "var(--card-pad)",
+              paddingRight: "var(--card-pad)",
+              paddingLeft: "var(--card-pad)",
+              paddingTop: "var(--card-pad)",
+              boxShadow: "0px 4px 14px var(--overlay-strong)",
+              transform: `scale(var(--resolution))`,
+            }}
           >
-            <h1 className="mt-[5px] ml-[15px]">
-              <span className="text-[#2D3436] font-urbanist text-[22px]">
+            {/* <div
+              className="border border-[#E9ECEF] border-[1px] rounded-[23px] w-[384px] h-[262px] mt-[8px]"
+              style={{ boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.08)" }}
+            > */}
+            <h1 className="mt-[px] ml-[5px]">
+              <span
+                className="text-[#2D3436] font-urbanist text-[22px]"
+                style={{ fontSize: "var(--fs-h2)" }}
+              >
                 Weight in kg
               </span>
             </h1>
@@ -296,7 +347,8 @@ const DiaryNew = () => {
             <div className="flex justify-center mt-[10px] scroll-smooth-x">
               <DemoCharts labels={labels} dataPoints={data} />
             </div>
-          </div>
+            {/* </div> */}
+          </section>
         </div>
         <BottomSheet
           isOpen={isFabOpen}
