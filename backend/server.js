@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
 
 app.get('/health', (req, res) => {
   res.send('Health is okay');
-  console.log('Health is okay');
 });
 
 app.post('/encode', encodeImage);
