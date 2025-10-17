@@ -18,6 +18,13 @@ export default function ThemeProvider({ children }) {
     if (theme === "dark") root.classList.add("theme-dark");
     else root.classList.remove("theme-dark");
     localStorage.setItem("theme", theme);
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    const lightColor = "#ffffff";
+    const darkColor = "#0d0d0d";
+
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute("content", theme === "dark" ? darkColor : lightColor);
+    }
   }, [theme]);
 
   // sync with OS changes if user never explicitly chose
