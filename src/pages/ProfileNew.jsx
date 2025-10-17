@@ -50,6 +50,17 @@ const ProfileNew = () => {
 
   const toggleDarkMode = () => setTheme(isDarkMode ? "light" : "dark");
 
+  useEffect(() => {
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+  const lightColor = '#FFFFFF';
+  const darkColor = '#0D0D0D'; // Match your CSS dark background
+  const color = isDarkMode ? darkColor : lightColor;
+  
+  if (metaThemeColor) {
+    metaThemeColor.setAttribute('content', color);
+  }
+}, [isDarkMode]);
+
   const calculateTargetedCalories = (
     weight,
     height,
