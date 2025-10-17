@@ -1,0 +1,236 @@
+/* ========================================
+   CONFIRM DIALOG RESPONSIVE STYLES
+   ======================================== */
+
+/* ========================================
+   1) CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Dialog dimensions */
+  --confirm-width: 72%;
+  --confirm-height: 90px;
+  --confirm-radius: 8px;
+  --confirm-padding: 10px;
+  
+  /* Typography */
+  --confirm-title-size: 14px;
+  --confirm-subtitle-size: 10px;
+  
+  /* Buttons */
+  --confirm-btn-height: 75%;
+  --confirm-btn-width: 20%;
+  --confirm-btn-radius: 5px;
+  --confirm-btn-font-size: 12px;
+  --confirm-btn-gap: 4px;
+  
+  /* Colors */
+  --confirm-bg: #FFFFFF;
+  --confirm-overlay: rgba(0, 0, 0, 0.5);
+  --confirm-text: #2D3436;
+  --confirm-text-muted: #777474;
+  --confirm-cancel-border: #d1d1d1;
+  --confirm-cancel-text: #6C757D;
+  --confirm-confirm-border: #FFC2BE;
+  --confirm-confirm-text: #FF6F7A;
+}
+
+/* ========================================
+   2) MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --confirm-width: 78%;
+    --confirm-height: 80px;
+    --confirm-radius: 7px;
+    --confirm-padding: 8px;
+    
+    --confirm-title-size: 12px;
+    --confirm-subtitle-size: 9px;
+    
+    --confirm-btn-height: 72%;
+    --confirm-btn-width: 22%;
+    --confirm-btn-radius: 4px;
+    --confirm-btn-font-size: 10px;
+    --confirm-btn-gap: 3px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --confirm-width: 75%;
+    --confirm-height: 85px;
+    
+    --confirm-title-size: 13px;
+    --confirm-subtitle-size: 9.5px;
+    
+    --confirm-btn-height: 73%;
+    --confirm-btn-width: 21%;
+    --confirm-btn-font-size: 11px;
+  }
+}
+
+/* Standard phones (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --confirm-width: 72%;
+    --confirm-height: 88px;
+    
+    --confirm-title-size: 13.5px;
+    --confirm-subtitle-size: 10px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --confirm-width: 70%;
+    --confirm-height: 94px;
+    --confirm-radius: 9px;
+    --confirm-padding: 11px;
+    
+    --confirm-title-size: 15px;
+    --confirm-subtitle-size: 11px;
+    
+    --confirm-btn-height: 76%;
+    --confirm-btn-width: 19%;
+    --confirm-btn-radius: 6px;
+    --confirm-btn-font-size: 13px;
+    --confirm-btn-gap: 5px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --confirm-width: 68%;
+    --confirm-height: 98px;
+    --confirm-radius: 10px;
+    --confirm-padding: 12px;
+    
+    --confirm-title-size: 16px;
+    --confirm-subtitle-size: 11.5px;
+    
+    --confirm-btn-height: 78%;
+    --confirm-btn-width: 18%;
+    --confirm-btn-radius: 6px;
+    --confirm-btn-font-size: 14px;
+    --confirm-btn-gap: 5px;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --confirm-width: 80%;
+    --confirm-height: 75px;
+    --confirm-radius: 6px;
+    --confirm-padding: 7px;
+    
+    --confirm-title-size: 11px;
+    --confirm-subtitle-size: 8px;
+    
+    --confirm-btn-height: 70%;
+    --confirm-btn-width: 24%;
+    --confirm-btn-radius: 4px;
+    --confirm-btn-font-size: 9px;
+    --confirm-btn-gap: 3px;
+  }
+}
+
+/* ========================================
+   3) CONFIRM DIALOG LAYOUT
+   ======================================== */
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--confirm-overlay);
+  z-index: 50;
+}
+
+.confirm-dialog {
+  display: flex;
+  flex-direction: column;
+  background: var(--confirm-bg);
+  width: var(--confirm-width);
+  height: var(--confirm-height);
+  border-radius: var(--confirm-radius);
+  font-family: urbanist, sans-serif;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   4) CONTENT AREA
+   ======================================== */
+
+.confirm-content {
+  flex: 1;
+  padding: var(--confirm-padding) var(--confirm-padding) 0;
+}
+
+.confirm-title {
+  font-size: var(--confirm-title-size);
+  font-weight: 600;
+  color: var(--confirm-text);
+  margin: 0 0 4px 0;
+}
+
+.confirm-subtitle {
+  font-size: var(--confirm-subtitle-size);
+  color: var(--confirm-text-muted);
+  margin: 0;
+}
+
+/* ========================================
+   5) ACTION BUTTONS
+   ======================================== */
+
+.confirm-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--confirm-btn-gap);
+  height: 30px;
+  padding: 0 var(--confirm-padding) var(--confirm-padding);
+  margin-top: 3px;
+}
+
+.confirm-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--confirm-btn-height);
+  width: var(--confirm-btn-width);
+  border-radius: var(--confirm-btn-radius);
+  font-family: urbanist, sans-serif;
+  font-size: var(--confirm-btn-font-size);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+  border: 1px solid;
+  background: transparent;
+}
+
+.confirm-btn:active {
+  transform: scale(0.95);
+}
+
+.confirm-btn-cancel {
+  border-color: var(--confirm-cancel-border);
+  color: var(--confirm-cancel-text);
+}
+
+.confirm-btn-confirm {
+  border-color: var(--confirm-confirm-border);
+  color: var(--confirm-confirm-text);
+}
+
+.confirm-btn:hover {
+  opacity: 0.85;
+}

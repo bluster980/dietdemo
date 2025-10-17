@@ -27,6 +27,7 @@ import {
 } from "../utils/supabaseQueries";
 // import { Alert } from '@mui/material';
 import toast from "react-hot-toast";
+import "../styles/profileresponsive.css";
 
 const ProfileNew = () => {
   const navigate = useNavigate();
@@ -233,61 +234,43 @@ const ProfileNew = () => {
   }
 
   return (
-    <div
-      className="flex flex-col justify-between items-center"
-      style={{
-        background: "var(--bg)",
-      }}
-    >
-      <div className="flex flex-col">
-        <BackArrow
-          alt="back arrow"
-          onClick={() => navigate(-1)}
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            display: "flex",
-            top: "10px",
-            left: "5px",
-            zIndex: 1,
-            color: "var(--edit-button-text)",
-          }}
-        />
-      </div>
+  <div className="profile-viewport">
+    <main className="profile-page">
+      {/* Back Arrow */}
+      <button 
+        className="profile-back-btn" 
+        onClick={() => navigate(-1)}
+        aria-label="Go back"
+      >
+        <BackArrow className="profile-back-icon" />
+      </button>
+
       {profileData && (
-        <div className="flex flex-col mt-[50px]">
-          <div
-            className="h-[115px] w-[385px] rounded-[10px] border border-1 border-[#E9ECEF] justify-center items-center"
-            style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)", backgroundColor: "var(--profile-section-card-bg)" }}
-          >
-            <div className="flex">
-              <div className="flex flex-col">
-                <div className="relative h-[100px] w-[100px] rounded-full overflow-hidden bg-gray-200 mt-[5px] ml-[5px]">
+        <div className="profile-content">
+          {/* Profile Info Card */}
+          <div className="profile-info-card">
+            <div className="profile-info-layout">
+              {/* Profile Image */}
+              <div className="profile-image-section">
+                <div className="profile-image-container">
                   {profileImage ? (
                     <img
                       src={profileImage}
                       alt="Profile"
-                      className="w-full h-full object-cover rounded rounded-[50%] border border-[#E9ECEF]"
+                      className="profile-image"
                     />
                   ) : (
-                    <div className="flex flex-col items-center justify-center mt-[10px] font-urbanist">
-                      <span className="text-[20px] h-[22px] text-gray-500 inset-0 flex items-center justify-center">
-                        No
-                      </span>
-                      <span className="text-[20px] h-[22px] text-gray-500 inset-0 flex items-center justify-center">
-                        Image
-                      </span>
-                      <span className="text-[20px] h-[22px] text-gray-500 inset-0 flex items-center justify-center">
-                        Selected
-                      </span>
+                    <div className="profile-image-placeholder">
+                      <span>No</span>
+                      <span>Image</span>
+                      <span>Selected</span>
                     </div>
                   )}
 
                   {isEditingProfile && (
                     <div
                       onClick={() => croppableRef.current?.clickTrigger()}
-                      className="absolute text-[22px] inset-0 bg-black bg-opacity-40 flex items-center justify-center font-urbanist font-bold text-[#ffffff] cursor-pointer"
+                      className="profile-image-overlay"
                     >
                       Edit
                     </div>
@@ -297,47 +280,41 @@ const ProfileNew = () => {
                     onCropComplete={handleImageCropped}
                   />
                 </div>
-                {/* {userData?.is_pro_user ? (
-                                <ProBadge className='relative ml-[40px] mt-[-22px] h-[30px] w-[30px]' />
-                            ) : (
-                                <NotProBadge className='relative ml-[40px] mt-[-22px] h-[30px] w-[30px]' />
-                            )} */}
               </div>
-              <div className="flex flex-col w-[200px] min-w-[190px]">
+
+              {/* Profile Details */}
+              <div className="profile-details-section">
                 {isEditingProfile ? (
-                  <div className="flex flex-col w-full">
+                  <div className="profile-name-edit">
                     <input
                       type="text"
                       value={profileData.name}
                       onChange={(e) =>
                         handleProfileChange("name", e.target.value)
                       }
-                      className="text-[#2D3436] mt-[12px] ml-[5px] font-urbanist w-[180px] h-[20px] font-bold text-[20px] border border-gray-300 rounded px-1"
+                      className="profile-name-input"
                     />
-                    <span className="text-[#6C757D] ml-[5px] font-urbanist w-[110px] text-[13px] mt-[2px]">
+                    <span className="profile-mobile">
                       +91 {profileData.mobile_number}
                     </span>
                   </div>
                 ) : (
-                  <div className="flex flex-col mt-[5px] ml-[5px]">
-                    <div className="flex items-center">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
-                        {profileData.name}
-                      </span>
-                      {userData?.is_pro_user ? (
-                        <div className="flex justify-center items-center text-center font-roboto font-semibold text-[#0B7285] text-[12px] w-[35px] h-[18px] bg-[#E6FCF5] border border-[#C3FAE8] rounded-[10px] ml-[5px] mt-[2px]">
-                          <span>PRO</span>
-                        </div>
-                      ) : null}
+                  <div className="profile-name-display">
+                    <div className="profile-name-row">
+                      <span className="profile-name">{profileData.name}</span>
+                      {userData?.is_pro_user && (
+                        <div className="profile-pro-badge">PRO</div>
+                      )}
                     </div>
-                    <span className="text-[#6C757D] font-urbanist text-[13px] mt-[-3px]" style={{color: "var(--faded-text)"}}>
+                    <span className="profile-mobile">
                       +91 {profileData.mobile_number}
                     </span>
                   </div>
                 )}
 
-                <div className="flex ml-[5px] mt-[5px] items-center">
-                  <ProfileCake className="h-[20px] w-[20px]" />
+                {/* Age & Goal Row */}
+                <div className="profile-info-row">
+                  <ProfileCake className="profile-icon" />
                   {isEditingProfile ? (
                     <input
                       type="text"
@@ -345,26 +322,20 @@ const ProfileNew = () => {
                       onChange={(e) =>
                         handleProfileChange("age", e.target.value)
                       }
-                      className="ml-[5px] text-[#2D3436] font-urbanist text-[13px] border border-gray-300 rounded px-1 w-[20px]"
+                      className="profile-age-input"
                     />
                   ) : (
-                    <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]" style={{color: "var(--general-charcoal-text)"}}>
-                      {profileData.age}
-                    </span>
+                    <span className="profile-info-text">{profileData.age}</span>
                   )}
-                  <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]" style={{color: "var(--general-charcoal-text)"}}>
-                    {" "}
-                    years
-                  </span>
+                  <span className="profile-info-text">years</span>
 
-                  <ProfileBicep className="h-[20px] w-[20px] ml-[10px]" />
-                  <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[2px]"  style={{color: "var(--general-charcoal-text)"}}>
-                    {profileData.goal}
-                  </span>
+                  <ProfileBicep className="profile-icon profile-icon-ml" />
+                  <span className="profile-info-text">{profileData.goal}</span>
                 </div>
 
-                <div className="flex mt-[5px] ml-[5px] items-center">
-                  <ProfileDiet className="h-[20px] w-[20px]" />
+                {/* Diet & Trainer Row */}
+                <div className="profile-info-row">
+                  <ProfileDiet className="profile-icon" />
                   {isEditingProfile ? (
                     <input
                       type="text"
@@ -372,29 +343,27 @@ const ProfileNew = () => {
                       onChange={(e) =>
                         handleProfileChange("diet_preference", e.target.value)
                       }
-                      className="ml-[5px] text-[#2D3436] font-urbanist text-[13px] border border-gray-300 rounded px-1 w-[55px]"
+                      className="profile-diet-input"
                     />
                   ) : (
-                    <span className="text-[#2D3436] font-urbanist w-[50px] text-[13px] ml-[5px]" style={{color: "var(--general-charcoal-text)"}}>
+                    <span className="profile-info-text profile-diet-text">
                       {profileData.diet_preference}
                     </span>
                   )}
-                  <TrainerId className="h-[20px] w-[20px] ml-[10px]" />
+                  <TrainerId className="profile-icon profile-icon-ml" />
                   {isEditingProfile && !userData.trainer_id ? (
-                    <>
-                      <input
-                        type="text"
-                        value={tempTrainerId}
-                        maxLength={6}
-                        onChange={(e) =>
-                          setTempTrainerId(e.target.value.toUpperCase())
-                        }
-                        placeholder="JP-180"
-                        className="text-[#2D3436] font-urbanist text-[13px] w-[70px] ml-[5px] mt-[2px] border border-gray-300 rounded px-1"
-                      />
-                    </>
+                    <input
+                      type="text"
+                      value={tempTrainerId}
+                      maxLength={6}
+                      onChange={(e) =>
+                        setTempTrainerId(e.target.value.toUpperCase())
+                      }
+                      placeholder="JP-180"
+                      className="profile-trainer-input"
+                    />
                   ) : (
-                    <span className="text-[#2D3436] font-urbanist text-[13px] ml-[5px] mt-[px]" style={{color: "var(--general-charcoal-text)"}}>
+                    <span className="profile-info-text">
                       {userData.trainer_id
                         ? userData.trainer_id
                         : "Trainer's ID"}
@@ -402,351 +371,209 @@ const ProfileNew = () => {
                   )}
                 </div>
               </div>
-              <div className="w-[80px] flex justify-end mt-[10px] ml-[-10px]">
+
+              {/* Edit Button */}
+              <div className="profile-edit-button-wrapper">
                 {!isEditingProfile ? (
-                  <div className="flex justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]" style={{background: "var(--edit-button-bg)", borderColor: "var(--profile-border)"}}>
-                    <ProfileEditPen
-                      className="h-[15px] w-[15px] ml-[px]"
-                      style={{ color: "var(--edit-button-text)" }}
-                    />
-                    <button
-                      onClick={() => setIsEditingProfile(true)}
-                      className="z-1 h-full ml-[2px] justify-center items-center text-[#6C757D] font-urbanist font-bold text-[12px]"
-                      style={{ color: "var(--edit-button-text)" }}
-                    >
-                      {isEditingProfile ? "Done" : "Edit"}
-                    </button>
-                  </div>
-                ) : (
-                  <div
-                    className="flex justify-center items-center w-[60px] h-[23px] rounded-[11px] bg-[#FF7675]"
-                    style={{
-                      boxShadow: "0px 6px 18px rgba(255, 118, 117, 0.30)",
-                    }}
+                  <button
+                    onClick={() => setIsEditingProfile(true)}
+                    className="profile-edit-button"
                   >
-                    <ProfileEditPen
-                      className="h-[15px] w-[15px] ml-[px]"
-                      style={{ color: "#ffffff" }}
-                    />
-                    <button
-                      onClick={handleDone}
-                      disabled={!userData || !isModified}
-                      className="z-1 h-full ml-[2px] justify-center items-center text-[#ffffff] font-urbanist font-bold text-[12px]"
-                    >
-                      {isEditingProfile ? "Done" : "Edit"}
-                    </button>
-                  </div>
+                    <ProfileEditPen className="profile-edit-icon" />
+                    <span>Edit</span>
+                  </button>
+                ) : (
+                  <button
+                    onClick={handleDone}
+                    disabled={!userData || !isModified}
+                    className="profile-done-button"
+                  >
+                    <ProfileEditPen className="profile-done-icon" />
+                    <span>Done</span>
+                  </button>
                 )}
               </div>
             </div>
           </div>
-          <div>
-            <div
-              className="w-[385px] h-[160px] rounded-[10px] border border-1 border-[#E9ECEF] mt-[10px]"
-              style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.07)", borderColor: "var(--profile-border)", backgroundColor: "var(--profile-section-card-bg)" }}
-            >
-              <div className="flex items-center">
-                <ProfileStatistics className="h-[27px] w-[27px] ml-[10px] mt-[5px]" />
-                <span className="text-[#2D3436] font-urbanist text-[24px] ml-[10px] mt-[3px]" style={{color: "var(--general-charcoal-text)"}}>
-                  Statistics
-                </span>
-              </div>
-              <div className="w-full h-[1px] bg-[#F1F3F5]" style={{ background: "var(--profile-divider)" }}></div>
-              <div className="flex">
-                <div className="flex flex-col">
-                  <div className="flex flex-col mt-[8px] ml-[15px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
-                      Calories
-                    </span>
-                    <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
-                        {calculatedCalories.toFixed(0)}
-                      </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
-                        {" "}
-                        kcal
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col mt-[8px] ml-[15px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
-                      Protein
-                    </span>
-                    <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
-                        {((calculatedCalories * 0.15) / 4).toFixed(0)}
-                      </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
-                        gm
-                      </span>
-                    </div>
-                  </div>
+
+          {/* Statistics Card */}
+          <div className="profile-stats-card">
+            <div className="profile-stats-header">
+              <ProfileStatistics className="profile-stats-icon" />
+              <span className="profile-stats-title">Statistics</span>
+            </div>
+            <div className="profile-stats-divider"></div>
+            <div className="profile-stats-grid">
+              <div className="profile-stat-item">
+                <span className="profile-stat-label">Calories</span>
+                <div className="profile-stat-value-row">
+                  <span className="profile-stat-value">
+                    {calculatedCalories.toFixed(0)}
+                  </span>
+                  <span className="profile-stat-unit">kcal</span>
                 </div>
-                <div className="flex flex-col ml-[70px]">
-                  <div className="flex flex-col mt-[8px] ml-[10px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
-                      Weight
-                    </span>
-                    <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
-                        {profileData.weight}
-                      </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
-                        {" "}
-                        kg
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col mt-[8px] ml-[10px]">
-                    <span className="text-[#6C757D] font-urbanist text-[15px] h-[15px]" style={{color: "var(--faded-text)"}}>
-                      Height
-                    </span>
-                    <div className="flex mt-[5px]">
-                      <span className="text-[#2D3436] font-urbanist font-bold text-[20px]" style={{color: "var(--general-charcoal-text)"}}>
-                        {profileData.height}
-                      </span>
-                      <span className="text-[#6C757D] font-urbanist font-bold text-[20px] ml-[5px]" style={{color: "var(--faded-text)"}}>
-                        {" "}
-                        cm
-                      </span>
-                    </div>
-                  </div>
+              </div>
+              <div className="profile-stat-item">
+                <span className="profile-stat-label">Weight</span>
+                <div className="profile-stat-value-row">
+                  <span className="profile-stat-value">{profileData.weight}</span>
+                  <span className="profile-stat-unit">kg</span>
+                </div>
+              </div>
+              <div className="profile-stat-item">
+                <span className="profile-stat-label">Protein</span>
+                <div className="profile-stat-value-row">
+                  <span className="profile-stat-value">
+                    {((calculatedCalories * 0.15) / 4).toFixed(0)}
+                  </span>
+                  <span className="profile-stat-unit">gm</span>
+                </div>
+              </div>
+              <div className="profile-stat-item">
+                <span className="profile-stat-label">Height</span>
+                <div className="profile-stat-value-row">
+                  <span className="profile-stat-value">{profileData.height}</span>
+                  <span className="profile-stat-unit">cm</span>
                 </div>
               </div>
             </div>
-            <div className="flex flex-col">
-              <div className="flex items-center justify-between">
-                <span className="text-[#2D3436] font-urbanist text-[22px] ml-[20px] mt-[9px]" style={{color: "var(--general-charcoal-text)"}}>
-                  My Goals
+          </div>
+
+          {/* My Goals Section */}
+          <div className="profile-goals-section">
+            <div className="profile-goals-header">
+              <span className="profile-goals-title">My Goals</span>
+              {!isEditingProfile2 ? (
+                <button
+                  onClick={() => setIsEditingProfile2(true)}
+                  className="profile-edit-button"
+                >
+                  <ProfileEditPen className="profile-edit-icon" />
+                  <span>Edit</span>
+                </button>
+              ) : (
+                <button
+                  onClick={handleDone2}
+                  disabled={!userData || !isModified}
+                  className="profile-done-button"
+                >
+                  <ProfileEditPen className="profile-done-icon" />
+                  <span>Done</span>
+                </button>
+              )}
+            </div>
+
+            <div className="profile-goals-list">
+              <div className="profile-goal-item">
+                <div className="profile-goal-dot"></div>
+                <span className="profile-goal-label">Nutrition:</span>
+                <span className="profile-goal-value">
+                  {profileData.targeted_weight > profileData.weight
+                    ? "High Protein"
+                    : "Low Carbs"}
                 </span>
-                {!isEditingProfile2 ? (
-                  <div className="flex mr-[10px] mt-[14px] justify-center items-center w-[50px] h-[23px] rounded-[11px] bg-[#F8F9FA] border border-[#E9ECEF]" style={{background: "var(--edit-button-bg)", borderColor: "var(--profile-border)"}}>
-                    <ProfileEditPen
-                      className="h-[15px] w-[15px] ml-[px]"
-                      style={{ color: "var(--edit-button-text)" }}
-                    />
-                    <button
-                      onClick={() => setIsEditingProfile2(true)}
-                      className="z-1 h-full ml-[2px] justify-center items-center text-[#6C757D] font-urbanist font-bold text-[12px] mt-[-2px]"
-                      style={{ color: "var(--edit-button-text)" }}
-                    >
-                      {isEditingProfile2 ? "Done" : "Edit"}
-                    </button>
-                  </div>
-                ) : (
-                  <div
-                    className="flex mr-[10px] mt-[9px] justify-center items-center w-[60px] h-[23px] rounded-[11px] bg-[#FF7675] "
-                    style={{
-                      boxShadow: "0px 6px 18px rgba(255, 118, 117, 0.30)",
-                    }}
-                  >
-                    <ProfileEditPen
-                      className="h-[15px] w-[15px] ml-[px]"
-                      style={{ color: "#ffffff" }}
-                    />
-                    <button
-                      onClick={handleDone2}
-                      disabled={!userData || !isModified}
-                      className="z-1 h-full ml-[2px] justify-center items-center text-[#ffffff] font-urbanist font-bold text-[12px] mt-[-3px]"
-                    >
-                      {isEditingProfile2 ? "Done" : "Edit"}
-                    </button>
-                  </div>
-                )}
               </div>
-              <div className="flex justify-start items-center mt-[5px] ml-[25px]">
-                <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
-                  {" "}
-                  Nutrition:{" "}
+              <div className="profile-goal-item">
+                <div className="profile-goal-dot"></div>
+                <span className="profile-goal-label">Goal:</span>
+                <span className="profile-goal-value">
+                  {profileData.targeted_weight > profileData.weight
+                    ? "Build Muscle"
+                    : "Weight Loss"}
                 </span>
-                {profileData.targeted_weight > profileData.weight ? (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                    High Protein
-                  </span>
-                ) : (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                    Low Carbs
-                  </span>
-                )}
               </div>
-              <div className="flex justify-start items-center mt-[5px] ml-[25px]">
-                <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
-                  {" "}
-                  Goal:{" "}
-                </span>
-                {profileData.targeted_weight > profileData.weight ? (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                    Build Muscle
-                  </span>
-                ) : (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                    Weight Loss
-                  </span>
-                )}
-              </div>
-              <div className="flex justify-start items-center mt-[5px] ml-[25px]">
-                <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
-                  {" "}
-                  Weight:{" "}
-                </span>
+              <div className="profile-goal-item">
+                <div className="profile-goal-dot"></div>
+                <span className="profile-goal-label">Weight:</span>
                 {isEditingProfile2 ? (
                   <input
-                    type="decimal"
+                    type="text"
                     value={profileData.targeted_weight}
                     onChange={(e) =>
                       handleProfileChange("targeted_weight", e.target.value)
                     }
-                    className="ml-[4px] text-[#2D3436] font-urbanist font-regular text-[15px] border border-gray-300 rounded px-1 w-[30px]"
+                    className="profile-goal-input"
                   />
                 ) : (
-                  <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                    {" "}
-                    {profileData.targeted_weight}{" "}
+                  <span className="profile-goal-value">
+                    {profileData.targeted_weight}
                   </span>
                 )}
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                  {" "}
-                  kg{" "}
-                </span>
+                <span className="profile-goal-value">kg</span>
               </div>
-              <div className="flex justify-start items-center mt-[5px] ml-[25px]">
-                <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
-                  {" "}
-                  Calories:{" "}
-                </span>
-
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                  {" "}
-                  {targetedCalories}{" "}
-                </span>
-
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                  {" "}
-                  kcal{" "}
-                </span>
+              <div className="profile-goal-item">
+                <div className="profile-goal-dot"></div>
+                <span className="profile-goal-label">Calories:</span>
+                <span className="profile-goal-value">{targetedCalories}</span>
+                <span className="profile-goal-value">kcal</span>
               </div>
-              <div className="flex justify-start items-center mt-[5px] ml-[25px]">
-                <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[1px]"></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]" style={{color: "var(--goal-list-title)"}}>
-                  {" "}
-                  steps:{" "}
-                </span>
-
-                <span className="font-urbanist font-regular text-[#2D3436] text-[15px] ml-[4px]" style={{color: "var(--goal-list-desc)"}}>
-                  {" "}
-                  5000{" "}
-                </span>
+              <div className="profile-goal-item">
+                <div className="profile-goal-dot"></div>
+                <span className="profile-goal-label">steps:</span>
+                <span className="profile-goal-value">5000</span>
               </div>
             </div>
-            <div className="flex flex-col">
-              <div
-                className="flex justify-between items-center mt-[9px] px-[10px]"
-                onClick={() => navigate("/profile/qna")}
-              >
-                <div className="flex items-start">
-                  <ProfileQna
-                    className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "var(--profile-sub-section-desc)" }}
-                  />
-                  <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px]" style={{color: "var(--profile-sub-section)"}}>
-                      Q&A
-                    </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px] mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
-                      Ask your daily questions
-                    </span>
-                  </div>
+          </div>
+
+          {/* Menu Items */}
+          <div className="profile-menu-section">
+            <div className="profile-menu-item" onClick={() => navigate("/profile/qna")}>
+              <div className="profile-menu-content">
+                <ProfileQna className="profile-menu-icon" />
+                <div className="profile-menu-text">
+                  <span className="profile-menu-title">Q&A</span>
+                  <span className="profile-menu-subtitle">Ask your daily questions</span>
                 </div>
-                <BackArrow
-                  style={{ transform: "rotate(180deg)", color: "var(--edit-button-text)" }}
-                />
               </div>
-              <div className="flex justify-center mt-[10px]">
-                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]" style={{color: "var(--profile-divider)"}}></div>
-              </div>
+              <BackArrow className="profile-menu-arrow" />
+            </div>
+            <div className="profile-menu-divider"></div>
 
-              <div
-                className="flex justify-between items-center mt-[9px] px-[10px]"
-                onClick={() => navigate("/profile/meeting")}
-              >
-                <div className="flex items-start">
-                  <ProfileMeeting
-                    className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "var(--profile-sub-section-desc)" }}
-                  />
-                  <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px]" style={{color: "var(--profile-sub-section)"}}>
-                      Meeting with Trainer
-                    </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px] mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
-                      Voice/video call
-                    </span>
-                  </div>
+            <div className="profile-menu-item" onClick={() => navigate("/profile/meeting")}>
+              <div className="profile-menu-content">
+                <ProfileMeeting className="profile-menu-icon" />
+                <div className="profile-menu-text">
+                  <span className="profile-menu-title">Meeting with Trainer</span>
+                  <span className="profile-menu-subtitle">Voice/video call</span>
                 </div>
-                <BackArrow
-                  style={{ transform: "rotate(180deg)", color: "var(--edit-button-text)" }}
-                />
               </div>
+              <BackArrow className="profile-menu-arrow" />
+            </div>
+            <div className="profile-menu-divider"></div>
 
-              <div className="flex justify-center mt-[10px]">
-                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]" style={{color: "var(--profile-divider)"}}></div>
-              </div>
-
-              <div className="flex justify-between items-center mt-[9px] px-[10px]">
-                <div className="flex items-start">
-                  <ProfileDarkMode
-                    className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "var(--profile-sub-section-desc)" }}
-                  />
-                  <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px] " style={{color: "var(--profile-sub-section)"}}>
-                      Dark Mode
-                    </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px]  mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
-                      Theme Preferences
-                    </span>
-                  </div>
+            <div className="profile-menu-item">
+              <div className="profile-menu-content">
+                <ProfileDarkMode className="profile-menu-icon" />
+                <div className="profile-menu-text">
+                  <span className="profile-menu-title">Dark Mode</span>
+                  <span className="profile-menu-subtitle">Theme Preferences</span>
                 </div>
-                <ToggleButton isActive={isDarkMode} onToggle={toggleDarkMode} />
               </div>
+              <ToggleButton isActive={isDarkMode} onToggle={toggleDarkMode} />
+            </div>
+            <div className="profile-menu-divider"></div>
 
-              <div className="flex justify-center mt-[10px]">
-                <div className="justify-between items-center h-[1px] w-[365px] bg-[#F1F3F5]" style={{color: "var(--profile-divider)"}}></div>
-              </div>
-
-              <div
-                className="flex justify-between items-center mt-[9px] px-[10px]"
-                onClick={() => navigate("/profile/upload")}
-              >
-                <div className="flex items-start">
-                  <ProfileUpload
-                    className="h-[27px] w-[27px] mt-[10px]"
-                    style={{ color: "var(--profile-sub-section-desc)" }}
-                  />
-                  <div className="flex flex-col ml-[10px]">
-                    <span className="text-[#2D3436] font-urbanist text-[20px] " style={{color: "var(--profile-sub-section)"}}>
-                      Upload Images
-                    </span>
-                    <span className="text-[#6C757D] font-urbanist text-[15px]  mt-[-4px]" style={{color: "var(--profile-sub-section-desc)"}}>
-                      Current Progress
-                    </span>
-                  </div>
+            <div className="profile-menu-item" onClick={() => navigate("/profile/upload")}>
+              <div className="profile-menu-content">
+                <ProfileUpload className="profile-menu-icon" />
+                <div className="profile-menu-text">
+                  <span className="profile-menu-title">Upload Images</span>
+                  <span className="profile-menu-subtitle">Current Progress</span>
                 </div>
-                <BackArrow
-                  style={{ transform: "rotate(180deg)", color: "var(--edit-button-text)" }}
-                />
               </div>
+              <BackArrow className="profile-menu-arrow" />
             </div>
           </div>
         </div>
       )}
-      <NavigationBar activeTab={activeTab} onTabChange={handleTabChange} />
-    </div>
-  );
+
+      {/* Navigation Bar */}
+      <div className="nav-wrap">
+        <NavigationBar activeTab={activeTab} onTabChange={handleTabChange} />
+      </div>
+    </main>
+  </div>
+);
 };
 
 export default ProfileNew;

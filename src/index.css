@@ -269,6 +269,23 @@ html {
   --edit-button-bg: #f8f9fa;
   --edit-button-text: #6c757d;
   --profile-section-card-bg: transparent;
+  --notification-bell: #6c757d;
+  --calorie-ring-mid-circle: #ffffff;
+  --calorie-ring-track: #F1F3F5;
+  --calorie-ring-value: #333333;
+  --macros-unit: #6C757D;
+  --protein-track: #6F4CF6;
+  --carbs-track: #4ECDC4;
+  --fat-track: #FFB600;
+  --chart-start: #4ECDC4;
+  --chart-end: #ffffff;
+  --chart-legend: #2D3436;
+  --navbar-active: #2D3436;
+  --navbar-inactive: #6C757D;
+  --navbar-background: #ffffff;
+  --navbar-shadow: 0px -5px 10px #00000015;
+  --dietcard-bg: #ffffff;
+  
 
   /* Accent */
   --accent: #12b886; /* teal */
@@ -283,7 +300,7 @@ html {
 
 /* AMOLED dark */
 .theme-dark {
-  --bg: #000000; /* viewport */
+  --bg: #0D0D0D; /* viewport */
   --surface: rgba(255, 255, 255, 0.04); /* cards */
   --surface-2: rgba(255, 255, 255, 0.06); /* subtle elevated */
   --text: rgba(255, 255, 255, 0.87);
@@ -295,13 +312,30 @@ html {
   --profile-sub-section-desc: #d2d2d4;
   --goal-list-title: #d2d2d4;
   --goal-list-desc: #ffffff;
-  --general-charcoal-text: #ffffff;
-  --faded-text: #d2d2d4;
-  --profile-border: #101010;
-  --profile-divider: #333133;
-  --edit-button-bg: #222323;
-  --edit-button-text: #bebab9;
-  --profile-section-card-bg: #020202;
+  --general-charcoal-text: #E5E5E7;
+  --faded-text: #98989D;
+  --profile-border: #2C2C2E;
+  --profile-divider: #2C2C2E;
+  --edit-button-bg: #2C2C2E;
+  --edit-button-text: #E5E5E7;
+  --edit-button-border: #3C3C3E;
+  --profile-section-card-bg: #1C1C1E;
+  --notification-bell: #8E8E93;
+  --calorie-ring-mid-circle: #1C1C1E;
+  --calorie-ring-track: #2C2C2E;
+  --calorie-ring-value: #ffffff;
+  --macros-unit: #8E8E93;
+  --protein-track: #9D7FF5;
+  --carbs-track: #5EDDD4;
+  --fat-track: #FFB366;
+  --chart-start: #5EDDD4;
+  --chart-end: #1C1C1E;
+  --chart-legend: #8E8E93;
+  --navbar-active: #ffffff;
+  --navbar-inactive: #8E8E93;
+  --navbar-background: #1C1C1E;
+  --navbar-shadow: transparent;
+  --dietcard-bg: var(--bg)
 
   --accent: #12d8a1; /* lift for contrast on black */
   --accent-strong: #2ee6b8;
@@ -314,23 +348,23 @@ html {
 
 /* design-frame.css */
 /* 1) The viewport spans the device width; center the canvas */
-.df-viewport {
+/* .df-viewport {
   width: 100vw;
   min-height: 100dvh;
   display: flex;
   justify-content: center;
   background: var(--bg);
-}
+} */
 
 /* 2) The canvas holds your existing pixel design */
-.df-canvas {
-  width: 412px; /* M51 reference width */
+/* .df-canvas {
+  width: 412px; 
   max-width: 100%;
-  padding: 0; /* keep your internal paddings */
-}
+  padding: 0; 
+} */
 
 /* 3) Phone-specific “locked” breakpoints adjust a few tokens */
-:root {
+/* :root {
   --fs-title: 28px;
   --fs-h2: 22px;
   --fs-body: 15px;
@@ -343,10 +377,11 @@ html {
   --chart-height: 230px;
   --padding: 18px;
   --scale: 1;
-}
+  --pad-between-cards: 10px;
+} */
 
 /* Small Android (≤360) and iPhone SE class */
-@media (max-width: 360px) {
+/* @media (max-width: 360px) {
   :root {
     --fs-title: 26px;
     --fs-h2: 20px;
@@ -359,10 +394,11 @@ html {
     --chart-height: 200px;
     --padding: 14px;
     --resolution: 0.9;
+    --pad-between-cards: 0px;
   }
-}
+} */
 
-@media (max-width: 384px) and (min-width: 361px) {
+/* @media (max-width: 384px) and (min-width: 361px) {
   :root {
     --fs-title: 25px;
     --fs-h2: 22px;
@@ -375,11 +411,12 @@ html {
     --chart-height: 230px;
     --padding: 15px;
     --resolution: 0.9;
+    --pad-between-cards: 0px;
   }
-}
+} */
 
 /* iPhone 12/13/14/15 = 390px wide */
-@media (max-width: 393px) and (min-width: 385px) {
+/* @media (max-width: 393px) and (min-width: 385px) {
   :root {
     --fs-title: 27px;
     --fs-h2: 21px;
@@ -389,12 +426,13 @@ html {
     --chart-height: 210px;
     --padding: 14px;
     --resolution: 0.95;
+    --pad-between-cards: 0px;
   }
-}
+} */
 
 
 /* Large phones (≥428 iPhone Pro Max) – optional slight up-scale */
-@media (min-width: 428px) {
+/* @media (min-width: 428px) {
   :root {
     --fs-title: 30px;
     --fs-h2: 24px;
@@ -407,5 +445,921 @@ html {
     --chart-height: 250px;
     --padding: 18px;
     --scale: 1.1;
+    --pad-between-cards: 10px;
+  }
+} */
+
+
+/* 1) viewport + canvas (locked 412 base, centered) */
+.df-viewport { width: 100vw; min-height: 100dvh; display: flex; justify-content: center; background: var(--bg, #fff); }
+.df-canvas   { width: 412px; max-width: 100%; }
+.df-canvas-full {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* 2) design tokens tuned for 412px (M51) */
+:root{
+  --page-pad: 18px;
+  --card-pad: 14px;
+  --gap: 12px;
+  --radius-lg: 18px;
+  --radius-sm: 12px;
+  --title: 28px;
+  --h2: 22px;
+  --body: 15px;
+  --small: 13px;
+
+  --text: #2D3436;
+  --text-2: #6C757D;
+  --surface: #ffffff;
+  --border: #E9ECEF;
+  --shadow: 0px 4px 14px rgba(0,0,0,0.08);
+
+  --food-hero-max: 320px;   /* radial max side */
+  --chart-h: 230px;
+  --track: rgba(0,0,0,0.08);
+  --teal: #22C7B8;
+  --orange: #FFB600;
+  --violet: #6F4CF6;
+  --text: #2D3436;
+  --text-2: #6C757D;
+  --hero-max: 320px;   /* tuned per breakpoint */
+  --mini-size: 56px;
+  --mini-stroke: 7px;
+}
+
+/* Phone steps */
+@media (max-width: 366px){
+  :root{
+    --page-pad: 14px;
+    --card-pad: 12px;
+    --title: 24px; /* Smaller title on very small screens */
+    --h2: 18px; 
+    --body: 14px; 
+    --small: 12px;
+    --food-hero-max: 290px; 
+    --chart-h: 200px;
+    --hero-max: 290px; 
+    --mini-size: 48px; 
+    --mini-stroke: 6px;
+  }
+  
+  .topbar {
+    gap: 8px; /* Tighter gap on small screens */
+  }
+}
+
+@media (min-width: 367px) and (max-width: 400px){
+  :root{
+    --page-pad: 14px;
+    --card-pad: 12px;
+    --title: 26px; 
+    --h2: 20px; 
+    --body: 14px; 
+    --small: 12px;
+    --food-hero-max: 310px; 
+    --chart-h: 220px;
+    --hero-max: 310px; 
+    --mini-size: 52px; 
+    --mini-stroke: 6px;
+  }
+}
+
+@media (min-width: 428px){
+  :root{
+    --page-pad: 12px;
+    --card-pad: 16px;
+    --title: 30px; 
+    --h2: 24px; 
+    --body: 16px; 
+    --small: 14px;
+    --food-hero-max: 340px; 
+    --chart-h: 250px;
+    --hero-max: 340px; 
+    --mini-size: 60px; 
+    --mini-stroke: 7px;
+  }
+}
+
+
+/* 3) page layout */
+.page { padding: var(--page-pad); display: flex; flex-direction: column; gap: var(--gap); scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+
+/* Optional: Hide scrollbar for cleaner look */
+.page::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Topbar */
+.topbar { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 12px;
+  margin-bottom: 4px; /* optional spacing adjustment */
+}
+.title { 
+  font-family: urbanist; 
+  color: var(--text); 
+  font-weight: 600; 
+  font-size: var(--title); 
+  line-height: 1.1;
+  
+  /* Critical flex fixes */
+  margin: 0; /* Remove default h1 margin */
+  flex: 1 1 auto; /* Allow shrinking and growing */
+  min-width: 0; /* Allow text to shrink below content size */
+  
+  /* Handle long text */
+  overflow-wrap: break-word; /* Break words if needed */
+  word-wrap: break-word; /* Legacy support */
+  hyphens: auto; /* Add hyphens on break */
+}
+.bell { 
+  /* Responsive button sizing */
+  width: clamp(44px, 12.5vw, 51px); 
+  height: clamp(44px, 12.5vw, 51px);
+  min-width: 44px; /* Prevent too small */
+  min-height: 44px;
+  
+  flex-shrink: 0; /* Never shrink the button */
+  
+  border-radius: 999px; 
+  border: 1px solid var(--border); 
+  background: var(--surface); 
+  box-shadow: var(--shadow); 
+  display: grid; 
+  place-items: center;
+  cursor: pointer; /* Better UX */
+  transition: transform 0.2s ease; /* Optional: subtle interaction */
+}
+
+.bell svg {
+  width: 55%; /* 55% of 51px = ~28px icon */
+  height: 55%;
+  max-width: 28px;
+  max-height: 28px;
+  display: block; /* Remove any inline spacing */
+}
+/* Card */
+.card { container-type: inline-size; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow); padding: var(--card-pad);  }
+.card:has(.chart-wrap) {
+  padding-bottom: calc(var(--card-pad) - 6px); /* Less bottom padding for chart cards */
+}
+.card-head { display: flex; align-items: center; justify-content: space-between; }
+.card-title { color: var(--text); font-size: var(--h2); font-family: var(--font-urbanist, inherit); }
+
+/* Streak */
+.streak { display: flex; align-items: center; gap: 4px; }
+.streak-count { color: #FF6B6B; font-weight: 700; font-size: 20px; }
+
+/* Radial block */
+.calories { color: var(--text); font-weight: 800; font-size: clamp(36px, 10vw, 52px); }
+.kcal { color: var(--text-2); font-size: var(--h2); }
+
+/* Macros row */
+.macros{
+  display:grid;
+  grid-template-columns: repeat(3, var(--macro-colw, 1fr));
+  gap: var(--macro-gap, 12px);
+  margin-top: 10px;
+  align-items:center;
+}
+/* Each macro cell aligns icon + text */
+.macro{ display:flex; align-items:center; gap: clamp(6px, calc(var(--macro-colw, 120px) * 0.06), 14px); }
+.mini-box{ display:grid; place-items:center; } /* width/height come inline from size */
+.macro-info{ display:flex !important; flex-direction:column !important; justify-content:center; align-items:flex-start; gap:2px; }
+.macro-label{ font-size: clamp(12px, calc(var(--macro-colw, 120px) * 0.14), 17px); color: var(--text-2); line-height:1.1; }
+.macro-value{ font-size: clamp(14px, calc(var(--macro-colw, 120px) * 0.18), 21px); color: var(--text); font-weight:700; line-height:1.1; }
+.unit{ font-size: clamp(12px, calc(var(--macro-colw, 120px) * 0.12), 15px); color: var(--text-2); font-weight:600; margin-left:0; }
+
+/* Weight chart */
+.chart-wrap { 
+  margin-top: 10px; 
+  /* height: var(--chart-h);  */
+  width: 100%; /* Ensure full width */
+  position: relative; /* For ResponsiveContainer positioning */
+  display: flex;
+  flex-direction: column;
+}
+/* Overlay + navbar containment */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: grid; place-items: center; z-index: 90; }
+.overlay-inner { width: min(412px, 100%); }
+.nav-wrap {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--workout-bg);
+}
+
+
+@supports not (width:1cqw){
+  .macros{ gap:clamp(10px,2.8vw,14px); }
+  .macro{ column-gap:clamp(8px,2.2vw,12px); }
+  .macro-icon, .mini-meter{ width: clamp(36px, 12vw, 66px); height: clamp(36px, 12vw, 66px); }
+  .macro-label{ font-size: clamp(var(--small), 2.8vw, var(--body)); }
+  .macro-value{ font-size:clamp(14px,3.4vw,19px); }
+  .unit{ font-size:clamp(12px,2.6vw,14px); }
+}
+
+
+/* Hard stop: if the container is too narrow, drop to 2 columns */
+@container (max-width: 300px) {
+  .macros { grid-template-columns: repeat(2, 1fr); }
+}
+@supports not (width: 1cqw) {
+  @media (max-width: 360px) {
+    .macros { grid-template-columns: repeat(2, 1fr); }
+  }
+}
+
+@media (max-width: 332px){
+  .macros{ grid-template-columns: repeat(2, 1fr); }
+}
+/* meters.css additions */
+.hero-wrap{ width:100%; display:grid; place-items:center; }
+.hero-center{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; }
+.hero-num{ font-weight:800; color:var(--text); font-size: clamp(34px, 9cqw, 56px); line-height:1; }
+.hero-sub{ color:var(--text-2); font-size: clamp(15px, 4.2cqw, 22px); line-height:1.05; }
+
+.macro-label, .macro-value{ display:block; white-space:nowrap; }
+
+@media (max-width: 320px) {
+  :root {
+    --title: 18px; /* Even smaller */
+  }
+  
+  .title {
+    font-size: 16px; /* Override if needed */
+  }
+}
+
+
+
+/* Workout*/
+
+:root {
+  /* Workout-specific spacing */
+  --workout-page-pad: 12px;
+  --workout-card-gap: 12px;
+  --workout-back-size: 30px;
+  --workout-back-offset: 10px;
+  
+  /* Card dimensions - responsive width, fixed height */
+  /* --workout-card-max-width: 395px; */
+  --workout-card-height: 160px;
+  --workout-card-radius: 10px;
+  --workout-card-pad-y: 8px;
+  --workout-card-pad-x: 18px;
+  --workout-card-gap-internal: 12px;
+  
+  /* GIF dimensions - percentage based for responsiveness */
+  --workout-gif-size: 150px;
+  --workout-gif-radius: 10px;
+  
+  /* Typography */
+  --workout-title-size: 20px; /* Reduced slightly */
+  --workout-label-size: 15px;
+  --workout-value-size: 15px;
+  --workout-detail-gap: 4px;
+  --workout-title-line-height: 1.2;
+  
+  /* Input */
+  --workout-input-width: 70px;
+  --workout-input-sets-width: 60px;
+  --workout-input-height: 24px;
+  --workout-input-font: 15px;
+  
+  /* Colors (matching existing design) */
+  --workout-bg: #FFFFFF;
+  --workout-text: #2D3436;
+  --workout-text-muted: #6C757D;
+  --workout-border: #E9ECEF;
+  --workout-shadow: 0px 4px 14px rgba(0, 0, 0, 0.08);
+  --workout-add-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+}
+
+.theme-dark {
+  --workout-bg: #0D0D0D;
+}
+
+.workout-page {
+  position: relative;
+  min-height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--workout-bg);
+  padding-bottom: 80px; /* Space for navbar */
+  box-sizing: border-box;
+}
+
+/* Back button */
+.workout-back-btn {
+  position: absolute;
+  top: var(--workout-back-offset);
+  left: 5px;
+  z-index: 10;
+  width: var(--workout-back-size);
+  height: var(--workout-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.workout-back-btn:active {
+  transform: scale(0.95);
+}
+
+.workout-back-icon {
+  width: 100%;
+  height: 100%;
+  color: #000000;
+}
+
+.theme-dark .workout-back-icon {
+  color: var(--faded-text);
+}
+
+/* Date selector wrapper */
+.workout-date-wrap {
+  margin-top: 50px;
+  padding: 0 var(--workout-page-pad);
+}
+
+.workout-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 var(--workout-page-pad);
+  margin-top: 16px;
+  
+  /* Smooth scrolling */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Hide scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.workout-list::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Slide animations container */
+.workout-slides {
+  display: flex;
+  flex-direction: column;
+  gap: var(--workout-card-gap);
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+/* Empty state */
+.workout-empty {
+  text-align: center;
+  color: var(--workout-text-muted);
+  font-size: var(--workout-label-size);
+  margin-top: 24px;
+  font-family: urbanist, sans-serif;
+}
+
+
+.workout-card-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.workout-card {
+  /* CRITICAL: Always horizontal flex, never column */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  
+  width: 100%;
+  /* max-width: var(--workout-card-max-width); */
+  height: var(--workout-card-height);
+  
+  background: var(--workout-bg);
+  border: 1px solid var(--workout-border);
+  border-radius: var(--workout-card-radius);
+  box-shadow: var(--workout-shadow);
+  
+  padding: var(--workout-card-pad-y) var(--workout-card-pad-x);
+  box-sizing: border-box;
+  
+  gap: var(--workout-card-gap-internal);
+  
+  overflow: hidden;
+}
+
+/* Left side - Exercise info */
+.workout-card-info {
+  /* KEY: flex: 1 makes it grow to fill available space (~60%) */
+  flex: 1 1 auto;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--workout-detail-gap);
+  
+  min-width: 0; /* Allow text to shrink if needed */
+  overflow: hidden;
+}
+
+.workout-card-title {
+  color: var(--workout-text);
+  font-family: urbanist, sans-serif;
+  font-weight: 500;
+  font-size: var(--workout-title-size);
+  line-height: 1.3; /* Slightly increased */
+  margin: 0;
+  padding: 0;
+  
+  /* REMOVED LINE CLAMP - Let text wrap naturally */
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  
+  /* Max 3 lines before overflow */
+  max-height: calc(var(--workout-title-size) * 1.3 * 3);
+}
+
+
+.workout-card-detail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  /* white-space: nowrap; */
+}
+
+.workout-label {
+  color: var(--workout-text-muted);
+  font-family: urbanist, sans-serif;
+  font-size: var(--workout-label-size);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.workout-value {
+  color: var(--workout-text);
+  font-family: urbanist, sans-serif;
+  font-size: var(--workout-value-size);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Input fields */
+.workout-input {
+  width: var(--workout-input-width);
+  height: var(--workout-input-height);
+  padding: 0 6px;
+  border-radius: 6px;
+  border: 1px solid var(--workout-border);
+  color: var(--workout-text);
+  font-family: urbanist, sans-serif;
+  font-size: var(--workout-input-font);
+  font-weight: 500;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.workout-input-sets {
+  width: var(--workout-input-sets-width);
+}
+
+.workout-input:focus {
+  border-color: var(--workout-text-muted);
+}
+
+
+.workout-card-media {
+  /* SQUARE dimensions */
+  width: var(--workout-gif-size);
+  height: var(--workout-gif-size);
+  flex-shrink: 0;
+  
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workout-gif {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--workout-gif-radius);
+  
+  /* CRITICAL: Contain (no crop) instead of cover */
+  object-fit: contain;
+  display: block;
+}
+
+.workout-add-btn {
+  position: absolute;
+  top: 3px;
+  right: -5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  background: white;
+  border: none;
+  box-shadow: var(--workout-add-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+.workout-add-btn:active {
+  transform: scale(0.95);
+}
+
+.workout-add-btn svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --workout-page-pad: 10px;
+    --workout-card-gap: 10px;
+    --workout-back-size: 26px;
+    /* --workout-back-offset: 8px; */
+    
+    --workout-card-height: 130px;
+    --workout-card-pad-y: 8px;
+    --workout-card-pad-x: 12px;
+    --workout-card-gap-internal: 8px;
+    
+    --workout-gif-size: 120px;
+    
+    --workout-title-size: 20px;
+    --workout-label-size: 14px;
+    --workout-value-size: 14px;
+    --workout-detail-gap: 1px;
+    
+    --workout-input-width: 50px;
+    --workout-input-sets-width: 40px;
+    --workout-input-height: 20px;
+    --workout-input-font: 12px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --workout-page-pad: 12px;
+    --workout-card-gap: 10px;
+    --workout-back-size: 28px;
+    
+    --workout-card-height: 140px;
+    --workout-card-pad-y: 10px;
+    --workout-card-pad-x: 14px;
+    --workout-card-gap-internal: 10px;
+    
+    --workout-gif-size: 130px;
+    
+    --workout-title-size: 20px;
+    --workout-label-size: 15px;
+    --workout-value-size: 14px;
+    --workout-detail-gap: 1px;
+    
+    --workout-input-width: 55px;
+    --workout-input-sets-width: 45px;
+    --workout-input-height: 22px;
+    --workout-input-font: 13px;
+  }
+}
+
+/* Standard phones (401px - 427px) - Close to base design */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --workout-page-pad: 16px;
+    --workout-card-gap: 10px;
+    
+    --workout-gif-size: 150px;
+    
+    --workout-title-size: 20px;
+    --workout-label-size: 17px;
+    --workout-value-size: 15px;
+  }
+}
+
+/* Large phones (428px+) */
+@media (min-width: 428px) {
+  :root {
+    --workout-page-pad: 14px;
+    --workout-card-gap: 14px;
+    --workout-back-size: 32px;
+    /* --workout-back-offset: 12px; */
+    
+    --workout-card-height: 165px;
+    --workout-card-pad-y: 9px;
+    --workout-card-pad-x: 18px;
+    --workout-card-gap-internal: 11px;
+    
+    --workout-gif-size: 155px;
+    
+    --workout-title-size: 22px;
+    --workout-label-size: 18px;
+    --workout-value-size: 16px;
+    --workout-detail-gap: 2px;
+    
+    --workout-input-width: 70px;
+    --workout-input-sets-width: 60px;
+    --workout-input-height: 26px;
+    --workout-input-font: 15px;
+  }
+}
+
+
+@media (max-width: 320px) {
+  :root {
+    --workout-page-pad: 8px;
+    --workout-card-pad-y: 8px;
+    --workout-card-pad-x: 10px;
+    --workout-card-gap-internal: 6px;
+    --workout-card-height: 120px;
+    
+    --workout-gif-size: 85px;
+    
+    --workout-title-size: 14px;
+    --workout-label-size: 12px;
+    --workout-value-size: 12px;
+    --workout-detail-gap: 2px;
+    
+    --workout-input-width: 45px;
+    --workout-input-sets-width: 38px;
+    --workout-input-height: 18px;
+    --workout-input-font: 11px;
+  }
+  
+  .workout-card-detail {
+    gap: 2px;
+  }
+}
+
+
+
+/* ========================================
+   DAYDATE COMPONENT - RESPONSIVE
+   ======================================== */
+
+:root {
+  /* DayDate dimensions */
+  --daydate-height: 73px;
+  --daydate-radius: 10px;
+  --daydate-indicator-width: 45px;
+  --daydate-indicator-height: 60px;
+  --daydate-indicator-radius: 13px;
+  --daydate-indicator-offset: 6.5px;
+  
+  /* DayDate typography */
+  --daydate-date-size: 20px;
+  --daydate-day-size: 15px;
+  
+  /* DayDate colors */
+  --daydate-bg: #FFFFFF;
+  --daydate-border: #E9ECEF;
+  --daydate-text-active: #2D3436;
+  --daydate-text-inactive: #6C757D;
+  --daydate-indicator-bg: #E6FCF5;
+  --daydate-indicator-border: #4ECDC4;
+  --daydate-text-active-dark: #FFFFFF;
+  --daydate-text-inactive-dark: #98989D;
+  --daydate-indicator-bg-dark: #275552;
+  --daydate-indicator-border-dark: #5EDDD4;
+}
+
+/* Wrapper - full width */
+.daydate-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Container - responsive width */
+.daydate-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  width: 100%;
+  height: var(--daydate-height);
+  
+  background: var(--daydate-bg);
+  border: 1px solid var(--daydate-border);
+  border-radius: var(--daydate-radius);
+  box-shadow: var(--workout-shadow);
+  
+  overflow: hidden;
+}
+
+/* Slots container */
+.daydate-slots {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+/* Individual slot */
+.daydate-slot {
+  flex: 1; /* Equal width distribution */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  padding: 8px 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  
+  font-family: urbanist, sans-serif;
+  font-weight: 700;
+  
+  transition: transform 0.15s ease;
+}
+
+.daydate-slot:active {
+  transform: scale(0.95);
+}
+
+/* Date number */
+.daydate-date {
+  font-family: inter, sans-serif;
+  font-size: var(--daydate-date-size);
+  line-height: 1;
+  margin-top: 5px;
+}
+
+/* Day label */
+.daydate-day {
+  font-size: var(--daydate-day-size);
+  line-height: 1;
+  margin-top: 2px;
+}
+
+/* Active state */
+.daydate-slot-active {
+  color: var(--daydate-text-active);
+}
+
+.daydate-slot-inactive {
+  color: var(--daydate-text-inactive);
+}
+
+.theme-dark .daydate-slot-active {
+  color: var(--daydate-text-active-dark);
+}
+
+.theme-dark .daydate-slot-inactive {
+  color: var(--daydate-text-inactive-dark);
+}
+
+
+
+
+
+/* Animated indicator track */
+.daydate-indicator-track {
+  position: absolute;
+  left: 0;
+  top: var(--daydate-indicator-offset);
+  z-index: 1;
+  
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+  
+  /* Prevent any layout shifts */
+  pointer-events: none;
+}
+
+.daydate-indicator-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.daydate-indicator {
+  width: var(--daydate-indicator-width);
+  height: var(--daydate-indicator-height);
+  background: var(--daydate-indicator-bg);
+  border: 1px solid var(--daydate-indicator-border);
+  border-radius: var(--daydate-indicator-radius);
+}
+
+.theme-dark .daydate-indicator {
+  background: var(--daydate-indicator-bg-dark);
+  border: 1px solid var(--daydate-indicator-border-dark);
+}
+
+/* ========================================
+   DAYDATE RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --daydate-height: 62px;
+    --daydate-radius: 8px;
+    --daydate-indicator-width: 38px;
+    --daydate-indicator-height: 50px;
+    --daydate-indicator-radius: 10px;
+    --daydate-indicator-offset: 6px;
+    
+    --daydate-date-size: 17px;
+    --daydate-day-size: 12px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --daydate-height: 66px;
+    --daydate-indicator-width: 40px;
+    --daydate-indicator-height: 54px;
+    --daydate-indicator-radius: 11px;
+    
+    --daydate-date-size: 18px;
+    --daydate-day-size: 13px;
+  }
+}
+
+/* Standard phones (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --daydate-height: 70px;
+    --daydate-indicator-width: 43px;
+    --daydate-indicator-height: 57px;
+    
+    --daydate-date-size: 19px;
+    --daydate-day-size: 14px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --daydate-height: 75px;
+    --daydate-indicator-width: 46px;
+    --daydate-indicator-height: 62px;
+    
+    --daydate-date-size: 21px;
+    --daydate-day-size: 15px;
+  }
+}
+
+/* Extra large phones/tablets (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --daydate-height: 78px;
+    --daydate-indicator-width: 48px;
+    --daydate-indicator-height: 65px;
+    
+    --daydate-date-size: 22px;
+    --daydate-day-size: 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --daydate-height: 58px;
+    --daydate-radius: 8px;
+    --daydate-indicator-width: 35px;
+    --daydate-indicator-height: 46px;
+    --daydate-indicator-radius: 9px;
+    --daydate-indicator-offset: 5.5px;
+    
+    --daydate-date-size: 16px;
+    --daydate-day-size: 11px;
+  }
+  
+  .daydate-slot {
+    padding: 6px 2px;
   }
 }

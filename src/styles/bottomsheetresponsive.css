@@ -1,0 +1,335 @@
+:root {
+  /* BottomSheet dimensions */
+  --bottomsheet-padding: 24px;
+  --bottomsheet-height: 130px;
+  --bottomsheet-margin-bottom: 100px;
+  --bottomsheet-radius: 15px;
+  
+  /* Icon */
+  --bottomsheet-icon-size: 60px;
+  
+  /* Typography */
+  --bottomsheet-title-size: 28px;
+  --bottomsheet-title-width: 220px;
+  --bottomsheet-label-size: 15px;
+  --bottomsheet-input-size: 22px;
+  
+  /* Input box */
+  --bottomsheet-input-width: 170px;
+  --bottomsheet-input-height: 60px;
+  --bottomsheet-input-radius: 11px;
+  --bottomsheet-input-field-width: 80px;
+  --bottomsheet-input-field-height: 28px;
+  
+  /* Submit button */
+  --bottomsheet-submit-size: 45px;
+  --bottomsheet-submit-radius: 15px;
+  --bottomsheet-arrow-size: 22px;
+  
+  /* Colors */
+  --bottomsheet-bg: #FFFFFF;
+  --bottomsheet-overlay: rgba(0, 0, 0, 0.5);
+  --bottomsheet-text: #2D3436;
+  --bottomsheet-text-dark: #000000;
+  --bottomsheet-text-muted: #6C757D;
+  --bottomsheet-border: #E9ECEF;
+  --bottomsheet-submit-bg: #FF7675;
+  --bottomsheet-shadow: 0px 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* ========================================
+   2) MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --bottomsheet-padding: 16px;
+    --bottomsheet-height: 110px;
+    --bottomsheet-margin-bottom: 70px;
+    --bottomsheet-radius: 12px;
+    
+    --bottomsheet-icon-size: 48px;
+    
+    --bottomsheet-title-size: 21px;
+    --bottomsheet-title-width: 170px;
+    --bottomsheet-label-size: 12px;
+    --bottomsheet-input-size: 18px;
+    
+    --bottomsheet-input-width: 135px;
+    --bottomsheet-input-height: 50px;
+    --bottomsheet-input-radius: 9px;
+    --bottomsheet-input-field-width: 65px;
+    --bottomsheet-input-field-height: 24px;
+    
+    --bottomsheet-submit-size: 38px;
+    --bottomsheet-submit-radius: 12px;
+    --bottomsheet-arrow-size: 18px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --bottomsheet-padding: 20px;
+    --bottomsheet-height: 118px;
+    --bottomsheet-margin-bottom: 80px;
+    
+    --bottomsheet-icon-size: 54px;
+    
+    --bottomsheet-title-size: 24px;
+    --bottomsheet-title-width: 190px;
+    --bottomsheet-label-size: 13px;
+    --bottomsheet-input-size: 19px;
+    
+    --bottomsheet-input-width: 150px;
+    --bottomsheet-input-height: 54px;
+    --bottomsheet-input-field-width: 70px;
+    --bottomsheet-input-field-height: 26px;
+    
+    --bottomsheet-submit-size: 40px;
+    --bottomsheet-submit-radius: 13px;
+    --bottomsheet-arrow-size: 19px;
+  }
+}
+
+/* Standard phones (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --bottomsheet-padding: 22px;
+    --bottomsheet-height: 125px;
+    --bottomsheet-margin-bottom: 90px;
+    
+    --bottomsheet-icon-size: 50px;
+    
+    --bottomsheet-title-size: 28px;
+    --bottomsheet-title-width: 205px;
+    --bottomsheet-label-size: 14px;
+    --bottomsheet-input-size: 20px;
+    
+    --bottomsheet-input-width: 160px;
+    --bottomsheet-input-height: 57px;
+    --bottomsheet-input-field-width: 75px;
+    --bottomsheet-input-field-height: 27px;
+    
+    --bottomsheet-submit-size: 42px;
+    --bottomsheet-submit-radius: 14px;
+    --bottomsheet-arrow-size: 20px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --bottomsheet-padding: 26px;
+    --bottomsheet-height: 135px;
+    --bottomsheet-margin-bottom: 105px;
+    
+    --bottomsheet-icon-size: 64px;
+    
+    --bottomsheet-title-size: 29px;
+    --bottomsheet-title-width: 230px;
+    --bottomsheet-label-size: 16px;
+    --bottomsheet-input-size: 23px;
+    
+    --bottomsheet-input-width: 180px;
+    --bottomsheet-input-height: 63px;
+    --bottomsheet-input-field-width: 85px;
+    --bottomsheet-input-field-height: 29px;
+    
+    --bottomsheet-submit-size: 47px;
+    --bottomsheet-submit-radius: 16px;
+    --bottomsheet-arrow-size: 23px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --bottomsheet-padding: 28px;
+    --bottomsheet-height: 140px;
+    --bottomsheet-margin-bottom: 110px;
+    
+    --bottomsheet-icon-size: 68px;
+    
+    --bottomsheet-title-size: 30px;
+    --bottomsheet-title-width: 240px;
+    --bottomsheet-label-size: 17px;
+    --bottomsheet-input-size: 24px;
+    
+    --bottomsheet-input-width: 190px;
+    --bottomsheet-input-height: 66px;
+    --bottomsheet-input-field-width: 90px;
+    --bottomsheet-input-field-height: 30px;
+    
+    --bottomsheet-submit-size: 49px;
+    --bottomsheet-submit-radius: 17px;
+    --bottomsheet-arrow-size: 24px;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --bottomsheet-padding: 14px;
+    --bottomsheet-height: 100px;
+    --bottomsheet-margin-bottom: 60px;
+    --bottomsheet-radius: 10px;
+    
+    --bottomsheet-icon-size: 44px;
+    
+    --bottomsheet-title-size: 19px;
+    --bottomsheet-title-width: 155px;
+    --bottomsheet-label-size: 11px;
+    --bottomsheet-input-size: 16px;
+    
+    --bottomsheet-input-width: 125px;
+    --bottomsheet-input-height: 46px;
+    --bottomsheet-input-radius: 8px;
+    --bottomsheet-input-field-width: 60px;
+    --bottomsheet-input-field-height: 22px;
+    
+    --bottomsheet-submit-size: 35px;
+    --bottomsheet-submit-radius: 11px;
+    --bottomsheet-arrow-size: 16px;
+  }
+}
+
+/* ========================================
+   3) BOTTOMSHEET LAYOUT
+   ======================================== */
+
+.bottomsheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bottomsheet-overlay);
+  z-index: 30;
+}
+
+.bottomsheet-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background: var(--profile-section-card-bg);
+  border-radius: var(--bottomsheet-radius) var(--bottomsheet-radius) 0 0;
+  padding: 10px var(--bottomsheet-padding) var(--bottomsheet-padding);
+  box-sizing: border-box;
+}
+
+.bottomsheet-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: var(--bottomsheet-height);
+  margin-bottom: var(--bottomsheet-margin-bottom);
+  gap: 16px;
+}
+
+/* ========================================
+   4) LEFT SIDE (Icon + Title)
+   ======================================== */
+
+.bottomsheet-left {
+  display: flex;
+  flex-direction: column;
+  margin-top: 8px;
+}
+
+.bottomsheet-icon {
+  width: var(--bottomsheet-icon-size);
+  height: var(--bottomsheet-icon-size);
+}
+
+.bottomsheet-title {
+  display: flex;
+  flex-direction: column;
+  width: var(--bottomsheet-title-width);
+  margin-top: 16px;
+  font-family: urbanist, sans-serif;
+  font-size: var(--bottomsheet-title-size);
+  font-weight: 600;
+  color: var(--bottomsheet-text);
+  line-height: 1;
+}
+
+/* ========================================
+   5) RIGHT SIDE (Input + Button)
+   ======================================== */
+/* ========================================
+   5) RIGHT SIDE (UNIFIED Input + Button Container)
+   ======================================== */
+
+/* Unified container with border */
+.bottomsheet-input-container {
+  display: flex;
+  align-items: center;
+  width: var(--bottomsheet-input-width);
+  height: var(--bottomsheet-input-height);
+  border: 1px solid var(--profile-border);
+  border-radius: var(--bottomsheet-input-radius);
+  box-shadow: var(--bottomsheet-shadow);
+  padding: 5px 5px 5px 15px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  gap: 4px;
+}
+
+/* Input field section (left part) */
+.bottomsheet-input-field {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bottomsheet-label {
+  font-family: palanquin, sans-serif;
+  font-size: var(--bottomsheet-label-size);
+  color: var(--bottomsheet-text-dark);
+  margin-bottom: 4px;
+}
+
+.bottomsheet-input {
+  width: 100%;
+  height: var(--bottomsheet-input-field-height);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: urbanist, sans-serif;
+  font-size: var(--bottomsheet-input-size);
+  font-weight: 600;
+  color: var(--bottomsheet-text-muted);
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.bottomsheet-input::placeholder {
+  color: var(--bottomsheet-text-muted);
+  opacity: 0.6;
+}
+
+/* Submit button (right part inside container) */
+.bottomsheet-submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--bottomsheet-submit-size);
+  height: var(--bottomsheet-submit-size);
+  min-width: var(--bottomsheet-submit-size); /* Prevent shrinking */
+  border-radius: var(--bottomsheet-submit-radius);
+  background: var(--bottomsheet-submit-bg);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  flex-shrink: 0;
+}
+
+.bottomsheet-submit-btn:active {
+  transform: scale(0.95);
+}
+
+.bottomsheet-arrow {
+  width: var(--bottomsheet-arrow-size);
+  height: var(--bottomsheet-arrow-size);
+  color: white;
+}

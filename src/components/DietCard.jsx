@@ -1,78 +1,127 @@
-import React from 'react';
-import Dietfire from '../assets/dietfire.svg'
-
+import React from "react";
+import Dietfire from "../assets/dietfire.svg";
 
 const DietCard = ({ title, meals }) => {
+  const flatMeals = meals.flat();
 
-    const flatMeals = meals.flat();
-    // console.log("flatMeals", flatMeals);
+  const getMealData = (meals) => {
+    const protein = Math.floor((meals.protein * meals.quantity) / 100);
+    const carbs = Math.floor((meals.carbs * meals.quantity) / 100);
+    const fat = Math.floor((meals.fat * meals.quantity) / 100);
+    const calories = Math.floor((meals.calories * meals.quantity) / 100);
 
-    return (
-        <div className='flex flex-col justify-center items-center mt-[10px]'>
-            <div className='z-10 bg-[#ffffff] flex flex-col w-[385px] border border-[#E9ECEF] rounded-[10px] pb-[20px]' style={{boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.06)' }}>
-                <p className='flex flex-col ml-[15px] mt-[5px] text-[#000000] font-urbanist font-medium text-[22px] h-[50px]'>
-                    <span>{title}</span>
-                </p>
-                <div className='flex flex-col items-end w-full gap-y-[25px] mt-[20px]'>
-                    {flatMeals.map((meals, index) => (
-                        <div key={index} className='flex w-[300px] h-[80px] bg-[#F8F9FA] border border-[#E9ECEF] rounded-l-[15px]' style={{boxShadow: '0px 4px 14px rgba(0, 0, 0, 0.08)' }}>
-                            <div
-                                style={{
-                                    width: '100px',
-                                    height: '100px',
-                                    marginLeft: '-55px',
-                                    marginTop: '-10px',
-                                    borderRadius: '50%',
-                                    boxShadow: '0px 2px 6px rgba(0, 0, 0, 0.25)',
-                                }}
-                            >
-                                <div className='flex'>
-                                    <img
-                                        src={`/imgs/${meals.img_url.replaceAll(' ', '')}.png`}
-                                        alt={meals.name}
-                                        style={{
-                                            width: '100px',
-                                            height: '100px',
-                                        }}
-                                    />
-                                    <div className='flex flex-col ml-[10px]'>
-                                        <div className='flex justify-between text-[15px] font-urbanist font-semibold text-[#6C757D] w-[97%] h-[35px] mt-[15px]'>
-                                            <div className='w-[60%]'>
-                                                <span>{meals.meal_name}</span>
-                                            </div>
-                                            <span>{meals.quantity} g</span>
-                                        </div>
-                                        <div className='flex justify-start items-center w-[240px] gap-x-[5px] mt-[10px]'>
-                                            <Dietfire />
-                                            <p className='text-[15px] font-urbanist text-[#909497]'>
-                                                <span>{Math.floor(meals.calories * meals.quantity / 100)}</span>
-                                                <span className='ml-[4px]'>kcal</span>
-                                            </p>
-                                            <div className='w-[8px] h-[8px] bg-[#6C5CE7] rounded-[100%] mt-[1px]'></div>
-                                            <p className='text-[15px] font-urbanist text-[#909497]'>
-                                                <span>{Math.floor(meals.protein * meals.quantity / 100)}</span>
-                                                <span className='ml-[4px]'>g</span>
-                                            </p>
-                                            <div className='w-[8px] h-[8px] bg-[#4ECDC4] rounded-[50%] mt-[1px]'></div>
-                                            <p className='text-[15px] font-urbanist text-[#909497]'>
-                                                <span>{Math.floor(meals.carbs * meals.quantity / 100)}</span>
-                                                <span className='ml-[4px]'>g</span>
-                                            </p>
-                                            <div className='w-[8px] h-[8px] bg-[#FFB703] rounded-[50%] mt-[1px]'></div>
-                                            <p className='text-[15px] font-urbanist text-[#909497]'>
-                                                <span>{Math.floor(meals.fat * meals.quantity / 100)}</span>
-                                                <span className='ml-[4px]'>g</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
+    const maxVal = Math.max(protein, carbs, fat, 1);
+    const hp = Math.round((protein / maxVal) * 100);
+    const hc = Math.round((carbs / maxVal) * 100);
+    const hf = Math.round((fat / maxVal) * 100);
+
+    const minPct = 6;
+    const getHeight = (x) => `${Math.max(x, protein || carbs || fat ? minPct : 0)}%`;
+
+    return {
+      protein,
+      carbs,
+      fat,
+      calories,
+      hp: getHeight(hp),
+      hc: getHeight(hc),
+      hf: getHeight(hf),
+    };
+  };
+
+  return (
+    <div className="diet-card-wrapper">
+      <div className="diet-card" style={{ backgroundColor: "var(--dietcard-bg)", borderColor: "var(--profile-border)" }}>
+        {/* Card Title */}
+        <h2 className="diet-card-title" style={{ color: "var(--general-charcoal-text)" }}>{title}</h2>
+
+        {/* Meals Container */}
+        <div className="diet-meals-container">
+          {flatMeals.map((meal, index) => {
+            const mealData = getMealData(meal);
+
+            return (
+              <div key={index} className="diet-meal-item" style={{backgroundColor: "var(--profile-section-card-bg)", borderColor: "var(--profile-border)", animationDelay: `${index * 80}ms`}}>
+                {/* Food Image - Positioned Outside */}
+                <div className="diet-meal-image-wrapper">
+                  <img
+                    src={`/imgs/${meal.img_url.replaceAll(" ", "")}.png`}
+                    alt={meal.meal_name}
+                    className="diet-meal-image"
+                  />
                 </div>
-            </div>
+
+                {/* Meal Content */}
+                <div className="diet-meal-content">
+                  {/* Title and Quantity */}
+                  <div className="diet-meal-header">
+                    <h3 className="diet-meal-name" style={{ color: "var(--general-charcoal-text"}}>
+                      {meal.meal_name.length > 21 
+                        ? `${meal.meal_name.slice(0, 20)}...` 
+                        : meal.meal_name}
+                    </h3>
+                    <span className="diet-meal-quantity" style={{color: "var(--general-charcoal-text)"}}>{meal.quantity}g</span>
+                  </div>
+
+                  {/* Calories */}
+                  <div className="diet-meal-calories">
+                    <Dietfire className="diet-fire-icon" />
+                    <span className="diet-calories-value" style={{color: "var(--general-charcoal-text"}}>{mealData.calories}</span>
+                    <span className="diet-calories-unit" style={{color: "var(--faded-text)"}}>kcal</span>
+                  </div>
+
+                  {/* Macros with Progress Bars */}
+                  <div className="diet-macros-row">
+                    {/* Protein */}
+                    <div className="diet-macro-group">
+                      <div className="diet-progress-bar">
+                        <div 
+                          className="diet-progress-fill diet-progress-protein"
+                          style={{ height: mealData.hp }}
+                        />
+                      </div>
+                      <div className="diet-macro-info">
+                        <span className="diet-macro-value" style={{color: "var(--general-charcoal-text"}}>{mealData.protein}g</span>
+                        <span className="diet-macro-label" style={{color: "var(--faded-text)"}}>Protein</span>
+                      </div>
+                    </div>
+
+                    {/* Carbs */}
+                    <div className="diet-macro-group">
+                      <div className="diet-progress-bar">
+                        <div 
+                          className="diet-progress-fill diet-progress-carbs"
+                          style={{ height: mealData.hc }}
+                        />
+                      </div>
+                      <div className="diet-macro-info">
+                        <span className="diet-macro-value" style={{color: "var(--general-charcoal-text"}}>{mealData.carbs}g</span>
+                        <span className="diet-macro-label" style={{color: "var(--faded-text)"}}>Carbs</span>
+                      </div>
+                    </div>
+
+                    {/* Fats */}
+                    <div className="diet-macro-group">
+                      <div className="diet-progress-bar">
+                        <div 
+                          className="diet-progress-fill diet-progress-fat"
+                          style={{ height: mealData.hf }}
+                        />
+                      </div>
+                      <div className="diet-macro-info">
+                        <span className="diet-macro-value" style={{color: "var(--general-charcoal-text"}}>{mealData.fat}g</span>
+                        <span className="diet-macro-label" style={{color: "var(--faded-text)"}}>Fats</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default DietCard;

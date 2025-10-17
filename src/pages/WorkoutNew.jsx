@@ -127,68 +127,59 @@ const WorkoutNew = () => {
   const isReady = !loading && selectedDay;
 
   return (
-    <div
-      className="flex flex-col justify-between items-center"
-      style={{ background: "#FFFFFF" }}
-    >
-      <div className="flex flex-col">
-        <BackArrow
-          onClick={() => navigate(-1)}
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            display: "flex",
-            top: "10px",
-            left: "5px",
-            zIndex: 1,
-            cursor: "pointer",
-          }}
-        />
-        <div className="flex flex-col mt-[50px]">
-          <DayDate onDateChange={handleDateChange} />
-        </div>
-        <div
-          className="flex flex-col w-full h-[76vh] overflow-y-scroll mt-4"
-          style={{
-            scrollbarWidth: "thin",
-            scrollbarColor: "transparent transparent",
-          }}
-        >
-          {!isReady ? (
-            <p className="text-center text-gray-500 mt-6">
-              Loading workouts...
-            </p>
-          ) : (
-            <div
-              // key remounts the list when day changes so the animation restarts
-              key={selectedDay}
-              className={`slide-container ${
-                slideDir === "left"
-                  ? "enter-left"
-                  : slideDir === "right"
-                  ? "enter-right"
-                  : "enter-none"
-              }`}
-            >
-              {(workoutsByDay[selectedDay] || []).map((exercise, index) => (
-                <WorkoutCard
-                  key={index}
-                  exercise={exercise}
-                  viewMode="client-view"
-                />
-              ))}
-              {(workoutsByDay[selectedDay]?.length === 0 ||
-                !workoutsByDay[selectedDay]) && (
-                <p className="text-center text-gray-400 mt-6">
-                  No workouts for {selectedDay}
-                </p>
-              )}
-            </div>
-          )}
-        </div>
+    <div className="df-viewport">
+      <div className="df-canvas df-canvas-full">
+        <main className="workout-page">
+          {/* Back Arrow */}
+          <button 
+            className="workout-back-btn" 
+            onClick={() => navigate(-1)}
+            aria-label="Go back"
+          >
+            <BackArrow className="workout-back-icon" />
+          </button>
+
+          {/* Day Date Selector */}
+          <div className="workout-date-wrap">
+            <DayDate onDateChange={handleDateChange} />
+          </div>
+
+          {/* Workout Cards List */}
+          <div className="workout-list">
+            {!isReady ? (
+              <p className="workout-empty">Loading workouts...</p>
+            ) : (
+              <div
+                key={selectedDay}
+                className={`workout-slides ${
+                  slideDir === "left"
+                    ? "enter-left"
+                    : slideDir === "right"
+                    ? "enter-right"
+                    : "enter-none"
+                }`}
+              >
+                {(workoutsByDay[selectedDay] || []).map((exercise, index) => (
+                  <WorkoutCard
+                    key={index}
+                    exercise={exercise}
+                    viewMode="client-view"
+                  />
+                ))}
+                {(workoutsByDay[selectedDay]?.length === 0 ||
+                  !workoutsByDay[selectedDay]) && (
+                  <p className="workout-empty">No workouts for {selectedDay}</p>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Navigation Bar */}
+          <div className="nav-wrap">
+            <NavigationBar activeTab={activeTab} onTabChange={handleTabChange} />
+          </div>
+        </main>
       </div>
-      <NavigationBar activeTab={activeTab} onTabChange={handleTabChange} />
     </div>
   );
 };

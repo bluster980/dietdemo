@@ -3,98 +3,144 @@ import { useRef } from "react";
 import { useState, useEffect } from "react";
 
 const getWeekDates = () => {
-    const today = new Date();
-    const dayIndex = today.getDay();
-    const startOfWeek = new Date(today);
-    startOfWeek.setDate(today.getDate() - dayIndex);
-    const weekDates = Array.from({ length: 7 }, (_, i) => {
-        const date = new Date(startOfWeek);
-        date.setDate(startOfWeek.getDate() + i);
-        return {
-            date: date.getDate(),
-            day: date.toLocaleDateString("en-US", { weekday: "short" }),
-            isToday: i === dayIndex,
-        };
-    });
-    return weekDates;
+  const today = new Date();
+  const dayIndex = today.getDay();
+  const startOfWeek = new Date(today);
+  startOfWeek.setDate(today.getDate() - dayIndex);
+  const weekDates = Array.from({ length: 7 }, (_, i) => {
+    const date = new Date(startOfWeek);
+    date.setDate(startOfWeek.getDate() + i);
+    return {
+      date: date.getDate(),
+      day: date.toLocaleDateString("en-US", { weekday: "short" }),
+      isToday: i === dayIndex,
+    };
+  });
+  return weekDates;
 };
 
 const DayDate = ({ onDateChange }) => {
-    const [weekDates, setWeekDates] = useState([]);
-    const [activeIndex, setActiveIndex] = useState(null);
-    const [slotWidth, setSlotWidth] = useState(55); // fallback default
+  const [weekDates, setWeekDates] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(null);
+//   const [slotWidth, setSlotWidth] = useState(55); 
+    const [indicatorPosition, setIndicatorPosition] = useState({ left: 0, width: 0 });
+  
     const containerRef = useRef(null);
+  const slotRefs = useRef([]);
 
-    useEffect(() => {
-        const dates = getWeekDates();
-        setWeekDates(dates);
+  // Calculate exact position by measuring actual DOM elements
+  const calculateIndicatorPosition = (index) => {
+    if (!containerRef.current || !slotRefs.current[index]) return;
 
-        const todayIndex = dates.findIndex((date) => date.isToday);
-        setActiveIndex(todayIndex);
+    const container = containerRef.current;
+    const slot = slotRefs.current[index];
 
-        if (containerRef.current) {
-            const actualWidth = containerRef.current.offsetWidth;
-            setSlotWidth(actualWidth / 7);
-        }
+    // Get bounding rectangles
+    const containerRect = container.getBoundingClientRect();
+    const slotRect = slot.getBoundingClientRect();
 
-        // ✅ Trigger initial onDateChange on mount
-        if (onDateChange && dates[todayIndex]) {
-            onDateChange(dates[todayIndex]);
-        }
-    }, []);
+    // Calculate slot center relative to container
+    const slotCenterX = slotRect.left - containerRect.left + (slotRect.width / 2);
 
+    // Get indicator width from CSS (or use measured value)
+    const computedStyle = getComputedStyle(document.documentElement);
+    const indicatorWidth = parseFloat(
+      computedStyle.getPropertyValue('--daydate-indicator-width') || '45'
+    );
 
-    const handleDateClick = (index) => {
-        setActiveIndex(index);
-        if (onDateChange) {
-            onDateChange(weekDates[index]);
-        }
+    // Position indicator so its center aligns with slot center
+    const indicatorLeft = slotCenterX - (indicatorWidth / 2);
+
+    setIndicatorPosition({
+      left: indicatorLeft,
+      width: indicatorWidth
+    });
+  };
+
+  useEffect(() => {
+    const dates = getWeekDates();
+    setWeekDates(dates);
+
+    const todayIndex = dates.findIndex((date) => date.isToday);
+    setActiveIndex(todayIndex);
+
+    // Trigger initial onDateChange
+    if (onDateChange && dates[todayIndex]) {
+      onDateChange(dates[todayIndex]);
+    }
+  }, []);
+
+ // Recalculate position when activeIndex changes or on resize
+  useEffect(() => {
+    if (activeIndex === null) return;
+
+    // Calculate after a short delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      calculateIndicatorPosition(activeIndex);
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, [activeIndex, weekDates]);
+
+  // Recalculate on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (activeIndex !== null) {
+        calculateIndicatorPosition(activeIndex);
+      }
     };
 
+    window.addEventListener("resize", handleResize);
+    
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [activeIndex]);
 
-    return (
-        <div className="flex flex-col items-center justify-center">
-            <div
-                ref={containerRef}
-                className="bg-white w-[385px] border border-gray-300 border-1 h-[73px] rounded-[10px] flex items-center justify-center relative"
+  const handleDateClick = (index) => {
+    setActiveIndex(index);
+    if (onDateChange) {
+      onDateChange(weekDates[index]);
+    }
+  };
+
+  return (
+    <div className="daydate-wrapper">
+      <div ref={containerRef} className="daydate-container" style={{ backgroundColor: "var(--profile-section-card-bg)", borderColor: "var(--profile-border)" }}>
+        {/* Date slots with refs */}
+        <div className="daydate-slots">
+          {weekDates.map((item, index) => (
+            <button
+              key={index}
+              ref={(el) => (slotRefs.current[index] = el)}
+              className={`daydate-slot ${
+                index === activeIndex ? "daydate-slot-active" : "daydate-slot-inactive"
+              }`}
+              onClick={() => handleDateClick(index)}
+              aria-label={`Select ${item.day} ${item.date}`}
+              aria-pressed={index === activeIndex}
             >
-                <div className="flex w-full justify-center items-center">
-                    {weekDates.map((item, index) => (
-                        <p
-                            key={index}
-                            className={`z-10 w-[55px] text-[#000000] font-bold font-urbanist text-[20px] flex flex-col items-center cursor-pointer ${
-                                index === activeIndex ? "text-[#2D3436]" : "text-[#6C757D]"
-                            }`}
-                            onClick={() => handleDateClick(index)}
-                        >
-                            <span className="mt-[5px] font-inter">{item.date}</span>
-                            <span
-                                className={`text-[15px] ${
-                                    index === activeIndex ? "text-[#2D3436]" : "text-[#6C757D]"
-                                }`}
-                            >
-                                {item.day}
-                            </span>
-                        </p>
-                    ))}
-                </div>
-                {activeIndex !== null && (
-                    <div
-                        className="absolute left-0 top-[6.5px] flex"
-                        style={{ transform: `translateX(${activeIndex * slotWidth}px)` }}
-                    >
-                        <div
-                            style={{ width: `${slotWidth}px` }}
-                            className="flex justify-center items-center"
-                        >
-                            {/* <div className="bg-[#FF752C30] border border-[#FF752C] w-[45px] h-[60px] rounded-[13px]" /> */}
-                            <div className="bg-[#E6FCF5] border border-[#4ECDC4] w-[45px] h-[60px] rounded-[13px]" />
-                        </div>
-                    </div>
-                )}
-            </div>
+              <span className="daydate-date">{item.date}</span>
+              <span className="daydate-day">{item.day}</span>
+            </button>
+          ))}
         </div>
-    );
+
+        {/* Active indicator - positioned with actual measurements */}
+        {activeIndex !== null && (
+          <div
+            className="daydate-indicator-track"
+            style={{ 
+              transform: `translateX(${indicatorPosition.left}px)`,
+              transition: 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
+            }}
+          >
+            <div className="daydate-indicator" />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default DayDate;

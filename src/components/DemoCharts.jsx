@@ -9,7 +9,7 @@ import {
   Line,
   ReferenceLine,
 } from "recharts";
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 
 const formatWeight = (value) => {
   if (value == null) return "";
@@ -19,24 +19,34 @@ const formatWeight = (value) => {
   return Number.isInteger(rounded) ? rounded.toString() : rounded.toFixed(2);
 };
 
-const CustomDot = ({ cx, cy, value }) => {
+const CustomDot = ({ cx, cy, value, chartWidth }) => {
+  const scaleFactor = Math.max(0.7, Math.min(1, chartWidth / 350));
   const isDecimal = value != null && !Number.isInteger(value);
+
+  const baseWidth = isDecimal ? 38 : 26;
+  const dotWidth = Math.round(baseWidth * scaleFactor);
+  const xOffset = Math.round((isDecimal ? 18 : 13) * scaleFactor);
+  const fontSize = Math.max(10, Math.round(12 * scaleFactor));
+
   return (
     <g>
       <foreignObject
-        x={cx - (isDecimal ? 18 : 13)} // slight shift if wider
+        x={cx - xOffset} // slight shift if wider
         y={cy - 15}
-        width={isDecimal ? 38 : 26}
+        width={dotWidth}
         height={28}
       >
         <div
-          className="bg-white text-[12px] font-semibold rounded-xl shadow px-2 py-0.5 text-center border border-[#E9ECEF]"
+          className="bg-white font-semibold rounded-xl shadow px-2 py-0.5 text-center border border-[#E9ECEF]"
           style={{
-            minWidth: isDecimal ? 38 : 26,
+            fontSize: `${fontSize}px`,
+            minWidth: dotWidth,
             lineHeight: "20px",
             borderRadius: "8px",
             fontFamily: "urbanist",
-            color: "#2D3436",
+            color: "var(--chart-legend)",
+            backgroundColor: "var(--navbar-background)",
+            borderColor: "var(--profile-border)",
             boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)",
           }}
         >
@@ -48,16 +58,55 @@ const CustomDot = ({ cx, cy, value }) => {
 };
 
 const WeightChart = ({ labels, dataPoints }) => {
+  const [containerWidth, setContainerWidth] = useState(350);
+  const scrollerRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // Calculate responsive slot width based on container width
+  const getSlotWidth = (width) => {
+    if (width < 320) return 45;
+    if (width < 360) return 50;
+    if (width < 400) return 55;
+    return 60;
+  };
+
+  const slotWidth = getSlotWidth(containerWidth);
+  const minSlotCount = 6;
+
+  // Calculate responsive chart height based on container width
+  const getChartHeight = (width) => {
+    if (width < 320) return 180;
+    if (width < 360) return 200;
+    if (width < 400) return 220;
+    return 230;
+  };
+
+  const chartHeight = getChartHeight(containerWidth);
+
+  // Track container width for responsive calculations
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      if (entries[0]) {
+        setContainerWidth(entries[0].contentRect.width);
+      }
+    });
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+      setContainerWidth(containerRef.current.offsetWidth);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const data = dataPoints.map((point, index) => ({
     date: labels[index],
     value: point,
   }));
-  const slotWidth = 60;
-  const minSlotCount = 6;
+
   const dataLength = data.length * slotWidth;
   const chartPixelWidth = Math.max(dataLength, minSlotCount * slotWidth);
   const paddedData = [...data];
-  const scrollerRef = useRef(null);
 
   useLayoutEffect(() => {
     const el = scrollerRef.current;
@@ -99,8 +148,28 @@ const WeightChart = ({ labels, dataPoints }) => {
   const lastValidDate =
     paddedData[paddedData.length - 1 - lastValidIndex]?.date;
 
+  // Responsive margins based on container width
+  const getMargins = (width) => {
+    if (width < 320) return { top: 12, right: 5, bottom: 8, left: 2 };
+    if (width < 360) return { top: 14, right: 6, bottom: 9, left: 3 };
+    return { top: 15, right: 8, bottom: 5, left: 5 };
+  };
+
+  // Responsive font size for X-axis
+  const getAxisFontSize = (width) => {
+    if (width < 320) return 10;
+    if (width < 360) return 11;
+    return 12;
+  };
+
+  const margins = getMargins(containerWidth);
+  const axisFontSize = getAxisFontSize(containerWidth);
+
   return (
-    <div className="w-full flex justify-center items-center px-2 py-4 scroll-smooth-x">
+    <div
+      ref={containerRef}
+      className="w-full flex justify-center items-center px-2 py-4 scroll-smooth-x"
+    >
       {/* Wrap the chart to center it horizontally */}
       <div
         ref={scrollerRef}
@@ -115,16 +184,20 @@ const WeightChart = ({ labels, dataPoints }) => {
               : { width: chartPixelWidth }
           }
         >
-          <ResponsiveContainer width="100%" height={220}>
-            <AreaChart
-              data={paddedData}
-              margin={{ top: 15, right: 8, bottom: 10, left: 5 }} // some breathing room
-            >
+          <ResponsiveContainer width="100%" height={chartHeight}>
+            <AreaChart data={paddedData} margin={margins}>
               <defs>
                 <linearGradient id="orangeGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#4ECDC4" stopOpacity={0.9} />
-                  {/* <stop offset="20%" stopColor="#ff5b1f" stopOpacity={0.1} /> */}
-                  <stop offset="100%" stopColor="#ffffff" stopOpacity={0.05} />
+                  <stop
+                    offset="0%"
+                    stopColor="var(--chart-start)"
+                    stopOpacity={0.9}
+                  />
+                  <stop
+                    offset="100%"
+                    stopColor="var(--chart-end)"
+                    stopOpacity={0.05}
+                  />
                 </linearGradient>
               </defs>
 
@@ -137,7 +210,7 @@ const WeightChart = ({ labels, dataPoints }) => {
               {/* ✅ Keep labels but hide horizontal axis line */}
               <XAxis
                 dataKey="date"
-                tick={{ fontSize: 12 }}
+                tick={{ fontSize: axisFontSize }}
                 axisLine={false}
                 tickLine={false}
                 interval={0}
@@ -160,15 +233,17 @@ const WeightChart = ({ labels, dataPoints }) => {
               <Line
                 type="monotone"
                 dataKey="value"
-                stroke="#4ECDC4"
+                stroke="var(--chart-start)"
                 strokeWidth={3}
-                dot={<CustomDot />}
+                dot={({ key, ...props }) => (
+                  <CustomDot key={key} {...props} chartWidth={containerWidth} />
+                )}
                 activeDot={false}
               />
 
               <ReferenceLine
                 x={lastValidDate}
-                stroke="#4ECDC4"
+                stroke="var(--chart-start)"
                 strokeDasharray="4 2"
                 isFront
               />

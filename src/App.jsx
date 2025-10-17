@@ -35,6 +35,8 @@ import WorkoutNew from './pages/WorkoutNew';
 import DietNew from './pages/DietNew';
 import ProfileNew from './pages/ProfileNew';
 import { PrivateRoute, PublicOnlyRoute } from './context/AuthContext';
+import DiaryResponsive from './pages/DiaryResponsive';
+import CalorieCircle from './pages/CalorieCircle';
 
 function App() {
   // const [generatedOTP, setGeneratedOTP] = useState("");
@@ -85,7 +87,7 @@ function App() {
         {/* Private app pages */}
         <Route path="/diary" element={
           <PrivateRoute>
-            <DiaryNew />
+            <DiaryResponsive />
           </PrivateRoute>
         } />
         <Route path="/workout" element={

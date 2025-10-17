@@ -1,0 +1,689 @@
+/* ========================================
+   DIET PAGE RESPONSIVE STYLES
+   Following Workout pattern
+   ======================================== */
+
+/* ========================================
+   1) CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Diet page spacing */
+  --diet-page-pad: 12px;
+  --diet-card-gap: 10px;
+  --diet-back-size: 30px;
+  --diet-back-offset: 10px;
+  
+  /* Diet card dimensions */
+  --diet-card-radius: 10px;
+  --diet-card-pad-top: 5px;
+  --diet-card-pad-bottom: 20px;
+  --diet-card-pad-x: 10px;
+  --diet-meals-gap: 25px;
+  --diet-meals-top: 20px;
+  
+  /* Meal item dimensions */
+  --diet-meal-height: 110px;
+  --diet-meal-radius: 15px;
+  --diet-meal-pad-y: 5px;
+  --diet-meal-pad-right: 10px;
+  --diet-meal-content-left: 100px;
+  
+  /* Food image */
+  --diet-image-size: 120px;
+  --diet-image-offset: -30px;
+  
+  /* Typography */
+  --diet-title-size: 22px;
+  --diet-meal-name-size: 18px;
+  --diet-quantity-size: 15px;
+  --diet-calories-size: 15px;
+  --diet-macro-value-size: 15px;
+  --diet-macro-label-size: 16px;
+  
+  /* Macro bars */
+  --diet-bar-width: 8px;
+  --diet-bar-height: 45px;
+  --diet-bar-radius: 10px;
+  --diet-macros-gap: 25px;
+  
+  /* Colors */
+  --diet-bg: #FFFFFF;
+  --diet-card-bg: #FFFFFF;
+  --diet-meal-bg: #F8F9FA;
+  --diet-text: #2D3436;
+  --diet-text-muted: #6C757D;
+  --diet-text-light: #6a6a6a;
+  --diet-border: #E9ECEF;
+  --diet-shadow-card: 0px 2px 8px rgba(0, 0, 0, 0.06);
+  --diet-shadow-meal: 0px 4px 14px rgba(0, 0, 0, 0.08);
+  --diet-shadow-image: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  
+  /* Progress colors */
+  --diet-protein-color: #FFA8A6;
+  --diet-carbs-color: #c7fceb;
+  --diet-fat-color: #ffe28c;
+  --diet-bar-track: #e9ecef;
+}
+
+/* ========================================
+   2) MEDIA QUERIES - RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --diet-page-pad: 8px;
+    --diet-card-gap: 8px;
+    --diet-back-size: 26px;
+    
+    --diet-card-pad-x: 10px;
+    --diet-card-pad-bottom: 15px;
+    --diet-meals-gap: 18px;
+    
+    --diet-meal-height: 95px;
+    --diet-meal-content-left: 80px;
+    
+    --diet-image-size: 95px;
+    --diet-image-offset: -25px;
+    
+    --diet-title-size: 18px;
+    --diet-meal-name-size: 15px;
+    --diet-quantity-size: 13px;
+    --diet-calories-size: 13px;
+    --diet-macro-value-size: 13px;
+    --diet-macro-label-size: 14px;
+    
+    --diet-bar-width: 6px;
+    --diet-bar-height: 38px;
+    --diet-macros-gap: 14px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --diet-page-pad: 10px;
+    --diet-card-gap: 9px;
+    --diet-back-size: 28px;
+    
+    --diet-card-pad-x: 12px;
+    --diet-card-pad-bottom: 18px;
+    --diet-meals-gap: 20px;
+    
+    --diet-meal-height: 100px;
+    --diet-meal-content-left: 90px;
+    
+    --diet-image-size: 105px;
+    --diet-image-offset: -27px;
+    
+    --diet-title-size: 20px;
+    --diet-meal-name-size: 16px;
+    --diet-quantity-size: 14px;
+    --diet-calories-size: 14px;
+    --diet-macro-value-size: 14px;
+    --diet-macro-label-size: 15px;
+    
+    --diet-bar-width: 7px;
+    --diet-bar-height: 42px;
+    --diet-macros-gap: 12px;
+  }
+}
+
+/* Standard phones (401px - 427px) */
+@media (min-width: 401px) and (max-width: 460px) {
+  :root {
+    --diet-page-pad: 12px;
+    --diet-card-gap: 10px;
+    
+    --diet-meal-height: 105px;
+    --diet-image-size: 120px;
+    --diet-image-offset: -28px;
+    
+    --diet-title-size: 21px;
+    --diet-meal-name-size: 17px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 461px) and (max-width: 480px) {
+  :root {
+    --diet-page-pad: 14px;
+    --diet-card-gap: 12px;
+    --diet-back-size: 32px;
+    
+    --diet-card-pad-x: 18px;
+    --diet-card-pad-bottom: 22px;
+    --diet-meals-gap: 28px;
+    
+    --diet-meal-height: 115px;
+    --diet-meal-content-left: 105px;
+    
+    --diet-image-size: 125px;
+    --diet-image-offset: -32px;
+    
+    --diet-title-size: 23px;
+    --diet-meal-name-size: 19px;
+    --diet-quantity-size: 16px;
+    --diet-calories-size: 16px;
+    --diet-macro-value-size: 16px;
+    --diet-macro-label-size: 17px;
+    
+    --diet-bar-width: 9px;
+    --diet-bar-height: 48px;
+    --diet-macros-gap: 11px;
+  }
+}
+
+/* Extra large phones/tablets (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --diet-page-pad: 16px;
+    --diet-card-gap: 14px;
+    --diet-back-size: 34px;
+    
+    --diet-card-pad-x: 20px;
+    --diet-card-pad-bottom: 24px;
+    --diet-meals-gap: 30px;
+    
+    --diet-meal-height: 120px;
+    --diet-meal-content-left: 110px;
+    
+    --diet-image-size: 130px;
+    --diet-image-offset: -35px;
+    
+    --diet-title-size: 24px;
+    --diet-meal-name-size: 20px;
+    --diet-quantity-size: 17px;
+    --diet-calories-size: 17px;
+    --diet-macro-value-size: 17px;
+    --diet-macro-label-size: 18px;
+    
+    --diet-bar-width: 10px;
+    --diet-bar-height: 50px;
+    --diet-macros-gap: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --diet-page-pad: 6px;
+    --diet-card-gap: 7px;
+    --diet-back-size: 24px;
+    
+    --diet-card-pad-x: 8px;
+    --diet-card-pad-bottom: 12px;
+    --diet-meals-gap: 15px;
+    
+    --diet-meal-height: 90px;
+    --diet-meal-content-left: 75px;
+    
+    --diet-image-size: 88px;
+    --diet-image-offset: -23px;
+    
+    --diet-title-size: 17px;
+    --diet-meal-name-size: 14px;
+    --diet-quantity-size: 12px;
+    --diet-calories-size: 12px;
+    --diet-macro-value-size: 12px;
+    --diet-macro-label-size: 13px;
+    
+    --diet-bar-width: 5px;
+    --diet-bar-height: 35px;
+    --diet-macros-gap: 6px;
+  }
+}
+
+/* ========================================
+   3) DIET PAGE LAYOUT
+   ======================================== */
+
+.diet-viewport {
+  width: 100vw;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: var(--diet-bg);
+}
+
+.diet-page {
+  position: relative;
+  width: 100% !important;
+  min-height: 100vh;
+  max-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* background: var(--diet-bg); */
+  padding-bottom: 80px;
+  box-sizing: border-box;
+  max-width: 100% !important;
+}
+
+/* Back button */
+.diet-back-btn {
+  position: absolute;
+  top: var(--diet-back-offset);
+  left: 5px;
+  z-index: 10;
+  width: var(--diet-back-size);
+  height: var(--diet-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.diet-back-btn:active {
+  transform: scale(0.95);
+}
+
+.diet-back-icon {
+  width: 100%;
+  height: 100%;
+  color: #000000;
+}
+
+.theme-dark .diet-back-icon {
+  color: var(--faded-text);
+}
+
+/* Date selector wrapper */
+.diet-date-wrap {
+  margin-top: 50px;
+  padding: 0 var(--diet-page-pad);
+}
+
+/* ========================================
+   4) DIET LIST & SCROLLING
+   ======================================== */
+
+.diet-list {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0 var(--diet-page-pad);
+  margin-top: 16px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.diet-list::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+
+/* Slide animations */
+.diet-slides {
+  display: flex;
+  flex-direction: column;
+  gap: var(--diet-card-gap);
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: both;
+}
+
+.enter-left {
+  animation-name: slideInFromRight;
+}
+
+.enter-right {
+  animation-name: slideInFromLeft;
+}
+
+.enter-none {
+  animation: none;
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Empty state */
+.diet-empty {
+  text-align: center;
+  color: var(--diet-text-muted);
+  font-size: var(--diet-calories-size);
+  margin-top: 24px;
+  font-family: urbanist, sans-serif;
+}
+
+/* ========================================
+   5) DIET CARD STYLES
+   ======================================== */
+
+.diet-card-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.diet-card {
+  z-index: 10;
+  width: 100%;
+  background: var(--diet-card-bg);
+  border: 1px solid var(--diet-border);
+  border-radius: var(--diet-card-radius);
+  box-shadow: var(--diet-shadow-card);
+  padding: var(--diet-card-pad-top) 0 var(--diet-card-pad-bottom) var(--diet-card-pad-x);
+  box-sizing: border-box;
+}
+
+.diet-card-title {
+  color: var(--diet-text);
+  font-family: urbanist, sans-serif;
+  font-weight: 500;
+  font-size: var(--diet-title-size);
+  line-height: 1.2;
+  margin: 0;
+  padding: 0;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+/* ========================================
+   6) MEALS CONTAINER
+   ======================================== */
+
+.diet-meals-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+  gap: var(--diet-meals-gap);
+  margin-top: var(--diet-meals-top);
+}
+
+/* ========================================
+   7) INDIVIDUAL MEAL ITEM
+   ======================================== */
+
+.diet-meal-item {
+  position: relative;
+  display: flex;
+  width: calc(90% - var(--diet-card-pad-x));
+  height: var(--diet-meal-height);
+  background: var(--diet-meal-bg);
+  border: 1px solid var(--diet-border);
+  border-radius: var(--diet-meal-radius) 0 0 var(--diet-meal-radius);
+  box-shadow: var(--diet-shadow-meal);
+  overflow: visible;
+  animation: mealItemEntrance 0.4s ease-out both;
+}
+
+/* Food Image - Positioned Outside */
+.diet-meal-image-wrapper {
+  position: absolute;
+  left: var(--diet-image-offset);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.diet-meal-image {
+  width: var(--diet-image-size);
+  height: var(--diet-image-size);
+  border-radius: 50%;
+  box-shadow: var(--diet-shadow-image);
+  object-fit: cover;
+  display: block;
+}
+
+/* Meal Content */
+.diet-meal-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--diet-meal-content-left);
+  margin-right: var(--diet-meal-pad-right);
+  margin-top: var(--diet-meal-pad-y);
+  width: 100%;
+}
+
+/* ========================================
+   8) MEAL HEADER (Title + Quantity)
+   ======================================== */
+
+.diet-meal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.diet-meal-name {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--diet-meal-name-size);
+  color: var(--diet-text);
+  line-height: 1.2;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diet-meal-quantity {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--diet-quantity-size);
+  color: var(--diet-text-light);
+  white-space: nowrap;
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   9) CALORIES ROW
+   ======================================== */
+
+.diet-meal-calories {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.diet-fire-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.diet-calories-value {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--diet-calories-size);
+  color: var(--diet-text-light);
+}
+
+.diet-calories-unit {
+  font-family: urbanist, sans-serif;
+  font-weight: 400;
+  font-size: var(--diet-calories-size);
+  color: var(--diet-text-muted);
+  margin-left: 0px;
+}
+
+/* ========================================
+   10) MACROS ROW WITH PROGRESS BARS
+   ======================================== */
+
+.diet-macros-row {
+  display: flex;
+  align-items: center;
+  gap: var(--diet-macros-gap);
+}
+
+.diet-macro-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Progress Bar */
+.diet-progress-bar {
+  width: var(--diet-bar-width);
+  height: var(--diet-bar-height);
+  background: var(--diet-bar-track);
+  border-radius: var(--diet-bar-radius);
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.diet-progress-fill {
+  width: 100%;
+  border-radius: var(--diet-bar-radius);
+  transition: height 0.3s ease;
+}
+
+.diet-progress-protein {
+  background: var(--diet-protein-color);
+}
+
+.diet-progress-carbs {
+  background: var(--diet-carbs-color);
+}
+
+.diet-progress-fat {
+  background: var(--diet-fat-color);
+}
+
+/* Macro Info (Value + Label) */
+.diet-macro-info {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.diet-macro-value {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--diet-macro-value-size);
+  color: var(--diet-text-light);
+}
+
+.diet-macro-label {
+  font-family: urbanist, sans-serif;
+  font-weight: 400;
+  font-size: var(--diet-macro-label-size);
+  color: var(--diet-text-muted);
+}
+
+
+/* ========================================
+   ENHANCED SLIDE ANIMATIONS FOR DIET
+   ======================================== */
+
+.diet-slides {
+  display: flex;
+  flex-direction: column;
+  gap: var(--diet-card-gap);
+  
+  /* Longer duration for diet cards */
+  animation-duration: 0.5s; /* Was 0.3s - now 67% slower */
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother easing */
+  animation-fill-mode: both;
+}
+
+/* Slide from right (moving forward) */
+.enter-left {
+  animation-name: slideInFromRightDiet;
+}
+
+/* Slide from left (moving backward) */
+.enter-right {
+  animation-name: slideInFromLeftDiet;
+}
+
+.enter-none {
+  animation: none;
+}
+
+/* Enhanced animations with more distance and smoothness */
+@keyframes slideInFromRightDiet {
+  0% {
+    opacity: 0;
+    transform: translateX(60px); /* Was 30px - doubled distance */
+  }
+  40% {
+    opacity: 0.3; /* Gradual fade-in */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeftDiet {
+  0% {
+    opacity: 0;
+    transform: translateX(-60px); /* Was -30px - doubled distance */
+  }
+  40% {
+    opacity: 0.3; /* Gradual fade-in */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Staggered animation for individual diet cards */
+.diet-slides > div {
+  animation: fadeSlideIn 0.4s ease-out both;
+}
+
+/* Add stagger delay (already in your JSX as style={{ animationDelay: `${idx * 50}ms` }}) */
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+/* ========================================
+   MEAL ITEMS STAGGERED ENTRANCE
+   ======================================== */
+
+
+@keyframes mealItemEntrance {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

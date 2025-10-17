@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import BackArrow from "../assets/backarrow.svg";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavBar";
@@ -7,23 +7,10 @@ import UploadFile from "../assets/uploadfile.svg";
 import ImagePicker from "../components/ImagePicker";
 import UseSteganography from "../components/UseSteganography";
 import toast from "react-hot-toast";
-
-/* Layout constants cloned from QnA for identical alignment */
-const CARD_MAX_W = 420;
-const PAGE_GUTTER = 7;
-const BORDER_DEFAULT = "#E9ECEF";
-
-/* width helper (matches qna.jsx) */
-const contentWidth = {
-  width: `calc(100% - ${PAGE_GUTTER * 2}px)`, // respect page gutters [7]
-  maxWidth: CARD_MAX_W - PAGE_GUTTER * 2, // align internal content
-  margin: "0 auto",
-  boxSizing: "border-box",
-};
+import "../styles/uploadresponsive.css";
 
 /* helper: middle-truncate preserving extension */
 const middleTruncate = (fileName = "") => {
-  //   console.log(fileName.slice(-4));
   if (fileName.length <= 25) return fileName;
   const name = fileName.slice(0, 18);
   const ext = fileName.slice(-4);
@@ -31,37 +18,33 @@ const middleTruncate = (fileName = "") => {
 };
 
 /* Circular progress with teal glow and larger head */
-/* Smooth CircularProgress with rAF tween + perfectly aligned head */
-const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3); // 0..1 -> eased [1][6]
+const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
 
 const CircularProgress = ({
   size = 220,
   stroke = 14,
-  progress = 0, // target 0..100
-  trackColor = "#EAF3F5",
+  progress = 0,
+  trackColor = "var(--calorie-ring-track)",
   gradientFrom = "#34E3CF",
   gradientTo = "#19B9A7",
   glow = "#38D6C4",
-  duration = 500, // ms per tween towards the new value
+  duration = 500,
 }) => {
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
 
-  const [tweened, setTweened] = React.useState(progress); // displayed value
+  const [tweened, setTweened] = React.useState(progress);
   const rafRef = React.useRef(null);
   const startRef = React.useRef({ from: progress, to: progress, t0: 0 });
 
-  // cancel on unmount
   React.useEffect(
     () => () => rafRef.current && cancelAnimationFrame(rafRef.current),
     []
   );
 
-  // tween whenever target 'progress' changes
   React.useEffect(() => {
     if (progress === startRef.current.to && tweened === progress) return;
 
-    // setup tween
     startRef.current = { from: tweened, to: progress, t0: performance.now() };
 
     const step = (now) => {
@@ -74,7 +57,7 @@ const CircularProgress = ({
       if (elapsed < 1) {
         rafRef.current = requestAnimationFrame(step);
       } else {
-        setTweened(to); // snap at end
+        setTweened(to);
       }
     };
 
@@ -82,16 +65,14 @@ const CircularProgress = ({
     return () => rafRef.current && cancelAnimationFrame(rafRef.current);
   }, [progress, duration, tweened]);
 
-  // geometry based on tweened value
   const offset = circumference * (1 - tweened / 100);
   const id = React.useId();
 
-  // end angle for the knob: start at -90deg and add tweened fraction of 360deg
   const angle = (tweened / 100) * Math.PI * 2 - Math.PI / 2;
   const cx = size / 2 + radius * Math.cos(angle);
   const cy = size / 2 + radius * Math.sin(angle);
 
-  const margin = Math.max(stroke, 28); // safe gutter around ring
+  const margin = Math.max(stroke, 28);
   const vb = `-${margin} -${margin} ${size + margin * 2} ${size + margin * 2}`;
 
   return (
@@ -147,10 +128,9 @@ const CircularProgress = ({
         strokeDashoffset={offset}
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
         fill="none"
-        style={{ filter: `url(#tealGlow-${id})` }} // JS drives animation; remove CSS transition
+        style={{ filter: `url(#tealGlow-${id})` }}
       />
 
-      {/* knob centered on the arc end so it "merges" with the stroke */}
       <circle
         cx={cx}
         cy={cy}
@@ -167,7 +147,7 @@ const CircularProgress = ({
         fontFamily="urbanist, system-ui"
         fontWeight="600"
         fontSize={size * 0.22}
-        fill="#1C2B32"
+        fill="var(--general-charcoal-text)"
       >
         {Math.round(Math.min(100, Math.max(0, tweened)))}%
       </text>
@@ -255,192 +235,108 @@ const Upload = () => {
       Uploading
       <span className="ml-[2px] ellipsis-dots" aria-hidden="true" />
     </span>
-  ); // CSS keyframes is defined globally
-
-  /* Card container style copied from qna.jsx (only marginTop differs to match its 28px) */
-  const containerStyle = useMemo(
-    () => ({
-      width: `calc(100% - ${PAGE_GUTTER * 2}px)`,
-      maxWidth: CARD_MAX_W,
-      margin: "20px auto 0px",
-      background: "#fff",
-      borderRadius: 16,
-      border: `1px solid ${BORDER_DEFAULT}`,
-      boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
-      padding: "0px 12px 20px ",
-      boxSizing: "border-box",
-      minHeight: "calc(100vh - 240px)",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-    }),
-    []
   );
 
   return (
-    <div
-      className="flex flex-col items-center"
-      style={{
-        background: "#ffffff",
-        overflowX: "hidden",
-        minHeight: "100vh",
-        width: "100%",
-        paddingLeft: PAGE_GUTTER, // global gutters [11]
-        paddingRight: PAGE_GUTTER, // global gutters
-        boxSizing: "border-box",
-      }}
-    >
-      {/* Back */}
-      {/* Back header row */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 600,
-          margin: "0 auto",
-          height: 40, // compact bar
-          display: "flex",
-          alignItems: "end",
-          position: "relative",
-        }}
-      >
-        <BackArrow
-          alt="back arrow"
+    <div className="df-viewport">
+      <main className="upload-page">
+        {/* Back Arrow */}
+        <button 
+          className="upload-back-btn" 
           onClick={() => navigate(-1)}
-          style={{
-            width: 30,
-            height: 30,
-            position: "absolute",
-            left: -1, // sticks to left gutter
-            cursor: "pointer",
-          }}
-        />
-      </div>
+          aria-label="Go back"
+        >
+          <BackArrow className="profile-back-icon" />
+        </button>
 
-      {/* Title aligned like QnA */}
-      <h1
-        style={{
-          width: "100%",
-          textAlign: "left",
-          margin: "24px 0 0 20px", // small space under the back row
-          fontSize: 32,
-          lineHeight: "36px",
-          fontWeight: 600,
-          fontFamily: "urbanist, system-ui, sans-serif",
-        }}
-      >
-        Upload &amp; Files
-      </h1>
+        {/* Page Title */}
+        <h1 className="upload-page-title" style={{color: "var(--general-charcoal-text)"}}>Upload &amp; Files</h1>
 
-      {/* Card with top / spacer / bottom like QnA */}
-      <div style={containerStyle}>
-        {/* TOP GROUP: first or second state */}
-        <div id="upload-top" style={{ ...contentWidth }}>
-          {!isUploading && (
-            <div className="w-full flex flex-col items-center">
-              <p className="text-[23px] leading-[26px] font-urbanist font-semibold text-center mt-[100px]">
-                Upload Progress Photos
-              </p>
-              <p className="text-[20px] leading-[26px] text-[#6C757D] font-urbanist text-center mt-[20px]">
+        {/* Upload Card */}
+        <div className="upload-card" style={{backgroundColor: "var(--dietcard-bg)", borderColor: "var(--profile-border)"}}>
+          {!isUploading ? (
+            /* Idle State */
+            <div className="upload-idle-content">
+              <p className="upload-idle-title" style={{color: "var(--faded-text)"}}>Upload Progress Photos</p>
+              <p className="upload-idle-subtitle" style={{color: "var(--macros-unit)"}}>
                 PNG, JPG, JPEG, WEBP supported
                 <br />
                 max allowed size is 30MB
               </p>
 
-              <div className="relative h-[170px] w-[170px] bg-[#f8f9fa] rounded-full flex items-center justify-center mt-[90px] mb-4">
-                <UploadFile />
+              <div className="upload-button-area">
                 <button
                   type="button"
                   onClick={() => pickerRef.current?.open()}
-                  className="absolute inset-0 rounded-full"
+                  className="upload-button"
                   aria-label="Choose image"
-                />
+                >
+                  <UploadFile className="upload-icon" />
+                </button>
                 <ImagePicker
                   ref={pickerRef}
                   onImageSelect={handleImageSelect}
                 />
               </div>
 
-              <p className="font-urbanist font-semibold text-[26px] mt-[40px]">
-                Upload
-              </p>
+              <p className="upload-label" style={{color: "var(--faded-text)"}}>Upload</p>
 
-              {/* fixed-height filename line to prevent jumps */}
-              <div className="h-[15px] leading-[18px] ">
+              <div className="upload-filename-area">
                 {selectedFile && (
-                  <p className="text-[#6B7280] text-[15px] max-w-[100%] mx-auto">
-                    {middleTruncate(selectedFile.name)}
-                  </p>
+                  <p className="upload-filename" style={{color: "var(--general-charcoal-text)"}}>{middleTruncate(selectedFile.name)}</p>
                 )}
               </div>
             </div>
-          )}
-
-          {isUploading && (
-            <div className="w-full flex flex-col items-center">
-              <div
-                className="relative flex items-center justify-center mt-[50px]"
-                style={{
-                  // shell that protects against rounded card borders
-                  padding: 24, // >= head radius + glow spread
-                  overflow: "visible", // let SVG paint outside its box
-                }}
-              >
-                <div
-                  // extra wrapper to escape any ancestor overflow rules
-                  style={{ overflow: "visible" }}
-                >
-                  <CircularProgress
-                    size={280}
-                    stroke={14}
-                    progress={progress}
-                  />
-                </div>
+          ) : (
+            /* Uploading State */
+            <div className="upload-progress-content">
+              <div className="upload-progress-wrapper">
+                <CircularProgress
+                  size={parseInt(getComputedStyle(document.documentElement)
+                    .getPropertyValue('--upload-progress-size') || '280')}
+                  stroke={14}
+                  progress={progress}
+                />
               </div>
-              <p className="text-[#2D3436] font-urbanist text-[23px] font-semibold mt-[50px]">
-                {uploadingLabel}
-              </p>
-
-              <div className="h-[24px] leading-[24px] mt-2">
-                <p className="text-[#9AA3A7] text-[16px] max-w-[280px]">
+              <p className="upload-progress-label" style={{color: "var(--faded-text)"}}>{uploadingLabel}</p>
+              <div className="upload-filename-area">
+                <p className="upload-progress-filename" style={{color: "var(--general-charcoal-text)"}}>
                   {selectedFile ? middleTruncate(selectedFile.name) : ""}
                 </p>
               </div>
             </div>
           )}
+
+          {/* Spacer */}
+          <div className="upload-spacer"></div>
+
+          {/* Submit Button */}
+          <div className="upload-button-wrapper">
+            <PrimaryButton
+              text={!isUploading ? "SEND" : "CANCEL"}
+              onClick={!isUploading ? handleUpload : handleCancel}
+              disabled={!isUploading && !selectedFile}
+              customStyle={{
+                width: "100%",
+                height: "var(--upload-button-height)",
+                borderRadius: 12,
+                background: !isUploading && !selectedFile ? "#FFC2BE" : "#FF6F7A",
+                boxShadow: "none",
+                cursor: !isUploading && !selectedFile ? "not-allowed" : "pointer",
+                opacity: !isUploading && !selectedFile ? 0.7 : 1,
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                overflow: "hidden",
+              }}
+            />
+          </div>
         </div>
 
-        {/* FLEX SPACER like QnA pushes CTA to card bottom */}
-        <div style={{ flex: 1 }} />
-
-        {/* BOTTOM GROUP: single PrimaryButton aligned with contentWidth */}
-        <div
-          id="upload-bottom"
-          style={{ ...contentWidth, marginTop: 12, paddingBottom: 0 }}
-          className="flex flex-col items-center"
-        >
-          <PrimaryButton
-            text={!isUploading ? "SEND" : "CANCEL"}
-            onClick={!isUploading ? handleUpload : handleCancel}
-            disabled={!isUploading && !selectedFile}
-            customStyle={{
-              width: "100%",
-              height: 52,
-              borderRadius: 12,
-            //   background: "#FF6F7A",
-              background: !isUploading && !selectedFile ? "#FFC2BE" : "#FF6F7A",
-              boxShadow: "none",
-              cursor: !isUploading && !selectedFile ? "not-allowed" : "pointer",
-              opacity: !isUploading && !selectedFile ? 0.7 : 1,
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-            }}
-          />
-          {/* optional helper row to mirror QnA spacing; leave empty or add tips */}
+        {/* Navigation Bar */}
+        <div className="nav-wrap">
+          <NavigationBar />
         </div>
-      </div>
-
-      <NavigationBar />
+      </main>
     </div>
   );
 };

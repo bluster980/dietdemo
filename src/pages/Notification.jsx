@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { useNavigate } from 'react-router-dom';
 import NotificationCard from "../components/NotificationCard";
 import NotificationSub from "../components/NotificationSub";
 import BackArrow from "../assets/backarrow.svg";
@@ -58,10 +57,27 @@ const Notification = ({ onClose, role, trainerUserId }) => {
 
   return (
     <div
-      className="absolute bg-[#FFFFFF] h-[72.5vh] w-[93.5%] mt-[20px] rounded-[23px] border border-[#E9ECEF]"
-      style={{ boxShadow: "0px 24px 60px rgba(0, 0, 0, 0.18)" }}
+      className="absolute  rounded-[23px] border border-[#E9ECEF] flex flex-col"
+      style={{
+        // Perfect centering using transform technique
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        backgroundColor: "var(--bg)",
+        borderColor: "var(--profile-border)",
+
+        // Responsive dimensions
+        width: "93.5%",
+        maxWidth: "420px", // Max width for larger screens
+        height: "72.5vh",
+        maxHeight: "650px", // Max height constraint
+
+        boxShadow: "0px 24px 60px rgba(0, 0, 0, 0.18)",
+        overflow: "hidden",
+        paddingBottom: "10px",
+      }}
     >
-      <div className="flex items-center justify-between mt-[15px] px-3">
+      <div className="flex items-center justify-between mt-[15px] px-3 flex-shrink-0">
         {/* Left: always reserves space for back arrow */}
         <div className="min-w-[32px] flex justify-start mt-[-1.5%]">
           {selectedNotification && (
@@ -74,7 +90,7 @@ const Notification = ({ onClose, role, trainerUserId }) => {
         </div>
 
         {/* Title expands responsively */}
-        <p className="flex-1 text-center text-[#2D3436] font-urbanist font-semibold text-[25px] mt-[1px]">
+        <p className="flex-1 text-center font-urbanist font-semibold text-[25px] mt-[1px]" style={{color: "var(--general-charcoal-text)"}}>
           Notification
         </p>
 
@@ -93,22 +109,28 @@ const Notification = ({ onClose, role, trainerUserId }) => {
           />
         </div>
       </div>
-      <div>
-        <div className="w-full h-[1px] bg-[#F1F3F5]"></div>{" "}
-        {/* Added Devider for seperationn as per AI suggestion */}
+      {/* Divider - Fixed */}
+      <div className="w-full h-[1px] flex-shrink-0" style={{backgroundColor: "var(--profile-divider)"}}></div>
+
+      {/* Content Section - Grows to Fill Remaining Space */}
+      <div className="flex-1 min-h-0 overflow-hidden" style={{ paddingBottom: '0px' }}>
         {loading ? (
-          <div className="flex justify-center items-center h-[60vh]">
+          <div className="flex justify-center items-center h-full">
             Loading...
           </div>
         ) : notifications.length > 0 ? (
           <div
-            className="flex h-[65vh] justify-center overflow-y-scroll rounded-[23px]"
+            className="h-full overflow-y-auto flex justify-center px-2"
             style={{
               scrollbarWidth: "thin",
               scrollbarColor: "transparent transparent",
+              
+              // paddingBottom: "10px",
+              // border: "3px solid red",
+              // borderRadius: "0 0 23px 23px",
             }}
           >
-            <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col items-center w-full" style={{ paddingBottom: '15px' }} >
               {selectedNotification ? (
                 <NotificationSub
                   notification={selectedNotification}
@@ -121,7 +143,6 @@ const Notification = ({ onClose, role, trainerUserId }) => {
                       answerText
                     );
                     if (!error && data) {
-                      // locally patch the updated row so UI reflects instantly
                       setNotifications((prev) =>
                         prev.map((n) =>
                           n.notify_id === notify_id
@@ -140,29 +161,27 @@ const Notification = ({ onClose, role, trainerUserId }) => {
                   }}
                 />
               ) : (
-                notifications.map((notif) => (
+                notifications.map((notif, index) => (
                   <NotificationCard
-                    key={notif.notify_id}
-                    notification={notif}
-                    onClick={() => handleSelectNotification(notif)}
-                    isRead={readNotifications.includes(notif.notify_id)}
+                  key={notif.notify_id}
+                  notification={notif}
+                  onClick={() => handleSelectNotification(notif)}
+                  isRead={readNotifications.includes(notif.notify_id)}
+                  isLast={index === notifications.length - 1}
                   />
                 ))
               )}
             </div>
           </div>
         ) : (
-          <div className="flex flex-col justify-center items-center h-[59vh]">
+          <div className="flex flex-col justify-center items-center h-full px-4">
             <LetterBox />
             <p className="flex flex-col justify-center items-center mt-[15px]">
               <span className="text-[#000000] font-urbanist font-medium text-[28px]">
                 No Notification yet
               </span>
-              <span className="text-[#000000] font-urbanist text-[18px] h-[20px]">
-                Your notification will appear here once
-              </span>
-              <span className="text-[#000000] font-urbanist text-[18px]">
-                you’ve received them.
+              <span className="text-[#000000] font-urbanist text-[18px] text-center">
+                Your notification will appear here once you've received them.
               </span>
             </p>
           </div>

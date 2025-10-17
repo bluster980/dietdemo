@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import BackArrow from "../assets/backarrow.svg";
 import { useNavigate } from "react-router-dom";
 import NavigationBar from "../components/NavBar";
@@ -12,19 +12,7 @@ import {
   getTrainerUserId,
   fetchLatestMeeting,
 } from "../utils/supabaseQueries";
-
-// Visual tokens (aligned with QnA)
-const CARD_MAX_W = 420;
-const PAGE_GUTTER = 7; // same gutters as QnA [web:94][web:121]
-const BORDER_DEFAULT = "#E9ECEF";
-
-// Inner content width helper (aligned with QnA)
-const contentWidth = {
-  width: `calc(100% - ${PAGE_GUTTER * 2}px)`,
-  maxWidth: CARD_MAX_W - PAGE_GUTTER * 2,
-  margin: "0 auto",
-  boxSizing: "border-box",
-};
+import "../styles/meetingresponsive.css";
 
 const generateTimeSlots = () => {
   const now = new Date();
@@ -98,7 +86,7 @@ const Meeting = () => {
     };
 
     checkMeetingEligibility();
-  }, [userData, lastMeetingDate, setLastMeetingDate]); // layout unaffected [web:109]
+  }, [userData, lastMeetingDate, setLastMeetingDate]);
 
   useEffect(() => {
     setTimeSlots(generateTimeSlots());
@@ -111,28 +99,9 @@ const Meeting = () => {
     setActiveCallType(activeCallType === "video" ? "voice" : "video");
   };
 
-  const containerStyle = useMemo(
-    () => ({
-      width: `calc(100% - ${PAGE_GUTTER * 2}px)`, // sits inside page gutters [7]
-      maxWidth: CARD_MAX_W,
-      margin: "16px auto 0",
-      background: "#fff",
-      borderRadius: 16,
-      border: `1px solid ${BORDER_DEFAULT}`,
-      boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
-      padding: "22px 12px 10px 12px",
-      boxSizing: "border-box",
-      minHeight: "calc(100vh - 230px)",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "flex-start",
-    }),
-    []
-  );
-
   if (loading || isSubmitted === null) {
     return (
-      <div style={{ height: "100vh" }} className="flex justify-center items-center">
+      <div className="meeting-loading">
         {/* loader */}
       </div>
     );
@@ -172,163 +141,110 @@ const Meeting = () => {
   const isReady = !isSubmitted && (activeCallType === "voice" || activeCallType === "video");
 
   return (
-    <div
-      className="flex flex-col items-center"
-      style={{
-        background: "#ffffff",
-        overflowX: "hidden",
-        minHeight: "100vh",
-        width: "100%",
-        paddingLeft: PAGE_GUTTER,     // page gutters (aligned with QnA)
-        paddingRight: PAGE_GUTTER,
-        boxSizing: "border-box",
-      }}
-    >
-      {/* Back header row (same pattern as QnA) */}
-      <div
-        style={{
-          width: "100%",
-          maxWidth: 600,
-          margin: "0 auto",
-          height: 40,
-          display: "flex",
-          alignItems: "end",
-          position: "relative",
-        }}
-      >
-        <BackArrow
+    <div className="df-viewport">
+      <main className="meeting-page">
+        {/* Back Arrow */}
+        <button 
+          className="meeting-back-btn" 
           onClick={() => navigate(-1)}
-          style={{
-            width: 30,
-            height: 30,
-            position: "absolute",
-            left: -1,
-            cursor: "pointer",
-          }}
-        />
-      </div>
+          aria-label="Go back"
+        >
+          <BackArrow className="profile-back-icon" />
+        </button>
 
-      {/* Title below back arrow (same pattern as QnA) */}
-      <h1
-        style={{
-          width: "100%",
-          textAlign: "left",
-          margin: "24px 0 0 20px",
-          fontSize: 32,
-          lineHeight: "36px",
-          fontWeight: 600,
-          fontFamily: "urbanist, system-ui, sans-serif",
-        }}
-      >
-        Schedule Meeting
-      </h1>
+        {/* Page Title */}
+        <h1 className="meeting-page-title" style={{ color: "var(--general-charcoal-text)"}}>Schedule Meeting</h1>
 
-      {/* Card container (aligned with QnA) */}
-      <div
-        style={containerStyle}
-      >
-        {/* TOP GROUP (unique content) */}
-        <div id="meet-top" style={{ ...contentWidth }}>
-          {!isSubmitted && (
+        {/* Meeting Card */}
+        <div className="meeting-card" style={{backgroundColor: "var(--dietcard-bg)", borderColor: "var(--profile-border)"}}>
+          {!isSubmitted ? (
             <>
-              <div className="flex flex-col justify-center items-center text-center">
-                <p style={{ width: "100%", maxWidth: 360, textAlign: "left", margin: "0 0 0 0" }}>
-                  <span className="text-[22px] font-urbanist font-semibold text-[#2D3436]">
-                    Select Hour
-                  </span>
-                </p>
+              {/* Time Slots Section */}
+              <div className="meeting-section">
+                <h2 className="meeting-section-title" style={{color: "var(--faded-text)"}}>Select Hour</h2>
+                <div className="meeting-time-grid">
+                  {timeSlots.map((time, index) => {
+                    const selected = selectedIndex === index;
+                    return (
+                      <button
+                        key={index}
+                        type="button"
+                        onClick={() => setSelectedIndex(index)}
+                        className={`meeting-time-slot ${selected ? 'meeting-time-slot-selected' : ''}`}
+                        aria-pressed={selected}
+                      >
+                        {time}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              <div className="flex flex-wrap justify-between gap-y-[12px] mt-[12px]">
-                {timeSlots.map((time, index) => {
-                  const selected = selectedIndex === index;
-                  return (
-                    <button
-                      key={index}
-                      type="button"
-                      onClick={() => setSelectedIndex(index)}
-                      className="flex items-center justify-center"
-                      style={{
-                        width: 106,
-                        height: 44,
-                        borderRadius: 12,
-                        border: `1px solid ${selected ? "#FF7675" : "#E9ECEF"}`,
-                        background: selected ? "#FF7675" : "#F7F8FA",
-                        color: selected ? "#FFFFFF" : "#1F2937",
-                        cursor: "pointer",
-                        fontSize: 17.5,
-                        fontFamily: "urbanist, system-ui, sans-serif",
-                        fontWeight: selected ? 700 : 600,
-                        boxSizing: "border-box", // avoid overflow [web:109]
-                      }}
-                      aria-pressed={selected}
-                    >
-                      {time}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div style={{ height: 18, marginTop: 6 }} />
-
-              <div className="flex justify-between items-center mt-[0px] px-[2px]">
-                <p className="text-start">
-                  <span className="text-[22px] font-urbanist font-medium text-[#2D3436]">
-                    Voice Call
-                  </span>
-                </p>
-                <div className="mt-[2px]">
+              {/* Call Type Section */}
+              <div className="meeting-section meeting-call-type-section">
+                <div className="meeting-toggle-row">
+                  <span className="meeting-toggle-label" style={{color: "var(--faded-text)"}}>Voice Call</span>
                   <ToggleButton
                     isActive={activeCallType === "voice"}
                     onToggle={handleVoiceToggle}
                   />
                 </div>
-              </div>
-
-              <div className="flex justify-between items-center mt-[10px] px-[2px]">
-                <p className="text-start">
-                  <span className="text-[22px] font-urbanist font-medium text-[#2D3436]">
-                    Video Call
-                  </span>
-                </p>
-                <div className="mt-[2px]">
+                <div className="meeting-toggle-row">
+                  <span className="meeting-toggle-label" style={{color: "var(--faded-text)"}}>Video Call</span>
                   <ToggleButton
                     isActive={activeCallType === "video"}
                     onToggle={handleVideoToggle}
                   />
                 </div>
               </div>
-            </>
-          )}
 
-          {isSubmitted && (
-            <div
-              className="flex flex-col items-center text-center"
-              style={{ minHeight: "calc(100vh - 283px)", boxSizing: "border-box" }}
-            >
-              <div className="flex-1 w-full flex flex-col items-center justify-center">
-                <div style={{ height: 110, width: 120 }}>
-                  <Meetings />
-                </div>
+              {/* Spacer */}
+              <div className="meeting-spacer"></div>
 
-                <div
-                  className="flex flex-col justify-center items-center text-center mt-[18px]"
-                  style={{ width: "100%", maxWidth: 320, marginLeft: 0 }}
-                >
-                  <span className="text-[23px] font-urbanistdark text-[#000000]">
-                    <span>Your meeting with the trainer is scheduled at </span>
-                    <span className="text-[#FF7675]">{timeSlots[selectedIndex]}</span>
-                  </span>
+              {/* Submit Button */}
+              <div className="meeting-button-wrapper">
+                <PrimaryButton
+                  text="CONFIRM"
+                  onClick={handleSubmit}
+                  disabled={!isReady}
+                  customStyle={{
+                    width: "100%",
+                    height: "var(--meeting-button-height)",
+                    borderRadius: 12,
+                    background: !isReady ? "#FFC2BE" : "#FF7675",
+                    boxShadow: "none",
+                    cursor: !isReady ? "not-allowed" : "pointer",
+                    opacity: !isReady ? 0.7 : 1,
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                    overflow: "hidden",
+                    letterSpacing: 0,
+                    fontWeight: 700,
+                  }}
+                />
+                <div className="meeting-notice">
+                  <div className="meeting-notice-dot"></div>
+                  <span className="meeting-notice-text">One meeting per day</span>
                 </div>
               </div>
-
-              <div className="w-full flex justify-center items-center mb-[4px] mt-[8px]">
-                <span className="text-[15px] font-urbanist text-[#6B7280]">
-                  Do you want to change time?
-                </span>
+            </>
+          ) : (
+            /* Success State */
+            <div className="meeting-success-wrapper">
+              <div className="meeting-success-content">
+                <div className="meeting-success-icon">
+                  <Meetings />
+                </div>
+                <p className="meeting-success-text" style={{color: "var(--faded-text)"}}>
+                  Your meeting with the trainer is scheduled at{" "}
+                  <span className="meeting-success-time">{timeSlots[selectedIndex]}</span>
+                </p>
+              </div>
+              <div className="meeting-reschedule">
+                <span className="meeting-reschedule-text">Do you want to change time?</span>
                 <button
                   type="button"
-                  className="text-[15px] font-urbanist font-bold text-[#FF7675] ml-[6px] underline"
+                  className="meeting-reschedule-btn"
                   onClick={() => setIsSubmitted(false)}
                 >
                   Reschedule
@@ -338,47 +254,11 @@ const Meeting = () => {
           )}
         </div>
 
-        {/* Spacer to push CTA down (same pattern as QnA) */}
-        <div style={{ flex: 1 }} />
-
-        {/* Bottom CTA (same styling as QnA) */}
-        {!isSubmitted && (
-          <div
-            id="meet-bottom"
-            style={{ ...contentWidth, marginTop: 12, paddingBottom: 0 }}
-            className="flex flex-col items-center"
-          >
-            <PrimaryButton
-              text="CONFIRM"
-              onClick={handleSubmit}
-              disabled={!isReady}
-              customStyle={{
-                width: "100%",
-                height: 52,
-                borderRadius: 12,
-                background: !isReady ? "#FFC2BE" : "#FF7675",
-                boxShadow: "none",
-                cursor: !isReady ? "not-allowed" : "pointer",
-                opacity: !isReady ? 0.7 : 1,
-                whiteSpace: "nowrap",
-                textOverflow: "ellipsis",
-                overflow: "hidden",
-                letterSpacing: 0,
-                fontWeight: 700,
-              }}
-            />
-            <div
-              className="w-full flex justify-center items-center gap-x-[5px]"
-              style={{ marginTop: 8 }}
-            >
-              <div className="h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] font-urbanist" />
-              <span className="text-[12px] text-[#909497]">One meeting per day</span>
-            </div>
-          </div>
-        )}
-      </div>
-
-      <NavigationBar />
+        {/* Navigation Bar */}
+        <div className="nav-wrap">
+          <NavigationBar />
+        </div>
+      </main>
     </div>
   );
 };

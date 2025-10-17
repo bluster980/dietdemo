@@ -1,0 +1,494 @@
+/* ========================================
+   UPLOAD PAGE RESPONSIVE STYLES
+   ======================================== */
+
+/* ========================================
+   1) CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Upload page spacing */
+  --upload-page-pad: 12px;
+  --upload-back-size: 30px;
+  --upload-back-offset: 10px;
+  
+  /* Card dimensions */
+  --upload-card-max-width: 420px;
+  --upload-card-pad: 0px 12px 20px 12px;
+  --upload-card-radius: 16px;
+  
+  /* Typography */
+  --upload-title-size: 32px;
+  --upload-idle-title-size: 23px;
+  --upload-idle-subtitle-size: 20px;
+  --upload-label-size: 26px;
+  --upload-filename-size: 15px;
+  --upload-progress-label-size: 23px;
+  --upload-progress-filename-size: 16px;
+  
+  /* Upload button (circular) */
+  --upload-button-size: 170px;
+  --upload-icon-size: 60px;
+  
+  /* Progress circle */
+  --upload-progress-size: 280px;
+  
+  /* Spacing */
+  --upload-idle-title-top: 100px;
+  --upload-idle-subtitle-top: 20px;
+  --upload-button-top: 90px;
+  --upload-label-top: 40px;
+  --upload-progress-top: 50px;
+  --upload-progress-label-top: 50px;
+  
+  /* Submit button */
+  --upload-button-height: 52px;
+  
+  /* Colors */
+  --upload-bg: #FFFFFF;
+  --upload-text: #2D3436;
+  --upload-text-muted: #6C757D;
+  --upload-text-light: #6B7280;
+  --upload-text-progress: #9AA3A7;
+  --upload-button-bg: #F8F9FA;
+  --upload-border: #E9ECEF;
+  --upload-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.theme-dark {
+  --upload-button-bg: #1C1C1E;
+}
+/* ========================================
+   2) MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --upload-page-pad: 8px;
+    --upload-back-size: 26px;
+    
+    --upload-card-pad: 0px 10px 16px 10px;
+    --upload-card-radius: 14px;
+    
+    --upload-title-size: 26px;
+    --upload-idle-title-size: 18px;
+    --upload-idle-subtitle-size: 16px;
+    --upload-label-size: 21px;
+    --upload-filename-size: 12px;
+    --upload-progress-label-size: 18px;
+    --upload-progress-filename-size: 13px;
+    
+    --upload-button-size: 130px;
+    --upload-icon-size: 48px;
+    
+    --upload-progress-size: 220px;
+    
+    --upload-idle-title-top: 70px;
+    --upload-idle-subtitle-top: 16px;
+    --upload-button-top: 60px;
+    --upload-label-top: 30px;
+    --upload-progress-top: 35px;
+    --upload-progress-label-top: 35px;
+    
+    --upload-button-height: 46px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --upload-page-pad: 10px;
+    --upload-back-size: 28px;
+    
+    --upload-card-pad: 0px 11px 18px 11px;
+    
+    --upload-title-size: 28px;
+    --upload-idle-title-size: 20px;
+    --upload-idle-subtitle-size: 17px;
+    --upload-label-size: 23px;
+    --upload-filename-size: 13px;
+    --upload-progress-label-size: 20px;
+    --upload-progress-filename-size: 14px;
+    
+    --upload-button-size: 145px;
+    --upload-icon-size: 52px;
+    
+    --upload-progress-size: 240px;
+    
+    --upload-idle-title-top: 80px;
+    --upload-idle-subtitle-top: 18px;
+    --upload-button-top: 70px;
+    --upload-label-top: 35px;
+    --upload-progress-top: 40px;
+    --upload-progress-label-top: 40px;
+    
+    --upload-button-height: 48px;
+  }
+}
+
+/* Standard phones (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --upload-title-size: 30px;
+    --upload-idle-title-size: 21px;
+    --upload-idle-subtitle-size: 19px;
+    --upload-label-size: 24px;
+    --upload-filename-size: 14px;
+    --upload-progress-label-size: 21px;
+    --upload-progress-filename-size: 15px;
+    
+    --upload-button-size: 160px;
+    --upload-icon-size: 56px;
+    
+    --upload-progress-size: 260px;
+    
+    --upload-idle-title-top: 90px;
+    --upload-idle-subtitle-top: 19px;
+    --upload-button-top: 80px;
+    --upload-label-top: 38px;
+    --upload-progress-top: 45px;
+    --upload-progress-label-top: 45px;
+    
+    --upload-button-height: 50px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --upload-page-pad: 14px;
+    --upload-back-size: 32px;
+    
+    --upload-card-pad: 0px 14px 22px 14px;
+    
+    --upload-title-size: 34px;
+    --upload-idle-title-size: 24px;
+    --upload-idle-subtitle-size: 21px;
+    --upload-label-size: 27px;
+    --upload-filename-size: 16px;
+    --upload-progress-label-size: 24px;
+    --upload-progress-filename-size: 17px;
+    
+    --upload-button-size: 180px;
+    --upload-icon-size: 64px;
+    
+    --upload-progress-size: 290px;
+    
+    --upload-idle-title-top: 105px;
+    --upload-idle-subtitle-top: 21px;
+    --upload-button-top: 95px;
+    --upload-label-top: 42px;
+    --upload-progress-top: 52px;
+    --upload-progress-label-top: 52px;
+    
+    --upload-button-height: 54px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --upload-page-pad: 16px;
+    --upload-back-size: 34px;
+    
+    --upload-card-pad: 0px 16px 24px 16px;
+    
+    --upload-title-size: 36px;
+    --upload-idle-title-size: 25px;
+    --upload-idle-subtitle-size: 22px;
+    --upload-label-size: 28px;
+    --upload-filename-size: 17px;
+    --upload-progress-label-size: 25px;
+    --upload-progress-filename-size: 18px;
+    
+    --upload-button-size: 190px;
+    --upload-icon-size: 68px;
+    
+    --upload-progress-size: 300px;
+    
+    --upload-idle-title-top: 110px;
+    --upload-idle-subtitle-top: 22px;
+    --upload-button-top: 100px;
+    --upload-label-top: 44px;
+    --upload-progress-top: 55px;
+    --upload-progress-label-top: 55px;
+    
+    --upload-button-height: 56px;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --upload-page-pad: 6px;
+    --upload-back-size: 24px;
+    
+    --upload-card-pad: 0px 8px 14px 8px;
+    --upload-card-radius: 12px;
+    
+    --upload-title-size: 24px;
+    --upload-idle-title-size: 17px;
+    --upload-idle-subtitle-size: 15px;
+    --upload-label-size: 20px;
+    --upload-filename-size: 11px;
+    --upload-progress-label-size: 17px;
+    --upload-progress-filename-size: 12px;
+    
+    --upload-button-size: 120px;
+    --upload-icon-size: 44px;
+    
+    --upload-progress-size: 200px;
+    
+    --upload-idle-title-top: 60px;
+    --upload-idle-subtitle-top: 14px;
+    --upload-button-top: 50px;
+    --upload-label-top: 25px;
+    --upload-progress-top: 30px;
+    --upload-progress-label-top: 30px;
+    
+    --upload-button-height: 44px;
+  }
+}
+
+/* ========================================
+   3) UPLOAD PAGE LAYOUT
+   ======================================== */
+
+.upload-viewport {
+  width: 100vw;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: var(--upload-bg);
+}
+
+.upload-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* background: var(--upload-bg); */
+  padding: 0 var(--upload-page-pad);
+  padding-bottom: 80px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Back button */
+.upload-back-btn {
+  position: absolute;
+  top: 10px;
+  left: calc(var(--upload-page-pad) - 8px);
+  z-index: 10;
+  width: var(--upload-back-size);
+  height: var(--upload-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.upload-back-btn:active {
+  transform: scale(0.95);
+}
+
+.upload-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* Page Title */
+.upload-page-title {
+  margin: 60px 0 0 8px;
+  font-family: urbanist, sans-serif;
+  font-size: var(--upload-title-size);
+  font-weight: 600;
+  color: var(--upload-text);
+  line-height: 1.125;
+}
+
+/* ========================================
+   4) UPLOAD CARD
+   ======================================== */
+
+.upload-card {
+  width: 100%;
+  max-width: var(--upload-card-max-width);
+  margin: 20px auto 0;
+  background: var(--upload-bg);
+  border: 1px solid var(--upload-border);
+  border-radius: var(--upload-card-radius);
+  box-shadow: var(--upload-shadow);
+  padding: var(--upload-card-pad);
+  box-sizing: border-box;
+  min-height: calc(100vh - 240px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================
+   5) IDLE STATE
+   ======================================== */
+
+.upload-idle-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.upload-idle-title {
+  font-family: urbanist, sans-serif;
+  font-size: var(--upload-idle-title-size);
+  font-weight: 600;
+  color: var(--upload-text);
+  line-height: 1.13;
+  margin: var(--upload-idle-title-top) 0 0 0;
+}
+
+.upload-idle-subtitle {
+  font-family: urbanist, sans-serif;
+  font-size: var(--upload-idle-subtitle-size);
+  line-height: 1.3;
+  color: var(--upload-text-muted);
+  margin: var(--upload-idle-subtitle-top) 0 0 0;
+}
+
+.upload-button-area {
+  position: relative;
+  width: var(--upload-button-size);
+  height: var(--upload-button-size);
+  margin-top: var(--upload-button-top);
+  margin-bottom: 16px;
+}
+
+.upload-button {
+  width: 100%;
+  height: 100%;
+  background: var(--upload-button-bg);
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  padding: 0;
+}
+
+.upload-button:active {
+  transform: scale(0.97);
+}
+
+.upload-icon {
+  width: var(--upload-icon-size);
+  height: var(--upload-icon-size);
+}
+
+.upload-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--upload-label-size);
+  font-weight: 600;
+  color: var(--upload-text);
+  margin: var(--upload-label-top) 0 0 0;
+}
+
+.upload-filename-area {
+  height: 15px;
+  line-height: 18px;
+  margin-top: 8px;
+}
+
+.upload-filename {
+  font-family: urbanist, sans-serif;
+  font-size: var(--upload-filename-size);
+  color: var(--upload-text-light);
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========================================
+   6) UPLOADING STATE
+   ======================================== */
+
+.upload-progress-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-progress-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--upload-progress-top);
+  padding: 24px;
+  overflow: visible;
+}
+
+.upload-progress-wrapper > div {
+  overflow: visible;
+}
+
+.upload-progress-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--upload-progress-label-size);
+  font-weight: 600;
+  color: var(--upload-text);
+  margin: var(--upload-progress-label-top) 0 0 0;
+}
+
+.upload-progress-filename {
+  font-family: urbanist, sans-serif;
+  font-size: var(--upload-progress-filename-size);
+  color: var(--upload-text-progress);
+  max-width: 280px;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ========================================
+   7) SUBMIT BUTTON
+   ======================================== */
+
+.upload-spacer {
+  flex: 1;
+}
+
+.upload-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* ========================================
+   8) ELLIPSIS ANIMATION (if needed)
+   ======================================== */
+
+@keyframes ellipsis {
+  0% { content: ""; }
+  25% { content: "."; }
+  50% { content: ".."; }
+  75% { content: "..."; }
+  100% { content: ""; }
+}
+
+.ellipsis-dots::after {
+  content: "";
+  animation: ellipsis 1.5s infinite;
+}

@@ -6,6 +6,7 @@ import NavigationBar from "../components/NavBar";
 import DietCard from "../components/DietCard";
 import { fetchUserDietWithDetails } from "../utils/supabaseQueries";
 import { useAuth } from "../context/AuthContext";
+import "../styles/dietresponsive.css";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
@@ -17,16 +18,15 @@ function dayIndex(day) {
 const Diet = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { ready } = useAuth(); // from your AuthProvider
+  const { ready } = useAuth();
   const [activeTab, setActiveTab] = useState("");
   const [loading, setLoading] = useState(true);
   const [dietByMealTime, setDietByMealTime] = useState({});
   const [userId, setUserId] = useState(null);
   const prevDayRef = useRef(null);
-  const [slideDir, setSlideDir] = useState("none"); // 'left'|'right'|'none'
+  const [slideDir, setSlideDir] = useState("none");
   const [selectedDay, setSelectedDay] = useState(null);
 
-  // Keep userId in React state so it’s reactive
   useEffect(() => {
     const uid = localStorage.getItem("user_id");
     setUserId(uid || null);
@@ -48,7 +48,6 @@ const Diet = () => {
 
   const handleDateChange = (dateObj) => {
     setSelectedDay(dateObj.day);
-    // setSelectedDay(dateObj.day);
   };
 
   useEffect(() => {
@@ -63,8 +62,8 @@ const Diet = () => {
     const prevIdx = dayIndex(prev);
     const diff = (curIdx - prevIdx + 7) % 7;
     if (diff === 0) setSlideDir("none");
-    else if (diff <= 3) setSlideDir("left"); // forward: slide in from right
-    else setSlideDir("right"); // backward: slide in from left
+    else if (diff <= 3) setSlideDir("left");
+    else setSlideDir("right");
     prevDayRef.current = selectedDay;
   }, [selectedDay]);
 
@@ -83,7 +82,6 @@ const Diet = () => {
       }
 
       if (Array.isArray(data) && data.length > 0) {
-        // Group by meal_time, merging nutrition with quantity
         const grouped = data.reduce((acc, item) => {
           const { meal_time, meals, quantity, meal_name } = item;
           if (!meal_time) return acc;
@@ -114,7 +112,6 @@ const Diet = () => {
   const isReady = !loading;
   const ORDER = { breakfast: 0, lunch: 1, dinner: 2, snacks: 3 };
 
-  // Build sorted entries for selected day
   const sortedEntries = Object.entries(dietByMealTime)
     .filter(([, meals]) => Array.isArray(meals) && meals.length > 0)
     .sort(([a], [b]) => {
@@ -124,44 +121,30 @@ const Diet = () => {
     });
 
   return (
-    <div
-      className="flex flex-col justify-between items-center"
-      style={{
-        background: "#FFFFFF",
-      }}
-    >
-      <div className="flex flex-col">
-        <BackArrow
-          alt="back arrow"
+    <div className="df-viewport">
+      <main className="diet-page">
+        {/* Back Arrow */}
+        <button 
+          className="diet-back-btn" 
           onClick={() => navigate(-1)}
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            display: "flex",
-            top: "10px",
-            left: "5px",
-            zIndex: 1,
-          }}
-        />
-        <div className="flex flex-col mt-[50px]">
+          aria-label="Go back"
+        >
+          <BackArrow className="diet-back-icon" />
+        </button>
+
+        {/* Day Date Selector */}
+        <div className="diet-date-wrap">
           <DayDate onDateChange={handleDateChange} />
         </div>
-        <div
-          className="flex flex-col w-full h-[76vh] overflow-y-scroll mt-4"
-          style={{
-            scrollbarWidth: "thin",
-            scrollbarColor: "transparent transparent",
-          }}
-        >
+
+        {/* Diet Cards List */}
+        <div className="diet-list">
           {!isReady ? (
-            <p className="text-center text-gray-500 mt-6">
-              Loading diet plan...
-            </p>
+            <p className="diet-empty">Loading diet plan...</p>
           ) : (
             <div
               key={selectedDay || "static"}
-              className={`slide-container ${
+              className={`diet-slides ${
                 slideDir === "left"
                   ? "enter-left"
                   : slideDir === "right"
@@ -179,15 +162,17 @@ const Diet = () => {
                   </div>
                 ))
               ) : (
-                <p className="text-center text-gray-400 mt-6">
-                  No diet plan configured
-                </p>
+                <p className="diet-empty">No diet plan configured</p>
               )}
             </div>
           )}
         </div>
-      </div>
-      <NavigationBar activeTab={activeTab} onTabChange={handleTabChange} />
+
+        {/* Navigation Bar */}
+        <div className="nav-wrap">
+          <NavigationBar activeTab={activeTab} onTabChange={handleTabChange} />
+        </div>
+      </main>
     </div>
   );
 };

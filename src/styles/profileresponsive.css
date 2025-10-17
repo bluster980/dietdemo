@@ -1,0 +1,778 @@
+/* ========================================
+   PROFILE PAGE RESPONSIVE STYLES
+   ======================================== */
+
+/* ========================================
+   1) CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Profile page spacing */
+  --profile-page-pad: 12px;
+  --profile-card-gap: 10px;
+  --profile-back-size: 30px;
+  --profile-back-offset: 10px;
+  
+  /* Profile info card */
+  --profile-info-height: 115px;
+  --profile-info-pad: 6px;
+  --profile-image-size: 100px;
+  --profile-image-offset: 5px;
+  
+  /* Statistics card */
+  --profile-stats-height: 160px;
+  --profile-stats-pad: 8px;
+  --profile-stats-grid-gap: 16px;
+  
+  /* Typography */
+  --profile-name-size: 20px;
+  --profile-mobile-size: 13px;
+  --profile-info-size: 13px;
+  --profile-stats-title-size: 24px;
+  --profile-stats-label-size: 15px;
+  --profile-stats-value-size: 20px;
+  --profile-goals-title-size: 22px;
+  --profile-goals-size: 15px;
+  --profile-menu-title-size: 20px;
+  --profile-menu-subtitle-size: 15px;
+  
+  /* Icons */
+  --profile-icon-size: 20px;
+  --profile-stats-icon-size: 27px;
+  --profile-menu-icon-size: 27px;
+  
+  /* Edit button */
+  --profile-edit-width: 50px;
+  --profile-edit-height: 23px;
+  --profile-edit-icon-size: 15px;
+  --profile-edit-font-size: 12px;
+  
+  /* Colors */
+  --profile-bg: var(--bg, #FFFFFF);
+  --profile-card-bg: var(--profile-section-card-bg, #FFFFFF);
+  --profile-border: var(--profile-border, #E9ECEF);
+  --profile-text: var(--general-charcoal-text, #2D3436);
+  --profile-text-muted: var(--faded-text, #6C757D);
+  --profile-edit-bg: var(--edit-button-bg, #F8F9FA);
+  --profile-edit-border: var(--edit-button-border, #E9ECEF);
+  --profile-edit-text: var(--edit-button-text, #6C757D);
+  --profile-done-bg: #FF7675;
+  --profile-done-text: #FFFFFF;
+  --profile-pro-bg: #E6FCF5;
+  --profile-pro-border: #C3FAE8;
+  --profile-pro-text: #0B7285;
+  --profile-dot-color: #4ECDC4;
+  --profile-divider: var(--profile-divider, #F1F3F5);
+  --profile-shadow: 0px 3px 10px rgba(0, 0, 0, 0.07);
+  --profile-done-shadow: 0px 6px 18px rgba(255, 118, 117, 0.30);
+}
+
+/* ========================================
+   2) MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --profile-page-pad: 8px;
+    --profile-card-gap: 8px;
+    --profile-back-size: 26px;
+    
+    --profile-info-height: 100px;
+    --profile-info-pad: 4px;
+    --profile-image-size: 85px;
+    
+    --profile-stats-height: 140px;
+    --profile-stats-pad: 8px;
+    --profile-stats-grid-gap: 12px;
+    
+    --profile-name-size: 17px;
+    --profile-mobile-size: 11px;
+    --profile-info-size: 11px;
+    --profile-stats-title-size: 20px;
+    --profile-stats-label-size: 13px;
+    --profile-stats-value-size: 17px;
+    --profile-goals-title-size: 19px;
+    --profile-goals-size: 13px;
+    --profile-menu-title-size: 17px;
+    --profile-menu-subtitle-size: 13px;
+    
+    --profile-icon-size: 17px;
+    --profile-stats-icon-size: 23px;
+    --profile-menu-icon-size: 23px;
+    
+    --profile-edit-width: 45px;
+    --profile-edit-height: 21px;
+    --profile-edit-icon-size: 13px;
+    --profile-edit-font-size: 11px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --profile-page-pad: 10px;
+    --profile-card-gap: 9px;
+    --profile-back-size: 28px;
+    
+    --profile-info-height: 105px;
+    --profile-image-size: 90px;
+    
+    --profile-stats-height: 145px;
+    --profile-stats-grid-gap: 14px;
+    
+    --profile-name-size: 18px;
+    --profile-mobile-size: 12px;
+    --profile-info-size: 12px;
+    --profile-stats-title-size: 21px;
+    --profile-stats-label-size: 14px;
+    --profile-stats-value-size: 18px;
+    --profile-goals-title-size: 20px;
+    --profile-goals-size: 14px;
+    --profile-menu-title-size: 18px;
+    --profile-menu-subtitle-size: 14px;
+    
+    --profile-icon-size: 18px;
+    --profile-stats-icon-size: 24px;
+    --profile-menu-icon-size: 24px;
+  }
+}
+
+/* Standard phones (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --profile-page-pad: 12px;
+    --profile-image-size: 95px;
+    --profile-info-height: 110px;
+    --profile-stats-height: 150px;
+    
+    --profile-name-size: 19px;
+    --profile-stats-title-size: 22px;
+    --profile-goals-title-size: 21px;
+    --profile-menu-title-size: 19px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --profile-page-pad: 14px;
+    --profile-card-gap: 12px;
+    --profile-back-size: 32px;
+    
+    --profile-info-height: 120px;
+    --profile-image-size: 105px;
+    
+    --profile-stats-height: 165px;
+    --profile-stats-grid-gap: 18px;
+    
+    --profile-name-size: 21px;
+    --profile-mobile-size: 14px;
+    --profile-info-size: 14px;
+    --profile-stats-title-size: 25px;
+    --profile-stats-label-size: 16px;
+    --profile-stats-value-size: 21px;
+    --profile-goals-title-size: 23px;
+    --profile-goals-size: 16px;
+    --profile-menu-title-size: 21px;
+    --profile-menu-subtitle-size: 16px;
+    
+    --profile-icon-size: 21px;
+    --profile-stats-icon-size: 28px;
+    --profile-menu-icon-size: 28px;
+    
+    --profile-edit-width: 55px;
+    --profile-edit-height: 25px;
+    --profile-edit-font-size: 13px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --profile-page-pad: 16px;
+    --profile-card-gap: 14px;
+    --profile-back-size: 34px;
+    
+    --profile-info-height: 125px;
+    --profile-image-size: 110px;
+    
+    --profile-stats-height: 170px;
+    --profile-stats-grid-gap: 20px;
+    
+    --profile-name-size: 22px;
+    --profile-mobile-size: 15px;
+    --profile-info-size: 15px;
+    --profile-stats-title-size: 26px;
+    --profile-stats-label-size: 17px;
+    --profile-stats-value-size: 22px;
+    --profile-goals-title-size: 24px;
+    --profile-goals-size: 17px;
+    --profile-menu-title-size: 22px;
+    --profile-menu-subtitle-size: 17px;
+    
+    --profile-icon-size: 22px;
+    --profile-stats-icon-size: 29px;
+    --profile-menu-icon-size: 29px;
+    
+    --profile-edit-width: 60px;
+    --profile-edit-height: 26px;
+    --profile-edit-font-size: 14px;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --profile-page-pad: 6px;
+    --profile-card-gap: 7px;
+    --profile-back-size: 24px;
+    
+    --profile-info-height: 95px;
+    --profile-image-size: 80px;
+    
+    --profile-stats-height: 130px;
+    --profile-stats-pad: 7px;
+    --profile-stats-grid-gap: 10px;
+    
+    --profile-name-size: 16px;
+    --profile-mobile-size: 10px;
+    --profile-info-size: 10px;
+    --profile-stats-title-size: 18px;
+    --profile-stats-label-size: 12px;
+    --profile-stats-value-size: 16px;
+    --profile-goals-title-size: 17px;
+    --profile-goals-size: 12px;
+    --profile-menu-title-size: 16px;
+    --profile-menu-subtitle-size: 12px;
+    
+    --profile-icon-size: 16px;
+    --profile-stats-icon-size: 21px;
+    --profile-menu-icon-size: 21px;
+    
+    --profile-edit-width: 42px;
+    --profile-edit-height: 20px;
+    --profile-edit-icon-size: 12px;
+    --profile-edit-font-size: 10px;
+  }
+}
+
+/* ========================================
+   3) PROFILE PAGE LAYOUT
+   ======================================== */
+
+.profile-viewport {
+  width: 100vw;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: var(--profile-bg);
+}
+
+.profile-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--profile-bg);
+  padding-bottom: 80px;
+  box-sizing: border-box;
+}
+
+.profile-back-btn {
+  position: absolute;
+  top: var(--profile-back-offset);
+  left: 5px;
+  z-index: 10;
+  width: var(--profile-back-size);
+  height: var(--profile-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.profile-back-btn:active {
+  transform: scale(0.95);
+}
+
+.profile-back-icon {
+  width: 100%;
+  height: 100%;
+  color: var(--profile-text-muted);
+}
+
+.profile-content {
+  margin-top: 50px;
+  padding: 0 var(--profile-page-pad);
+  display: flex;
+  flex-direction: column;
+  gap: var(--profile-card-gap);
+}
+
+/* ========================================
+   4) PROFILE INFO CARD
+   ======================================== */
+
+.profile-info-card {
+  width: 100%;
+  height: var(--profile-info-height);
+  background: var(--profile-card-bg);
+  border: 1px solid var(--profile-border);
+  border-radius: 10px;
+  box-shadow: var(--profile-shadow);
+  padding: var(--profile-info-pad);
+  box-sizing: border-box;
+}
+
+.profile-info-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  height: 100%;
+}
+
+/* Profile Image */
+.profile-image-section {
+  flex-shrink: 0;
+}
+
+.profile-image-container {
+  position: relative;
+  width: var(--profile-image-size);
+  height: var(--profile-image-size);
+  border-radius: 50%;
+  overflow: hidden;
+  background: #E5E5E5;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid var(--profile-border);
+  border-radius: 50%;
+}
+
+.profile-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-family: urbanist, sans-serif;
+  font-size: calc(var(--profile-image-size) * 0.2);
+  color: #9CA3AF;
+  gap: 0px;
+  line-height: normal;
+}
+
+.profile-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: urbanist, sans-serif;
+  font-weight: 700;
+  font-size: calc(var(--profile-image-size) * 0.22);
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+/* Profile Details */
+.profile-details-section {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profile-name-edit,
+.profile-name-display {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name-input {
+  font-family: urbanist, sans-serif;
+  font-weight: 700;
+  font-size: var(--profile-name-size);
+  color: var(--profile-text);
+  border: 1px solid var(--profile-border);
+  border-radius: 4px;
+  padding: 2px 4px;
+  width: calc(100% - 8px);
+  outline: none;
+  background-color: var(--dietcard-bg);
+}
+
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.profile-name {
+  font-family: urbanist, sans-serif;
+  font-weight: 700;
+  font-size: var(--profile-name-size);
+  color: var(--profile-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-pro-badge {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: roboto, sans-serif;
+  font-weight: 600;
+  font-size: calc(var(--profile-name-size) * 0.6);
+  color: var(--profile-pro-text);
+  background: var(--profile-pro-bg);
+  border: 1px solid var(--profile-pro-border);
+  border-radius: 10px;
+  padding: 2px 6px;
+  height: calc(var(--profile-name-size) * 0.9);
+}
+
+.profile-mobile {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-mobile-size);
+  color: var(--profile-text-muted);
+  margin-top: -3px;
+}
+
+.profile-info-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 0px;
+}
+
+.profile-icon {
+  width: var(--profile-icon-size);
+  height: var(--profile-icon-size);
+  flex-shrink: 0;
+}
+
+.profile-icon-ml {
+  margin-left: 10px;
+}
+
+.profile-info-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-info-size);
+  color: var(--profile-text-muted);
+  white-space: nowrap;
+}
+
+.profile-age-input,
+.profile-diet-input,
+.profile-trainer-input {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-info-size);
+  color: var(--profile-text);
+  border: 1px solid var(--profile-border);
+  border-radius: 3px;
+  padding: 1px 3px;
+  outline: none;
+  background-color: var(--dietcard-bg);
+}
+
+.profile-age-input {
+  width: 25px;
+}
+
+.profile-diet-input {
+  width: 55px;
+}
+
+.profile-trainer-input {
+  width: 70px;
+}
+
+.profile-diet-text {
+  width: 50px;
+}
+
+/* Edit/Done Button */
+.profile-edit-button-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-top: 5px;
+  flex-shrink: 0;
+}
+
+.profile-edit-button,
+.profile-done-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  width: var(--profile-edit-width);
+  height: var(--profile-edit-height);
+  border-radius: 11px;
+  border: 1px solid;
+  font-family: urbanist, sans-serif;
+  font-weight: 700;
+  font-size: var(--profile-edit-font-size);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.profile-edit-button {
+  background: var(--profile-edit-bg);
+  border-color: var(--profile-edit-border);
+  color: var(--profile-edit-text);
+}
+
+.profile-done-button {
+  background: var(--profile-done-bg);
+  border-color: var(--profile-done-bg);
+  color: var(--profile-done-text);
+  box-shadow: var(--profile-done-shadow);
+  width: calc(var(--profile-edit-width) + 10px);
+}
+
+.profile-edit-button:active,
+.profile-done-button:active {
+  transform: scale(0.95);
+}
+
+.profile-edit-icon,
+.profile-done-icon {
+  width: var(--profile-edit-icon-size);
+  height: var(--profile-edit-icon-size);
+}
+
+.profile-done-icon {
+  color: var(--profile-done-text);
+}
+
+/* ========================================
+   5) STATISTICS CARD
+   ======================================== */
+
+.profile-stats-card {
+  width: 100%;
+  min-height: var(--profile-stats-height);
+  background: var(--profile-card-bg);
+  border: 1px solid var(--profile-border);
+  border-radius: 10px;
+  box-shadow: var(--profile-shadow);
+  padding-left: var(--profile-stats-pad);
+  padding-right: var(--profile-stats-pad);
+  padding-top: var(--profile-stats-pad);
+  box-sizing: border-box;
+}
+
+.profile-stats-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0px;
+}
+
+.profile-stats-icon {
+  width: var(--profile-stats-icon-size);
+  height: var(--profile-stats-icon-size);
+}
+
+.profile-stats-title {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-stats-title-size);
+  color: var(--profile-text);
+}
+
+.profile-stats-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--profile-divider);
+  margin: 0px 0;
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--profile-stats-grid-gap);
+  padding: 8px 5px;
+}
+
+.profile-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-stat-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-stats-label-size);
+  color: var(--profile-text-muted);
+  line-height: 1;
+  margin-bottom: 0px;
+}
+
+.profile-stat-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  margin-top: 0px;
+}
+
+.profile-stat-value {
+  font-family: urbanist, sans-serif;
+  font-weight: 700;
+  font-size: var(--profile-stats-value-size);
+  color: var(--profile-text);
+}
+
+.profile-stat-unit {
+  font-family: urbanist, sans-serif;
+  font-weight: 700;
+  font-size: var(--profile-stats-value-size);
+  color: var(--profile-text-muted);
+}
+
+/* ========================================
+   6) MY GOALS SECTION
+   ======================================== */
+
+.profile-goals-section {
+  margin-top: 0px;
+}
+
+.profile-goals-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.profile-goals-title {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-goals-title-size);
+  color: var(--profile-text);
+}
+
+.profile-goals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 5px;
+  padding: 0 13px;
+}
+
+.profile-goal-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-goal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--profile-dot-color);
+  flex-shrink: 0;
+}
+
+.profile-goal-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-goals-size);
+  color: var(--profile-text-muted);
+}
+
+.profile-goal-value {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-goals-size);
+  color: var(--profile-text);
+}
+
+.profile-goal-input {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-goals-size);
+  color: var(--profile-text);
+  border: 1px solid var(--profile-border);
+  border-radius: 3px;
+  padding: 1px 3px;
+  width: 35px;
+  outline: none;
+  background-color: var(--dietcard-bg);
+}
+
+/* ========================================
+   7) MENU SECTION
+   ======================================== */
+
+.profile-menu-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.profile-menu-item:active {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.profile-menu-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.profile-menu-icon {
+  width: var(--profile-menu-icon-size);
+  height: var(--profile-menu-icon-size);
+  margin-top: 10px;
+  color: var(--profile-text-muted);
+}
+
+.profile-menu-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-menu-title {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-menu-title-size);
+  color: var(--profile-text);
+}
+
+.profile-menu-subtitle {
+  font-family: urbanist, sans-serif;
+  font-size: var(--profile-menu-subtitle-size);
+  color: var(--profile-text-muted);
+  margin-top: -4px;
+}
+
+.profile-menu-arrow {
+  transform: rotate(180deg);
+  color: var(--profile-text-muted);
+  width: 20px;
+  height: 20px;
+}
+
+.profile-menu-divider {
+  width: calc(100% - 20px);
+  height: 1px;
+  background: var(--profile-divider);
+  margin: 10px auto;
+}

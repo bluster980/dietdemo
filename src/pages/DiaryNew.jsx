@@ -164,26 +164,26 @@ const DiaryNew = () => {
           background: "#FFFFFF",
         }}
       >
-        <div className="flex justify-center items-center h-[55px] w-full mt-[2vh]" style={{paddingLeft: "var(--padding)", paddingRight: "var(--padding)"}}>
-          <h1
-            className="flex justify-center items-center text-[#2D3436] font-semibold font-urbanist text-[28px]"
-            style={{
-              lineHeight: "1",
-              // paddingLeft: "var(--card-pad)",
-              width: "86%",
-              fontSize: "var(--fs-title)",
-            }}
-          >
-            Hello, Champ! Complete your daily nutrition
-          </h1>
-          <div
-            className=" flex justify-center items-center w-[14%] h-full rounded-full border border-[#E9ECEF] bg-white"
-            style={{ boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)" }}
-            onClick={handleNotification}
-          >
-            <NotificationBell />
-          </div>
-        </div>
+        <div className="page" style={{ padding: "var(--padding)" }}>
+  <div className="flex items-center justify-between">
+    <h1 className="font-urbanist font-semibold" style={{ color: "var(--text)", fontSize: "var(--fs-title)", lineHeight: 1.1 }}>
+      Hello, Champ! Complete your daily nutrition
+    </h1>
+    <button
+      onClick={handleNotification}
+      className="shrink-0 rounded-full border flex items-center justify-center"
+      style={{
+        width: 48, height: 48,
+        borderColor: "var(--border)",
+        background: "var(--surface-2)",
+        boxShadow: "0px 2px 8px var(--overlay-strong)"
+      }}
+      aria-label="Notifications"
+    >
+      <NotificationBell />
+    </button>
+  </div>
+  </div>
         {showNotification && (
           <motion.div
             className="flex justify-center items-center z-[90] absolute bg-black/50 w-[100%] h-[100%]"
@@ -194,7 +194,7 @@ const DiaryNew = () => {
             <Notification onClose={() => setShowNotification(false)} />
           </motion.div>
         )}
-        <div>
+        <div className="flex flex-col ">
           <section
             className="card w-full border bg-white border-[#E9ECEF] mt-[10px]"
             style={{
@@ -208,12 +208,12 @@ const DiaryNew = () => {
               transform: `scale(var(--resolution))`,
             }}
           >
-            <div className="items-center mt-[px]">
+            <div className="items-center ">
               {/* <div
               className="border bg-white border-[#E9ECEF] border-[1px] rounded-[23px] w-[384px] h-[391px]"
               style={{ boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.08)" }}
             > */}
-              <div className="flex justify-between mt-[px] ml-[5px]">
+              <div className="flex justify-between  ml-[5px]">
                 <span
                   className="text-[#2D3436] font-urbanist text-[22px]"
                   style={{ fontSize: "var(--fs-h2)" }}
@@ -319,11 +319,11 @@ const DiaryNew = () => {
               {/* </div> */}
             </div>
           </section>
+          <div style={{ height: "var(--pad-between-cards)" }}></div>
           <section
-            className="card w-full border border-[#E9ECEF] mt-[5px]"
+            className="card w-full border border-[#E9ECEF] mt-[-var(--card-pad)]"
             style={{
               borderRadius: "var(--card-radius)",
-              // padding: "var(--card-pad)",
               paddingRight: "var(--card-pad)",
               paddingLeft: "var(--card-pad)",
               paddingTop: "var(--card-pad)",
@@ -331,11 +331,7 @@ const DiaryNew = () => {
               transform: `scale(var(--resolution))`,
             }}
           >
-            {/* <div
-              className="border border-[#E9ECEF] border-[1px] rounded-[23px] w-[384px] h-[262px] mt-[8px]"
-              style={{ boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.08)" }}
-            > */}
-            <h1 className="mt-[px] ml-[5px]">
+            <h1 className=" ml-[5px]">
               <span
                 className="text-[#2D3436] font-urbanist text-[22px]"
                 style={{ fontSize: "var(--fs-h2)" }}
@@ -347,7 +343,6 @@ const DiaryNew = () => {
             <div className="flex justify-center mt-[10px] scroll-smooth-x">
               <DemoCharts labels={labels} dataPoints={data} />
             </div>
-            {/* </div> */}
           </section>
         </div>
         <BottomSheet

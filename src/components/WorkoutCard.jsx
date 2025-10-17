@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from "react";
-// import dumbellchest from '../assets/situps.gif';
 import AddPlus from "../assets/addplus.svg";
 import toast from "react-hot-toast";
 
@@ -62,104 +61,83 @@ const WorkoutCard = ({
       : exercise.sets ?? setsInput;
 
   return (
-    <div className="flex flex-col justify-center items-center mt-[12px]">
-      <div
-        className="flex justify-center items-center w-[385px] h-[160px] border border-[#E9ECEF] rounded-[10px] bg-white"
-        style={{ boxShadow: "0px 4px 14px rgba(0, 0, 0, 0.08)" }}
-      >
-        <div className="flex flex-col w-full ">
-          <div className="flex flex-col ml-[20px] mt-[px]">
-            <span className="text-[#2D3436] font-urbanist font-medium text-[22px]">
-              {exercise.exercise_name}
-            </span>
-            <p className="flex mt-[5px]">
-              <span className="text-[#6C757D] font-urbanist text-[16px]">
-                {" "}
-                Target:{" "}
-              </span>
-              <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
-                {exercise.target}
-              </span>
-            </p>
-            {isClientView ? (
-              <p className="flex">
-                <span className="text-[#6C757D] font-urbanist text-[16px]"> Reps: </span>
-                <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
-                  {repsDisplay}
-                </span>
-              </p>
-            ) : isSelectAndEditing ? (
-              <div className="flex items-center">
-                <span className="text-[#6C757D] font-urbanist text-[16px]"> Reps: </span>
-                <input
-                  type="text"
-                  className="ml-[6px] w-[70px] h-[24px] px-[6px] rounded-[6px] border border-[#E9ECEF] text-[#2D3436] font-urbanist text-[15px] font-medium outline-none"
-                  placeholder={exercise.reps || "e.g. 10-12"}
-                  value={repsInput}
-                  onFocus={beginEdit}
-                  onChange={(e) => setRepsInput(e.target.value)}
-                />
-              </div>
-            ) : (
-              <p className="flex">
-                <span className="text-[#6C757D] font-urbanist text-[16px]"> Reps: </span>
-                <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
-                  {repsDisplay}
-                </span>
-              </p>
-            )}
-            {isClientView ? (
-              <p className="flex">
-                <span className="text-[#6C757D] font-urbanist text-[16px]"> Sets: </span>
-                <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
-                  {setsDisplay}
-                </span>
-              </p>
-            ) : isSelectAndEditing ? (
-              <div className="flex items-center">
-                <span className="text-[#6C757D] font-urbanist text-[16px]"> Sets: </span>
-                <input
-                  type="number"
-                  min="1"
-                  className="ml-[6px] w-[60px] h-[24px] px-[6px] rounded-[6px] border border-[#E9ECEF] text-[#2D3436] font-urbanist text-[15px] font-medium outline-none"
-                  placeholder={exercise.sets || "3"}
-                  value={setsInput}
-                  onFocus={beginEdit}
-                  onChange={(e) => setSetsInput(e.target.value)}
-                />
-              </div>
-            ) : (
-              <p className="flex">
-                <span className="text-[#6C757D] font-urbanist text-[16px]"> Sets: </span>
-                <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
-                  {setsDisplay}
-                </span>
-              </p>
-            )}
-            <p className="flex">
-              <span className="text-[#6C757D] font-urbanist text-[16px]">
-                {" "}
-                Rest:{" "}
-              </span>
-              <span className="text-[#2D3436] font-urbanist text-[16px] ml-[4px] font-medium">
-                {exercise.rest}
-              </span>
-            </p>
+    <div className="workout-card-wrapper">
+      <div className="workout-card" style={{ backgroundColor: "var(--profile-section-card-bg)", borderColor: "var(--profile-border)" }}>
+        {/* Left side - Exercise info */}
+        <div className="workout-card-info">
+          <h3 className="workout-card-title" style={{color: "var(--general-charcoal-text"}}>{exercise.exercise_name}</h3>
+          
+          <div className="workout-card-detail">
+            <span className="workout-label" style={{color: "var(--faded-text"}}>Target:</span>
+            <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{exercise.target}</span>
+          </div>
+
+          {isClientView ? (
+            <div className="workout-card-detail">
+              <span className="workout-label" style={{color: "var(--faded-text"}}>Reps:</span>
+              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{repsDisplay}</span>
+            </div>
+          ) : isSelectAndEditing ? (
+            <div className="workout-card-detail">
+              <span className="workout-label">Reps:</span>
+              <input
+                type="text"
+                className="workout-input"
+                placeholder={exercise.reps || "e.g. 10-12"}
+                value={repsInput}
+                onFocus={beginEdit}
+                onChange={(e) => setRepsInput(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div className="workout-card-detail">
+              <span className="workout-label" style={{color: "var(--faded-text"}}>Reps:</span>
+              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{repsDisplay}</span>
+            </div>
+          )}
+
+          {isClientView ? (
+            <div className="workout-card-detail">
+              <span className="workout-label" style={{color: "var(--faded-text"}}>Sets:</span>
+              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{setsDisplay}</span>
+            </div>
+          ) : isSelectAndEditing ? (
+            <div className="workout-card-detail">
+              <span className="workout-label">Sets:</span>
+              <input
+                type="number"
+                min="1"
+                className="workout-input workout-input-sets"
+                placeholder={exercise.sets || "3"}
+                value={setsInput}
+                onFocus={beginEdit}
+                onChange={(e) => setSetsInput(e.target.value)}
+              />
+            </div>
+          ) : (
+            <div className="workout-card-detail">
+              <span className="workout-label" style={{color: "var(--faded-text"}}>Sets:</span>
+              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{setsDisplay}</span>
+            </div>
+          )}
+
+          <div className="workout-card-detail">
+            <span className="workout-label" style={{color: "var(--faded-text"}}>Rest:</span>
+            <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{exercise.rest}</span>
           </div>
         </div>
-        <div className="z-0 relative">
-          <div className="mr-[10px]">
-            <img
-              src={`/gifs/${exercise.gif_url.replaceAll(" ", "")}.gif`}
-              alt={exercise.exercise_name}
-              className="w-[250px] h-[155px] rounded-[10px]"
-            />
-          </div>
+
+        {/* Right side - GIF */}
+        <div className="workout-card-media">
+          <img
+            src={`/gifs/${exercise.gif_url.replaceAll(" ", "")}.gif`}
+            alt={exercise.exercise_name}
+            className="workout-gif"
+          />
           {!isClientView && addButton && (
-            <div
-              className="z-1 absolute top-[3px] right-[-5px] h-[20px] w-[20px] rounded-[10px] mt-[5px]"
+            <button
+              className="workout-add-btn"
               style={{
-                boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.15)",
                 opacity: mode === "select" && (!isSelectAndEditing || !isValid) ? 0.5 : 1,
                 pointerEvents: mode === "select" && (!isSelectAndEditing || !isValid) ? "none" : "auto",
               }}
@@ -169,6 +147,7 @@ const WorkoutCard = ({
                 return onRemove?.(e);
               }}
               aria-disabled={mode === "select" && (!isSelectAndEditing || !isValid)}
+              aria-label={addButton === "preview" ? "Remove exercise" : "Add exercise"}
             >
               <AddPlus
                 style={
@@ -177,10 +156,9 @@ const WorkoutCard = ({
                     : { color: "#ff7675" }
                 }
               />
-            </div>
+            </button>
           )}
         </div>
-        <div className="w-[30px]"></div>
       </div>
     </div>
   );

@@ -80,7 +80,7 @@ const ClientDietCard = ({
           style={{ boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.25)" }}
         />
         <div className="flex flex-col ml-[12px] mt-[5px]">
-          <div className="text-[18px] font-urbanist  w-[90%] h-[35px]">
+          <div className="text-[18px] font-urbanist w-[90%] h-[35px]">
             <span className="font-semibold text-[#2D3436]">
               {meal.meal_name}
             </span>

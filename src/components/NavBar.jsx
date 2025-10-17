@@ -49,6 +49,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
         transform: 'translateX(-50%)',
         borderRadius: '30px',
         boxShadow: '0px -5px 10px #00000015',
+        backgroundColor: 'var(--navbar-background)'
       }}
     />
   )}
@@ -60,7 +61,8 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
     style={{
       borderTopLeftRadius: '40px',
       borderTopRightRadius: '40px',
-      boxShadow: '0px -5px 10px #00000015',
+      boxShadow: 'var(--navbar-shadow)',
+      backgroundColor: 'var(--navbar-background)'
     }}
   >
     {tabs.map((tab, index) => {
@@ -73,8 +75,8 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
             isSpacer
               ? 'opacity-0 pointer-events-none'
               : currentPath.startsWith(tab.path)
-              ? 'text-[#2D3436] font-bold'
-              : 'text-[#6C757D]'
+              ? `text-[var(--navbar-active)] font-bold`
+              : 'text-[var(--navbar-inactive)]'
           }`}
         >
           <tab.Icon
@@ -82,8 +84,8 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
               isSpacer
                 ? ''
                 : currentPath.startsWith(tab.path)
-                ? 'fill-[#2D3436]'
-                : 'fill-[#6C757D]'
+                ? `fill-[var(--navbar-active)]`
+                : 'fill-[var(--navbar-inactive)]'
             }`}
           />
           <span className="text-[15px]">
@@ -97,7 +99,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
               }`}
               style={{
                 width: 18,           // 12–18px looks good
-                backgroundColor: '#4ECDC4'
+                backgroundColor: 'var(--chart-start)'
               }}
             />
           )}
@@ -115,6 +117,7 @@ const NavigationBar = ({ activeTab, onTabChange, isFabOpen }) => {
         left: '50%',
         transform: 'translateX(-50%)',
         borderRadius: '30px',
+        backgroundColor: 'var(--navbar-background)'
       }}
     >
       <button

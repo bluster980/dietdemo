@@ -1,0 +1,538 @@
+/* ========================================
+   MEETING PAGE RESPONSIVE STYLES
+   ======================================== */
+
+/* ========================================
+   1) CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Meeting page spacing */
+  --meeting-page-pad: 12px;
+  --meeting-back-size: 30px;
+  --meeting-back-offset: 10px;
+  
+  /* Card dimensions */
+  --meeting-card-max-width: 420px;
+  --meeting-card-pad: 22px 12px 10px 12px;
+  --meeting-card-radius: 16px;
+  --meeting-section-gap: 18px;
+  
+  /* Typography */
+  --meeting-title-size: 32px;
+  --meeting-section-title-size: 22px;
+  --meeting-time-slot-size: 17.5px;
+  --meeting-toggle-label-size: 22px;
+  --meeting-success-text-size: 23px;
+  --meeting-reschedule-size: 15px;
+  --meeting-notice-size: 12px;
+  
+  /* Time slots */
+  --meeting-slot-width: 106px;
+  --meeting-slot-height: 44px;
+  --meeting-slot-radius: 12px;
+  --meeting-grid-gap: 12px;
+  
+  /* Button */
+  --meeting-button-height: 52px;
+  
+  /* Success icon */
+  --meeting-icon-width: 120px;
+  --meeting-icon-height: 110px;
+  
+  /* Colors */
+  --meeting-bg: #FFFFFF;
+  --meeting-text: #2D3436;
+  --meeting-text-dark: #000000;
+  --meeting-text-muted: #6B7280;
+  --meeting-text-placeholder: #909497;
+  --meeting-border: #E9ECEF;
+  --meeting-slot-bg: #F7F8FA;
+  --meeting-slot-selected-bg: #FF7675;
+  --meeting-slot-selected-border: #FF7675;
+  --meeting-slot-text: #6C757D;
+  --meeting-slot-selected-text: #FFFFFF;
+  --meeting-accent: #FF7675;
+  --meeting-dot-color: #4ECDC4;
+  --meeting-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.theme-dark {
+    --meeting-slot-bg: var(--profile-section-card-bg);
+    --meeting-border: var(--profile-border);
+}
+
+/* ========================================
+   2) MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px - 366px) */
+@media (max-width: 366px) {
+  :root {
+    --meeting-page-pad: 8px;
+    --meeting-back-size: 26px;
+    
+    --meeting-card-pad: 18px 10px 8px 10px;
+    --meeting-card-radius: 14px;
+    --meeting-section-gap: 14px;
+    
+    --meeting-title-size: 26px;
+    --meeting-section-title-size: 18px;
+    --meeting-time-slot-size: 18px;
+    --meeting-toggle-label-size: 18px;
+    --meeting-success-text-size: 18px;
+    --meeting-reschedule-size: 12px;
+    --meeting-notice-size: 10px;
+    
+    --meeting-slot-width: 95px;
+    --meeting-slot-height: 41px;
+    --meeting-grid-gap: 12px;
+    
+    --meeting-button-height: 46px;
+    
+    --meeting-icon-width: 100px;
+    --meeting-icon-height: 92px;
+  }
+}
+
+/* Small phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 375px) {
+  :root {
+    --meeting-page-pad: 10px;
+    --meeting-back-size: 28px;
+    
+    --meeting-card-pad: 20px 11px 9px 11px;
+    --meeting-section-gap: 16px;
+    
+    --meeting-title-size: 28px;
+    --meeting-section-title-size: 19px;
+    --meeting-time-slot-size: 19px;
+    --meeting-toggle-label-size: 19px;
+    --meeting-success-text-size: 20px;
+    --meeting-reschedule-size: 13px;
+    --meeting-notice-size: 11px;
+    
+    --meeting-slot-width: 100px;
+    --meeting-slot-height: 44px;
+    --meeting-grid-gap: 10px;
+    
+    --meeting-button-height: 48px;
+    
+    --meeting-icon-width: 108px;
+    --meeting-icon-height: 100px;
+  }
+}
+
+@media (min-width: 376px) and (max-width: 401px) {
+  :root {
+    --meeting-page-pad: 11px;
+    --meeting-back-size: 29px;
+    
+    --meeting-card-pad: 21px 12px 10px 12px;
+    --meeting-section-gap: 17px;
+    
+    --meeting-title-size: 29px;
+    --meeting-section-title-size: 20px;
+    --meeting-time-slot-size: 20px;
+    --meeting-toggle-label-size: 20px;
+    --meeting-success-text-size: 21px;
+    --meeting-reschedule-size: 14px;
+    --meeting-notice-size: 12px;
+    
+    --meeting-slot-width: 101px;
+    --meeting-slot-height: 47px;
+    --meeting-grid-gap: 11px;
+    
+    --meeting-button-height: 50px;
+    
+    --meeting-icon-width: 110px;
+    --meeting-icon-height: 102px;
+  }
+}
+
+/* Standard phones (401px - 427px) */
+@media (min-width: 402px) and (max-width: 427px) {
+  :root {
+    --meeting-title-size: 30px;
+    --meeting-section-title-size: 20px;
+    --meeting-time-slot-size: 19px;
+    --meeting-toggle-label-size: 20px;
+    --meeting-success-text-size: 21px;
+    --meeting-reschedule-size: 14px;
+    
+    --meeting-slot-width: 110px;
+    --meeting-slot-height: 46px;
+    --meeting-grid-gap: 11px;
+    
+    --meeting-button-height: 50px;
+    
+    --meeting-icon-width: 112px;
+    --meeting-icon-height: 104px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --meeting-page-pad: 14px;
+    --meeting-back-size: 32px;
+    
+    --meeting-card-pad: 24px 14px 12px 14px;
+    --meeting-section-gap: 20px;
+    
+    --meeting-title-size: 34px;
+    --meeting-section-title-size: 23px;
+    --meeting-time-slot-size: 21px;
+    --meeting-toggle-label-size: 23px;
+    --meeting-success-text-size: 24px;
+    --meeting-reschedule-size: 16px;
+    --meeting-notice-size: 13px;
+    
+    --meeting-slot-width: 114px;
+    --meeting-slot-height: 50px;
+    --meeting-grid-gap: 13px;
+    
+    --meeting-button-height: 54px;
+    
+    --meeting-icon-width: 126px;
+    --meeting-icon-height: 116px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --meeting-page-pad: 16px;
+    --meeting-back-size: 34px;
+    
+    --meeting-card-pad: 26px 16px 14px 16px;
+    --meeting-section-gap: 22px;
+    
+    --meeting-title-size: 36px;
+    --meeting-section-title-size: 24px;
+    --meeting-time-slot-size: 19px;
+    --meeting-toggle-label-size: 24px;
+    --meeting-success-text-size: 25px;
+    --meeting-reschedule-size: 17px;
+    --meeting-notice-size: 14px;
+    
+    --meeting-slot-width: 114px;
+    --meeting-slot-height: 48px;
+    --meeting-grid-gap: 14px;
+    
+    --meeting-button-height: 56px;
+    
+    --meeting-icon-width: 130px;
+    --meeting-icon-height: 120px;
+  }
+}
+
+@media (max-width: 320px) {
+  :root {
+    --meeting-page-pad: 6px;
+    --meeting-back-size: 24px;
+    
+    --meeting-card-pad: 16px 8px 6px 8px;
+    --meeting-card-radius: 12px;
+    --meeting-section-gap: 12px;
+    
+    --meeting-title-size: 24px;
+    --meeting-section-title-size: 17px;
+    --meeting-time-slot-size: 13px;
+    --meeting-toggle-label-size: 17px;
+    --meeting-success-text-size: 17px;
+    --meeting-reschedule-size: 11px;
+    --meeting-notice-size: 9px;
+    
+    --meeting-slot-width: 80px;
+    --meeting-slot-height: 36px;
+    --meeting-grid-gap: 7px;
+    
+    --meeting-button-height: 44px;
+    
+    --meeting-icon-width: 95px;
+    --meeting-icon-height: 88px;
+  }
+}
+
+/* ========================================
+   3) MEETING PAGE LAYOUT
+   ======================================== */
+
+.meeting-viewport {
+  width: 100vw;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  background: var(--meeting-bg);
+}
+
+.meeting-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* background: var(--meeting-bg); */
+  padding: 0 var(--meeting-page-pad);
+  padding-bottom: 80px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.meeting-loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Back button */
+.meeting-back-btn {
+  position: absolute;
+  top: 10px;
+  left: calc(var(--meeting-page-pad) - 8px);
+  z-index: 10;
+  width: var(--meeting-back-size);
+  height: var(--meeting-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.meeting-back-btn:active {
+  transform: scale(0.95);
+}
+
+.meeting-back-icon {
+  width: 100%;
+  height: 100%;
+  /* background: ; */
+}
+
+/* Page Title */
+.meeting-page-title {
+  margin: 60px 0 0 8px;
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-title-size);
+  font-weight: 600;
+  color: var(--meeting-text);
+  line-height: 1.125;
+}
+
+/* ========================================
+   4) MEETING CARD
+   ======================================== */
+
+.meeting-card {
+  width: 100%;
+  max-width: var(--meeting-card-max-width);
+  margin: 16px auto 0;
+  background: var(--meeting-bg);
+  border: 1px solid var(--meeting-border);
+  border-radius: var(--meeting-card-radius);
+  box-shadow: var(--meeting-shadow);
+  padding: var(--meeting-card-pad);
+  box-sizing: border-box;
+  min-height: calc(100vh - 230px);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========================================
+   5) TIME SLOTS SECTION
+   ======================================== */
+
+.meeting-section {
+  margin-bottom: var(--meeting-section-gap);
+}
+
+.meeting-section-title {
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-section-title-size);
+  font-weight: 600;
+  color: var(--meeting-text);
+  margin: 0 0 12px 0;
+}
+
+.meeting-time-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--meeting-grid-gap);
+}
+
+.meeting-time-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--meeting-slot-width);
+  height: var(--meeting-slot-height);
+  border-radius: var(--meeting-slot-radius);
+  border: 1px solid var(--meeting-border);
+  background: var(--meeting-slot-bg);
+  color: var(--meeting-slot-text);
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-time-slot-size);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-sizing: border-box;
+}
+
+.meeting-time-slot-selected {
+  background: var(--meeting-slot-selected-bg);
+  border-color: var(--meeting-slot-selected-border);
+  color: var(--meeting-slot-selected-text);
+  font-weight: 700;
+}
+
+.meeting-time-slot:active {
+  transform: scale(0.97);
+}
+
+/* ========================================
+   6) CALL TYPE TOGGLES
+   ======================================== */
+
+.meeting-call-type-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meeting-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2px;
+}
+
+.meeting-toggle-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-toggle-label-size);
+  font-weight: 500;
+  color: var(--meeting-text);
+}
+
+/* ========================================
+   7) SUBMIT BUTTON
+   ======================================== */
+
+.meeting-spacer {
+  flex: 1;
+}
+
+.meeting-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.meeting-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.meeting-notice-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--meeting-dot-color);
+  flex-shrink: 0;
+}
+
+.meeting-notice-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-notice-size);
+  color: var(--meeting-text-placeholder);
+}
+
+/* ========================================
+   8) SUCCESS STATE
+   ======================================== */
+
+.meeting-success-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 283px);
+  box-sizing: border-box;
+}
+
+.meeting-success-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.meeting-success-icon {
+  width: var(--meeting-icon-width);
+  height: var(--meeting-icon-height);
+  margin-bottom: 18px;
+}
+
+.meeting-success-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.meeting-success-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-success-text-size);
+  font-weight: 400;
+  color: var(--meeting-text-dark);
+  line-height: 1.3;
+  max-width: 320px;
+  margin: 0;
+}
+
+.meeting-success-time {
+  color: var(--meeting-accent);
+  font-weight: 600;
+}
+
+.meeting-reschedule {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 8px;
+  margin-bottom: 4px;
+}
+
+.meeting-reschedule-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-reschedule-size);
+  color: var(--meeting-text-muted);
+}
+
+.meeting-reschedule-btn {
+  font-family: urbanist, sans-serif;
+  font-size: var(--meeting-reschedule-size);
+  font-weight: 700;
+  color: var(--meeting-accent);
+  background: transparent;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 0;
+  transition: opacity 0.15s ease;
+}
+
+.meeting-reschedule-btn:active {
+  opacity: 0.7;
+}

@@ -4,10 +4,11 @@ const ToggleButton = ({isActive, onToggle}) => {
 
   return (
     <div
-      onClick={onToggle}
-      className={`w-[58px] h-[26px] rounded-full flex items-center transition-all duration-300 ${
-        isActive ? 'bg-[#4ECDC4]' : 'bg-[#E9ECEF]'
-      }`}
+       onClick={onToggle}
+      className="w-[58px] h-[26px] rounded-full flex items-center transition-all duration-300"
+      style={{
+        backgroundColor: isActive ? '#4ECDC4' : 'var(--calorie-ring-track, #E9ECEF)'
+      }}
     >
       <div
         className={`w-[24px] h-[24px] bg-white rounded-full transform transition-transform duration-300 ${

@@ -1,18 +1,20 @@
-// src/components/BottomSheet.jsx
-import React, { useState } from 'react';
-import WeighingScale from '../assets/weighingscale.svg';
-import RightArrow from '../assets/rightarrow.svg';
-import { useUser } from '../context/UserContext';
-import { updateUserField, updateOrInsertWeightRecord } from '../utils/supabaseQueries'
-import toast from 'react-hot-toast';
-// eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence, color } from 'framer-motion';
+import React, { useState } from "react";
+import WeighingScale from "../assets/weighingscale.svg";
+import RightArrow from "../assets/rightarrow.svg";
+import { useUser } from "../context/UserContext";
+import {
+  updateUserField,
+  updateOrInsertWeightRecord,
+} from "../utils/supabaseQueries";
+import toast from "react-hot-toast";
+import { AnimatePresence } from "framer-motion";
+import "../styles/bottomsheetresponsive.css";
 
 const BottomSheet = ({ isOpen, onClose, onWeightSubmitSuccess }) => {
-  const [weightInput, setWeightInput] = useState('');
+  const [weightInput, setWeightInput] = useState("");
   const { userData, setUserData } = useUser();
 
-   const handleWeightSubmit = async () => {
+  const handleWeightSubmit = async () => {
     if (!userData) {
       toast.error("User data missing. Please refresh the page.");
       return;
@@ -20,93 +22,89 @@ const BottomSheet = ({ isOpen, onClose, onWeightSubmitSuccess }) => {
 
     const weight = parseFloat(weightInput);
     if (isNaN(weight) || weight <= 0) {
-      toast.error('Please enter a valid weight.');
+      toast.error("Please enter a valid weight.");
       return;
     }
 
     try {
-      const { data, error } = await updateUserField(userData.user_id, {weight: weight});
+      const { data, error } = await updateUserField(userData.user_id, {
+        weight: weight,
+      });
       if (error) {
-        toast.error('❌ Error updating weight: ' + error.message);
+        toast.error("❌ Error updating weight: " + error.message);
         return;
       }
 
-      await updateOrInsertWeightRecord(userData.user_id, weight); // ✅ Add to weightrecords
+      await updateOrInsertWeightRecord(userData.user_id, weight);
       toast.success("Weight recorded successfully!", { duration: 5000 });
-      setWeightInput('');
-      // ✅ Inform parent to refresh chart
-      if (typeof onWeightSubmitSuccess === 'function') {
+      setWeightInput("");
+
+      if (typeof onWeightSubmitSuccess === "function") {
         onWeightSubmitSuccess();
       }
 
-      // Update local context
       const updatedUserData = { ...userData, weight: data.weight };
       setUserData(updatedUserData);
 
-
-      onClose(); // close the bottom sheet
+      onClose();
     } catch (err) {
-      console.error('Update failed:', err);
-      alert('Something went wrong.');
+      console.error("Update failed:", err);
+      alert("Something went wrong.");
     }
   };
-
 
   return (
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* 1) Semi-transparent black overlay */}
+          {/* Overlay */}
           <motion.div
-            className="fixed left-0 right-0 bottom-0 top-[0px] bg-black/50 z-30"
+            className="bottomsheet-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            />
+          />
 
-
-          {/* 2) The actual sheet */}
+          {/* Bottom Sheet */}
           <motion.div
-            className="fixed bottom-0 left-0 right-0 z-40 bg-white rounded-[15px] pt-[10px] px-6 pb-6"
+            className="bottomsheet-container"
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            >
-            {/* You can replace the content below with whatever you need */}
-            <div className='flex justify-center h-[130px] mb-[100px]'>
-                <div className='mt-[8px]'>
-                    <WeighingScale />
-                    <p className='flex flex-col text-[#2D3436] h-[10px] w-[210px] font-urbanist font-semibold text-[25px] mt-[16px]'>
-                        <span >Enter your</span>
-                        <span style={{'lineHeight': '1'}}>today’s weight</span>
-                    </p>
+          >
+            <div className="bottomsheet-content">
+              {/* Left side - Icon & Text */}
+              <div className="bottomsheet-left">
+                <WeighingScale className="bottomsheet-icon" />
+                <div className="bottomsheet-title" style={{color: "var(--general-charcoal-text)"}}>
+                  <span>Enter your</span>
+                  <span>today's weight</span>
                 </div>
-                <div className='flex w-[170px] h-[60px] border border-[#E9ECEF] rounded-[11px] mt-[20px]' style={{boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.06)'}}>
-                    <div>
-                        <p className='flex flex-col text-[#000000] h-[10px] w-[100px] font-palanquin text-[15px] mt-[5px] ml-[15px]'>
-                            <span>Weight, kg</span>
-                        </p>
-                        <input
-                            inputMode="decimal" // for mobile keyboards
-                            className='flex justify-center items-center mt-[12px] w-[80px] h-[28px] bg-transparent border-none outline-none text-[22px] font-urbanist font-semibold text-[#6C757D] placeholder-top'
-                            placeholder="00.00"
-                            value={weightInput}
-                            onChange={(e) => setWeightInput(e.target.value)}
-                            style={{
-                                textAlign: 'left',
-                                resize: 'none',
-                                paddingLeft: '15px',
-                            }}
-                        />
-                    </div>
-                    <div className='flex mt-[7px]'>
-                        <div onClick={handleWeightSubmit} className='flex justify-center items-center h-[45px] w-[45px] rounded-[15px] bg-[#ff7675]'>
-                            <RightArrow className='h-[22px] w-[22px]' style={{color: 'white'}}/>
-                        </div>
-                    </div>
+              </div>
+
+              {/* Right side - Input & Submit */}
+              <div className="bottomsheet-input-container">
+                <div className="bottomsheet-input-field">
+                  <label className="bottomsheet-label" style={{color: "var(--faded-text)"}}>Weight, kg</label>
+                  <input
+                    inputMode="decimal"
+                    className="bottomsheet-input"
+                    placeholder="00.00"
+                    value={weightInput}
+                    onChange={(e) => setWeightInput(e.target.value)}
+                    style={{color: "var(--general-charcoal-text)"}}
+                  />
                 </div>
+                <button
+                  onClick={handleWeightSubmit}
+                  className="bottomsheet-submit-btn"
+                  aria-label="Submit weight"
+                >
+                  <RightArrow className="bottomsheet-arrow" />
+                </button>
+              </div>
             </div>
           </motion.div>
         </>
