@@ -1,5 +1,6 @@
 import React from "react";
-import {  AnimatePresence } from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import {motion,  AnimatePresence } from "framer-motion";
 import "../styles/confirmdialogresponsive.css";
 
 function ConfirmDialog({ isOpen, onClose, onConfirm }) {

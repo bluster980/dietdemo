@@ -7,7 +7,8 @@ import {
   updateOrInsertWeightRecord,
 } from "../utils/supabaseQueries";
 import toast from "react-hot-toast";
-import { AnimatePresence } from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import {motion, AnimatePresence } from "framer-motion";
 import "../styles/bottomsheetresponsive.css";
 
 const BottomSheet = ({ isOpen, onClose, onWeightSubmitSuccess }) => {
