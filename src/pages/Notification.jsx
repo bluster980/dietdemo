@@ -57,13 +57,13 @@ const Notification = ({ onClose, role, trainerUserId }) => {
 
   return (
     <div
-      className="absolute  rounded-[23px] border border-[#E9ECEF] flex flex-col"
+      className="absolute rounded-[23px] border border-[#E9ECEF] flex flex-col"
       style={{
         // Perfect centering using transform technique
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
-        backgroundColor: "var(--bg)",
+        backgroundColor: "var(--notification-bg)",
         borderColor: "var(--profile-border)",
 
         // Responsive dimensions
@@ -115,7 +115,7 @@ const Notification = ({ onClose, role, trainerUserId }) => {
       {/* Content Section - Grows to Fill Remaining Space */}
       <div className="flex-1 min-h-0 overflow-hidden" style={{ paddingBottom: '0px' }}>
         {loading ? (
-          <div className="flex justify-center items-center h-full">
+          <div className="flex justify-center items-center h-full" style={{color: "var(--general-charcoal-text)"}}>
             Loading...
           </div>
         ) : notifications.length > 0 ? (
@@ -177,10 +177,10 @@ const Notification = ({ onClose, role, trainerUserId }) => {
           <div className="flex flex-col justify-center items-center h-full px-4">
             <LetterBox />
             <p className="flex flex-col justify-center items-center mt-[15px]">
-              <span className="text-[#000000] font-urbanist font-medium text-[28px]">
+              <span className="text-[#000000] font-urbanist font-medium text-[28px]" style={{color: "var(--general-charcoal-text)"}}>
                 No Notification yet
               </span>
-              <span className="text-[#000000] font-urbanist text-[18px] text-center">
+              <span className="text-[#000000] font-urbanist text-[18px] text-center" style={{color: "var(--faded-text)"}}>
                 Your notification will appear here once you've received them.
               </span>
             </p>

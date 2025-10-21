@@ -285,6 +285,8 @@ html {
   --navbar-background: #ffffff;
   --navbar-shadow: 0px -5px 10px #00000015;
   --dietcard-bg: #ffffff;
+  --notification-bg: #ffffff;
+  --notification-card-bg:  #ffffff;
   
 
   /* Accent */
@@ -307,7 +309,7 @@ html {
   --text-2: rgba(255, 255, 255, 0.65);
   --border: rgba(255, 255, 255, 0.08);
   --divider: rgba(255, 255, 255, 0.08);
-  --overlay-strong: rgba(0, 0, 0, 0); /* usually unused on dark */
+  --overlay-strong: rgba(0, 0, 0, 1); /* usually unused on dark */
   --profile-sub-section: #ffffff;
   --profile-sub-section-desc: #d2d2d4;
   --goal-list-title: #d2d2d4;
@@ -335,7 +337,9 @@ html {
   --navbar-inactive: #8E8E93;
   --navbar-background: #1C1C1E;
   --navbar-shadow: transparent;
-  --dietcard-bg: var(--bg)
+  --dietcard-bg: var(--bg);
+  --notification-bg: #1C1C1E;
+  --notification-card-bg: #272727;
 
   --accent: #12d8a1; /* lift for contrast on black */
   --accent-strong: #2ee6b8;
@@ -645,7 +649,7 @@ html {
   flex-direction: column;
 }
 /* Overlay + navbar containment */
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: grid; place-items: center; z-index: 90; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); display: grid; place-items: center; z-index: 90; }
 .overlay-inner { width: min(412px, 100%); }
 .nav-wrap {
   position: sticky;

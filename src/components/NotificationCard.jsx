@@ -15,7 +15,7 @@
                     // maxWidth: '375px',  // Responsive: use full width up to 355px
                     minHeight: '72px',
                     boxShadow: '0px 4px 14px rgba(0, 0, 0, 0.08)',
-                    backgroundColor: "var(--profile-section-card-bg)",
+                    backgroundColor: "var(--notification-card-bg)",
                     borderColor:"var(--profile-border)",
                 }} > 
                     {!isRead && ( <div className="absolute left-0 top-5 bottom-0 w-[4px] rounded-l-[10px] h-[100%]" style={{ backgroundColor: '#4ECDC4' }} /> )}
