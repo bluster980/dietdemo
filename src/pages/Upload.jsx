@@ -9,6 +9,9 @@ import UseSteganography from "../components/UseSteganography";
 import toast from "react-hot-toast";
 import "../styles/uploadresponsive.css";
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
+
 /* helper: middle-truncate preserving extension */
 const middleTruncate = (fileName = "") => {
   if (fileName.length <= 25) return fileName;
@@ -156,42 +159,130 @@ const CircularProgress = ({
 };
 
 const Upload = () => {
-  const { encodeAndUpload } = UseSteganography();
   const navigate = useNavigate();
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [uploadAborted, setUploadAborted] = useState(false);
 
   const pickerRef = useRef(null);
-  const intervalRef = useRef(null);
+  const abortControllerRef = useRef(null);
 
   const handleImageSelect = (file) => {
     setSelectedFile(file);
     setProgress(0);
     setIsUploading(false);
+    setUploadAborted(false);
   };
 
-  const clearProgressTimer = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
+  /**
+   * Upload file to R2 using presigned URL
+   */
+  const uploadToR2 = async (file) => {
+    try {
+      // Step 1: Get presigned URL from backend
+      setProgress(5);
+
+      const urlResponse = await fetch(
+        `${API_BASE_URL}/api/upload/generate-url`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fileName: file.name,
+            contentType: file.type,
+          }),
+        }
+      );
+
+      if (!urlResponse.ok) {
+        const error = await urlResponse.json();
+        throw new Error(error.message || "Failed to generate upload URL");
+      }
+
+      const { signedUrl, fileKey, publicUrl } = await urlResponse.json();
+      setProgress(10);
+
+      // Step 2: Upload directly to R2 using presigned URL
+      abortControllerRef.current = new AbortController();
+
+      const xhr = new XMLHttpRequest();
+
+      // Track upload progress
+      xhr.upload.addEventListener("progress", (e) => {
+        if (e.lengthComputable && !uploadAborted) {
+          // Map progress from 10% to 90%
+          const percentComplete = 10 + (e.loaded / e.total) * 80;
+          setProgress(Math.round(percentComplete));
+        }
+      });
+
+      // Handle completion
+      const uploadPromise = new Promise((resolve, reject) => {
+        xhr.addEventListener("load", () => {
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve({ fileKey, publicUrl });
+          } else {
+            reject(new Error(`Upload failed with status ${xhr.status}`));
+          }
+        });
+
+        xhr.addEventListener("error", () => {
+          reject(new Error("Network error during upload"));
+        });
+
+        xhr.addEventListener("abort", () => {
+          reject(new Error("Upload aborted"));
+        });
+      });
+
+      xhr.open("PUT", signedUrl);
+      xhr.setRequestHeader("Content-Type", file.type);
+      xhr.send(file);
+
+      // Allow cancellation
+      abortControllerRef.current.signal.addEventListener("abort", () => {
+        xhr.abort();
+      });
+
+      const result = await uploadPromise;
+
+      if (!uploadAborted) {
+        setProgress(95);
+
+        // Step 3: Optional - Verify upload with backend
+        await fetch(`${API_BASE_URL}/api/upload/verify`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fileKey: result.fileKey,
+          }),
+        });
+
+        setProgress(100);
+        return { success: true, publicUrl: result.publicUrl };
+      }
+
+      return { success: false };
+    } catch (error) {
+      if (uploadAborted || error.message === "Upload aborted") {
+        return { success: false, aborted: true };
+      }
+      console.error("Upload error:", error);
+      throw error;
     }
-  };
-  useEffect(() => () => clearProgressTimer(), []);
-
-  const startFakeProgress = () => {
-    clearProgressTimer();
-    let value = 0;
-    intervalRef.current = setInterval(() => {
-      const delta = value < 70 ? 5 : value < 90 ? 3 : 1;
-      value = Math.min(99, value + delta);
-      setProgress(value);
-    }, 200);
   };
 
   const handleCancel = () => {
-    clearProgressTimer();
+    setUploadAborted(true);
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
     setIsUploading(false);
     setProgress(0);
     toast.error("Upload canceled");
@@ -202,33 +293,54 @@ const Upload = () => {
       toast.error("Please select an image");
       return;
     }
+
+    // Validate file size (30MB max)
+    const maxSize = 30 * 1024 * 1024; // 30MB in bytes
+    if (selectedFile.size > maxSize) {
+      toast.error("File size exceeds 30MB limit");
+      return;
+    }
+
     setIsUploading(true);
     setProgress(0);
-    startFakeProgress();
+    setUploadAborted(false);
 
     try {
-      const response = await encodeAndUpload(selectedFile);
-      clearProgressTimer();
-      setProgress(100);
+      const response = await uploadToR2(selectedFile);
 
       if (response?.success) {
         toast.success("Image uploaded successfully!");
+        console.log("Public URL:", response.publicUrl);
+
+        // Reset after brief delay to show 100%
         setTimeout(() => {
           setIsUploading(false);
           setProgress(0);
           setSelectedFile(null);
         }, 650);
-      } else {
+      } else if (!response?.aborted) {
         toast.error("Upload failed. Please try again.");
         setIsUploading(false);
+        setProgress(0);
       }
-    } catch {
-      clearProgressTimer();
-      toast.error("Upload failed due to network or server error.");
-      setIsUploading(false);
-      setProgress(0);
+    } catch (error) {
+      if (!uploadAborted) {
+        toast.error("Upload failed due to network or server error.");
+        setIsUploading(false);
+        setProgress(0);
+      }
+      console.error("Upload error:", error);
     }
   };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   const uploadingLabel = (
     <span className="inline-flex items-center">
@@ -241,8 +353,8 @@ const Upload = () => {
     <div className="df-viewport">
       <main className="upload-page">
         {/* Back Arrow */}
-        <button 
-          className="upload-back-btn" 
+        <button
+          className="upload-back-btn"
           onClick={() => navigate(-1)}
           aria-label="Go back"
         >
@@ -250,15 +362,34 @@ const Upload = () => {
         </button>
 
         {/* Page Title */}
-        <h1 className="upload-page-title" style={{color: "var(--general-charcoal-text)"}}>Upload &amp; Files</h1>
+        <h1
+          className="upload-page-title"
+          style={{ color: "var(--general-charcoal-text)" }}
+        >
+          Upload &amp; Files
+        </h1>
 
         {/* Upload Card */}
-        <div className="upload-card" style={{backgroundColor: "var(--dietcard-bg)", borderColor: "var(--profile-border)"}}>
+        <div
+          className="upload-card"
+          style={{
+            backgroundColor: "var(--dietcard-bg)",
+            borderColor: "var(--profile-border)",
+          }}
+        >
           {!isUploading ? (
             /* Idle State */
             <div className="upload-idle-content">
-              <p className="upload-idle-title" style={{color: "var(--faded-text)"}}>Upload Progress Photos</p>
-              <p className="upload-idle-subtitle" style={{color: "var(--macros-unit)"}}>
+              <p
+                className="upload-idle-title"
+                style={{ color: "var(--faded-text)" }}
+              >
+                Upload Progress Photos
+              </p>
+              <p
+                className="upload-idle-subtitle"
+                style={{ color: "var(--macros-unit)" }}
+              >
                 PNG, JPG, JPEG, WEBP supported
                 <br />
                 max allowed size is 30MB
@@ -279,11 +410,21 @@ const Upload = () => {
                 />
               </div>
 
-              <p className="upload-label" style={{color: "var(--faded-text)"}}>Upload</p>
+              <p
+                className="upload-label"
+                style={{ color: "var(--faded-text)" }}
+              >
+                Upload
+              </p>
 
               <div className="upload-filename-area">
                 {selectedFile && (
-                  <p className="upload-filename" style={{color: "var(--general-charcoal-text)"}}>{middleTruncate(selectedFile.name)}</p>
+                  <p
+                    className="upload-filename"
+                    style={{ color: "var(--general-charcoal-text)" }}
+                  >
+                    {middleTruncate(selectedFile.name)}
+                  </p>
                 )}
               </div>
             </div>
@@ -292,15 +433,26 @@ const Upload = () => {
             <div className="upload-progress-content">
               <div className="upload-progress-wrapper">
                 <CircularProgress
-                  size={parseInt(getComputedStyle(document.documentElement)
-                    .getPropertyValue('--upload-progress-size') || '280')}
+                  size={parseInt(
+                    getComputedStyle(document.documentElement).getPropertyValue(
+                      "--upload-progress-size"
+                    ) || "280"
+                  )}
                   stroke={14}
                   progress={progress}
                 />
               </div>
-              <p className="upload-progress-label" style={{color: "var(--faded-text)"}}>{uploadingLabel}</p>
+              <p
+                className="upload-progress-label"
+                style={{ color: "var(--faded-text)" }}
+              >
+                {uploadingLabel}
+              </p>
               <div className="upload-filename-area">
-                <p className="upload-progress-filename" style={{color: "var(--general-charcoal-text)"}}>
+                <p
+                  className="upload-progress-filename"
+                  style={{ color: "var(--general-charcoal-text)" }}
+                >
                   {selectedFile ? middleTruncate(selectedFile.name) : ""}
                 </p>
               </div>
@@ -320,9 +472,11 @@ const Upload = () => {
                 width: "100%",
                 height: "var(--upload-button-height)",
                 borderRadius: 12,
-                background: !isUploading && !selectedFile ? "#FFC2BE" : "#FF6F7A",
+                background:
+                  !isUploading && !selectedFile ? "#FFC2BE" : "#FF6F7A",
                 boxShadow: "none",
-                cursor: !isUploading && !selectedFile ? "not-allowed" : "pointer",
+                cursor:
+                  !isUploading && !selectedFile ? "not-allowed" : "pointer",
                 opacity: !isUploading && !selectedFile ? 0.7 : 1,
                 whiteSpace: "nowrap",
                 textOverflow: "ellipsis",

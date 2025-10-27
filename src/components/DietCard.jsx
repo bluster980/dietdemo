@@ -45,7 +45,7 @@ const DietCard = ({ title, meals }) => {
                 {/* Food Image - Positioned Outside */}
                 <div className="diet-meal-image-wrapper">
                   <img
-                    src={`/imgs/${meal.img_url.replaceAll(" ", "")}.png`}
+                    src={meal.img_url}
                     alt={meal.meal_name}
                     className="diet-meal-image"
                   />

@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from "react";
-import oatmeal from "../assets/oatmeal.png";
 import Dietfire from "../assets/dietfire.svg";
 import AddPlus from "../assets/addplus.svg";
 import toast from "react-hot-toast";
@@ -74,7 +73,7 @@ const ClientDietCard = ({
     <div className="w-full flex justify-center items-center mt-[8px]">
       <div className="relative flex w-[385px] h-[113px] border border-[#E9ECEF] rounded-[10px] bg-white">
         <img
-          src={oatmeal}
+          src={meal.img_url}
           className="w-[84px] h-[84px] rounded-[50px] mt-[6px] ml-[8px] text-[15px]"
           alt="No img available"
           style={{ boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.25)" }}

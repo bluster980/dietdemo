@@ -15,6 +15,7 @@ const WorkoutCard = ({
 }) => {
   const [repsInput, setRepsInput] = useState("");
   const [setsInput, setSetsInput] = useState("");
+  // const [imageLoaded, setImageLoaded] = useState(false);
 
   const isClientView = viewMode === "client-view";
   const isSelectAndEditing =
@@ -48,34 +49,65 @@ const WorkoutCard = ({
   const beginEdit = () => onBeginEdit?.();
 
   // Choose display values: when selected for day, show exercise.reps/sets (saved in parent)
-   const repsDisplay = isClientView
+  const repsDisplay = isClientView
     ? exercise.reps
     : isSelectAndEditing
-      ? repsInput
-      : exercise.reps ?? repsInput;
+    ? repsInput
+    : exercise.reps ?? repsInput;
 
   const setsDisplay = isClientView
     ? exercise.sets
     : isSelectAndEditing
-      ? setsInput
-      : exercise.sets ?? setsInput;
+    ? setsInput
+    : exercise.sets ?? setsInput;
 
   return (
     <div className="workout-card-wrapper">
-      <div className="workout-card" style={{ backgroundColor: "var(--profile-section-card-bg)", borderColor: "var(--profile-border)" }}>
+      <div
+        className="workout-card"
+        style={{
+          backgroundColor: "var(--profile-section-card-bg)",
+          borderColor: "var(--profile-border)",
+        }}
+      >
         {/* Left side - Exercise info */}
         <div className="workout-card-info">
-          <h3 className="workout-card-title" style={{color: "var(--general-charcoal-text"}}>{exercise.exercise_name}</h3>
-          
+          <h3
+            className="workout-card-title"
+            style={{ color: "var(--general-charcoal-text" }}
+          >
+            {exercise.exercise_name}
+          </h3>
+
           <div className="workout-card-detail">
-            <span className="workout-label" style={{color: "var(--faded-text"}}>Target:</span>
-            <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{exercise.target}</span>
+            <span
+              className="workout-label"
+              style={{ color: "var(--faded-text" }}
+            >
+              Target:
+            </span>
+            <span
+              className="workout-value"
+              style={{ color: "var(--general-charcoal-text" }}
+            >
+              {exercise.target}
+            </span>
           </div>
 
           {isClientView ? (
             <div className="workout-card-detail">
-              <span className="workout-label" style={{color: "var(--faded-text"}}>Reps:</span>
-              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{repsDisplay}</span>
+              <span
+                className="workout-label"
+                style={{ color: "var(--faded-text" }}
+              >
+                Reps:
+              </span>
+              <span
+                className="workout-value"
+                style={{ color: "var(--general-charcoal-text" }}
+              >
+                {repsDisplay}
+              </span>
             </div>
           ) : isSelectAndEditing ? (
             <div className="workout-card-detail">
@@ -91,15 +123,35 @@ const WorkoutCard = ({
             </div>
           ) : (
             <div className="workout-card-detail">
-              <span className="workout-label" style={{color: "var(--faded-text"}}>Reps:</span>
-              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{repsDisplay}</span>
+              <span
+                className="workout-label"
+                style={{ color: "var(--faded-text" }}
+              >
+                Reps:
+              </span>
+              <span
+                className="workout-value"
+                style={{ color: "var(--general-charcoal-text" }}
+              >
+                {repsDisplay}
+              </span>
             </div>
           )}
 
           {isClientView ? (
             <div className="workout-card-detail">
-              <span className="workout-label" style={{color: "var(--faded-text"}}>Sets:</span>
-              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{setsDisplay}</span>
+              <span
+                className="workout-label"
+                style={{ color: "var(--faded-text" }}
+              >
+                Sets:
+              </span>
+              <span
+                className="workout-value"
+                style={{ color: "var(--general-charcoal-text" }}
+              >
+                {setsDisplay}
+              </span>
             </div>
           ) : isSelectAndEditing ? (
             <div className="workout-card-detail">
@@ -116,38 +168,76 @@ const WorkoutCard = ({
             </div>
           ) : (
             <div className="workout-card-detail">
-              <span className="workout-label" style={{color: "var(--faded-text"}}>Sets:</span>
-              <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{setsDisplay}</span>
+              <span
+                className="workout-label"
+                style={{ color: "var(--faded-text" }}
+              >
+                Sets:
+              </span>
+              <span
+                className="workout-value"
+                style={{ color: "var(--general-charcoal-text" }}
+              >
+                {setsDisplay}
+              </span>
             </div>
           )}
 
           <div className="workout-card-detail">
-            <span className="workout-label" style={{color: "var(--faded-text"}}>Rest:</span>
-            <span className="workout-value" style={{color: "var(--general-charcoal-text"}}>{exercise.rest}</span>
+            <span
+              className="workout-label"
+              style={{ color: "var(--faded-text" }}
+            >
+              Rest:
+            </span>
+            <span
+              className="workout-value"
+              style={{ color: "var(--general-charcoal-text" }}
+            >
+              {exercise.rest}
+            </span>
           </div>
         </div>
 
         {/* Right side - GIF */}
         <div className="workout-card-media">
+          {/* {!imageLoaded && <div className="loading-spinner">Loading...</div>} */}
           <img
-            src={`/gifs/${exercise.gif_url.replaceAll(" ", "")}.gif`}
+            src={exercise.gif_url}
             alt={exercise.exercise_name}
             className="workout-gif"
+            //crop to fit to the frame
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+            // onLoad={() => setImageLoaded(true)}
           />
           {!isClientView && addButton && (
             <button
               className="workout-add-btn"
               style={{
-                opacity: mode === "select" && (!isSelectAndEditing || !isValid) ? 0.5 : 1,
-                pointerEvents: mode === "select" && (!isSelectAndEditing || !isValid) ? "none" : "auto",
+                opacity:
+                  mode === "select" && (!isSelectAndEditing || !isValid)
+                    ? 0.5
+                    : 1,
+                pointerEvents:
+                  mode === "select" && (!isSelectAndEditing || !isValid)
+                    ? "none"
+                    : "auto",
               }}
               onClick={(e) => {
                 e.stopPropagation();
                 if (mode === "select") return handleAddClick(e);
                 return onRemove?.(e);
               }}
-              aria-disabled={mode === "select" && (!isSelectAndEditing || !isValid)}
-              aria-label={addButton === "preview" ? "Remove exercise" : "Add exercise"}
+              aria-disabled={
+                mode === "select" && (!isSelectAndEditing || !isValid)
+              }
+              aria-label={
+                addButton === "preview" ? "Remove exercise" : "Add exercise"
+              }
             >
               <AddPlus
                 style={
