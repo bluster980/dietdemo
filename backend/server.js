@@ -21,9 +21,35 @@ const PORT = process.env.PORT || 5000;
 // 1. Security headers - Prevents common vulnerabilities
 app.use(helmet());
 
-// 2. CORS - Required for your Vercel frontend
+
+// 2. CORS - Required for your Vercel frontend (FIXED)
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:5173',
+  'http://localhost:3000',
+  // Allow all Vercel preview deployments
+  /^https:\/\/dietdelta-.*\.vercel\.app$/,
+];
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin) return callback(null, true);
+    
+    // Check if origin is in allowed list
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (allowedOrigin instanceof RegExp) {
+        return allowedOrigin.test(origin);
+      }
+      return allowedOrigin === origin;
+    });
+    
+    if (isAllowed) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 

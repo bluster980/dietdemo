@@ -43,7 +43,7 @@ const Userverification = () => {
         updateUserFieldLocally("name", trimmedName);
       }
       try {
-        const res = await fetch("https://dietdelta.onrender.com/jwtcreation", {
+        const res = await fetch("https://dietdelta.onrender.com/api/auth/jwt", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
