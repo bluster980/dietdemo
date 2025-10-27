@@ -5,7 +5,8 @@ import NavigationBar from "../components/NavBar";
 import PrimaryButton from "../components/PrimaryButton";
 import UploadFile from "../assets/uploadfile.svg";
 import ImagePicker from "../components/ImagePicker";
-import UseSteganography from "../components/UseSteganography";
+import { supabase } from '../utils/supabaseClient';
+import {insertUpload} from "../utils/supabaseQueries"
 import toast from "react-hot-toast";
 import "../styles/uploadresponsive.css";
 
@@ -306,18 +307,55 @@ const Upload = () => {
     setUploadAborted(false);
 
     try {
+      // Upload to R2
       const response = await uploadToR2(selectedFile);
 
       if (response?.success) {
-        toast.success("Image uploaded successfully!");
-        console.log("Public URL:", response.publicUrl);
+        setProgress(95);
 
-        // Reset after brief delay to show 100%
-        setTimeout(() => {
+        // Get user_id from localStorage or Supabase session
+        const storedUserId = localStorage.getItem("user_id");
+        let userId = storedUserId;
+
+        // Fallback: Get from Supabase session if not in localStorage
+        if (!userId) {
+          const {
+            data: { user },
+          } = await supabase.auth.getUser();
+          userId = user?.id;
+        }
+
+        if (!userId) {
+          console.error("No user_id found");
+          toast.error("User not authenticated");
           setIsUploading(false);
           setProgress(0);
-          setSelectedFile(null);
-        }, 650);
+          return;
+        }
+
+        // Insert upload record to database
+        const dbResult = await insertUpload({
+          user_id: userId,
+          image_url: response.publicUrl,
+        });
+
+        setProgress(100);
+
+        if (dbResult.success) {
+          toast.success("Image uploaded successfully!");
+          console.log("Public URL:", response.publicUrl);
+
+          // Reset after brief delay to show 100%
+          setTimeout(() => {
+            setIsUploading(false);
+            setProgress(0);
+            setSelectedFile(null); // Clear selected file
+          }, 650);
+        } else {
+          toast.error("Upload succeeded but failed to save to database");
+          setIsUploading(false);
+          setProgress(0);
+        }
       } else if (!response?.aborted) {
         toast.error("Upload failed. Please try again.");
         setIsUploading(false);
