@@ -96,10 +96,11 @@ export const UserProvider = ({ children }) => {
       }
       // always refresh from DB if credentials exist
       await refreshUser();
+      await refreshTrainer();
       setIsLoading(false);
     };
     bootstrap();
-  }, [refreshUser]);
+  }, [refreshUser], [refreshTrainer]);
 
   const calculateCalories = (weight, height, age, gender, profession) => {
     if (!weight || !height || !age || !gender || !profession) {

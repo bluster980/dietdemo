@@ -454,7 +454,7 @@ export async function upsertWorkoutPlanEntry(supabase, {userId, dayOfWeek, exerc
 export async function fetchClientsForTrainer(trainerId) {
   const { data, error } = await supabase
     .from('users')
-    .select('user_id, name, mobile_number, subscription_expiry')
+    .select('user_id, name, mobile_number, subscription_expiry, gender')
     .eq('trainer_id', trainerId);
 
   if (error) {

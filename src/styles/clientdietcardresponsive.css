@@ -1,0 +1,477 @@
+/* ========================================
+   CLIENT DIET CARD RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Card dimensions */
+  --dietcard-width: 385px;
+  --dietcard-height: 113px;
+  --dietcard-radius: 10px;
+  --dietcard-margin-top: 8px;
+  
+  /* Image */
+  --dietcard-image-size: 84px;
+  --dietcard-image-radius: 50px;
+  --dietcard-image-margin-top: 6px;
+  --dietcard-image-margin-left: 8px;
+  
+  /* Content */
+  --dietcard-content-margin-left: 12px;
+  --dietcard-content-margin-top: 5px;
+  
+  /* Header */
+  --dietcard-header-width: 90%;
+  --dietcard-header-height: 35px;
+  --dietcard-meal-name-size: 18px;
+  --dietcard-calories-gap: 5px;
+  --dietcard-calories-size: 15px;
+  --dietcard-fire-icon-size: 16px;
+  
+  /* Macros */
+  --dietcard-macros-gap: 10px;
+  --dietcard-macros-margin-top: 12px;
+  --dietcard-bar-width: 8px;
+  --dietcard-bar-height: 40px;
+  --dietcard-bar-radius: 10px;
+  --dietcard-macro-text-size: 15px;
+  
+  /* Quantity input */
+  --dietcard-quantity-width: 53px;
+  --dietcard-quantity-height: 25px;
+  --dietcard-quantity-input-width: 35px;
+  --dietcard-quantity-input-height: 20px;
+  
+  /* Action button */
+  --dietcard-action-size: 20px;
+  --dietcard-action-top: 9px;
+  --dietcard-action-right: 8px;
+}
+
+/* ========================================
+   BASE STYLES
+   ======================================== */
+
+.dietcard-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--dietcard-margin-top);
+}
+
+.dietcard-container {
+  position: relative;
+  display: flex;
+  width: var(--dietcard-width);
+  min-height: var(--dietcard-height);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--dietcard-radius);
+  background: white;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   IMAGE
+   ======================================== */
+
+.dietcard-image {
+  width: var(--dietcard-image-size);
+  height: var(--dietcard-image-size);
+  border-radius: var(--dietcard-image-radius);
+  margin-top: var(--dietcard-image-margin-top);
+  margin-left: var(--dietcard-image-margin-left);
+  object-fit: cover;
+  flex-shrink: 0;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* ========================================
+   CONTENT
+   ======================================== */
+
+.dietcard-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--dietcard-content-margin-left);
+  margin-top: var(--dietcard-content-margin-top);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+
+.dietcard-header {
+  width: var(--dietcard-header-width);
+  min-height: var(--dietcard-header-height);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dietcard-meal-name {
+  font-family: urbanist, sans-serif;
+  font-size: var(--dietcard-meal-name-size);
+  font-weight: 600;
+  color: #2D3436;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.dietcard-calories {
+  display: flex;
+  align-items: center;
+  gap: var(--dietcard-calories-gap);
+}
+
+.dietcard-fire-icon {
+  width: var(--dietcard-fire-icon-size);
+  height: var(--dietcard-fire-icon-size);
+  flex-shrink: 0;
+}
+
+.dietcard-calories-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--dietcard-calories-size);
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.dietcard-calories-value {
+  font-weight: 600;
+  color: #6a6a6a;
+}
+
+.dietcard-calories-unit {
+  font-weight: 400;
+  color: #6C757D;
+}
+
+/* ========================================
+   MACROS
+   ======================================== */
+
+.dietcard-macros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: var(--dietcard-macros-gap);
+  margin-top: var(--dietcard-macros-margin-top);
+}
+
+.dietcard-macro-bar-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.dietcard-macro-bar {
+  width: var(--dietcard-bar-width);
+  height: var(--dietcard-bar-height);
+  background: #F8F9FA;
+  border-radius: var(--dietcard-bar-radius);
+  margin-top: 1px;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.dietcard-macro-bar-fill {
+  width: 100%;
+  border-radius: var(--dietcard-bar-radius);
+  transition: height 0.3s ease;
+}
+
+.dietcard-macro-info {
+  display: flex;
+  flex-direction: column;
+  font-family: urbanist, sans-serif;
+  font-size: var(--dietcard-macro-text-size);
+  color: #6a6a6a;
+}
+
+.dietcard-macro-value {
+  display: flex;
+  font-weight: 600;
+  gap: 0;
+}
+
+.dietcard-macro-label {
+  display: flex;
+  color: #6C757D;
+  font-weight: 400;
+}
+
+/* ========================================
+   QUANTITY INPUT
+   ======================================== */
+
+.dietcard-quantity-input-wrapper {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  width: var(--dietcard-quantity-width);
+  height: var(--dietcard-quantity-height);
+  border-radius: 5px;
+  border: 1px solid #E9ECEF;
+  box-sizing: border-box;
+}
+
+.dietcard-quantity-input {
+  width: var(--dietcard-quantity-input-width);
+  height: var(--dietcard-quantity-input-height);
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  text-align: start;
+  margin-left: 6px;
+  font-family: urbanist, sans-serif;
+  font-size: var(--dietcard-macro-text-size);
+  font-weight: 600;
+  background: transparent;
+}
+
+.dietcard-quantity-input::placeholder {
+  color: #6a6a6a;
+}
+
+.dietcard-quantity-input::-webkit-inner-spin-button,
+.dietcard-quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dietcard-quantity-unit {
+  margin-left: -5px;
+  font-weight: 600;
+  color: #6a6a6a;
+}
+
+/* ========================================
+   ACTION BUTTON
+   ======================================== */
+
+.dietcard-action-btn {
+  position: absolute;
+  top: var(--dietcard-action-top);
+  right: var(--dietcard-action-right);
+  z-index: 1;
+  width: var(--dietcard-action-size);
+  height: var(--dietcard-action-size);
+  border-radius: 10px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  border: none;
+  background: white;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.dietcard-action-btn:active {
+  transform: scale(0.95);
+}
+
+.dietcard-action-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --dietcard-width: 300px;
+    --dietcard-height: 95px;
+    --dietcard-radius: 8px;
+    
+    --dietcard-image-size: 65px;
+    --dietcard-image-margin-top: 5px;
+    --dietcard-image-margin-left: 6px;
+    
+    --dietcard-content-margin-left: 8px;
+    
+    --dietcard-meal-name-size: 15px;
+    --dietcard-calories-size: 12px;
+    --dietcard-fire-icon-size: 13px;
+    
+    --dietcard-macros-gap: 6px;
+    --dietcard-macros-margin-top: 8px;
+    --dietcard-bar-width: 6px;
+    --dietcard-bar-height: 32px;
+    --dietcard-macro-text-size: 12px;
+    
+    --dietcard-quantity-width: 42px;
+    --dietcard-quantity-height: 20px;
+    --dietcard-quantity-input-width: 28px;
+    
+    --dietcard-action-size: 16px;
+    --dietcard-action-top: 6px;
+    --dietcard-action-right: 6px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --dietcard-width: 330px;
+    --dietcard-height: 100px;
+    
+    --dietcard-image-size: 70px;
+    --dietcard-image-margin-left: 7px;
+    
+    --dietcard-content-margin-left: 9px;
+    
+    --dietcard-meal-name-size: 16px;
+    --dietcard-calories-size: 13px;
+    --dietcard-fire-icon-size: 14px;
+    
+    --dietcard-macros-gap: 7px;
+    --dietcard-macros-margin-top: 9px;
+    --dietcard-bar-width: 7px;
+    --dietcard-bar-height: 35px;
+    --dietcard-macro-text-size: 13px;
+    
+    --dietcard-quantity-width: 45px;
+    --dietcard-quantity-height: 22px;
+    --dietcard-quantity-input-width: 30px;
+    
+    --dietcard-action-size: 17px;
+    --dietcard-action-top: 7px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 380px) {
+  :root {
+    --dietcard-width: 345px;
+    --dietcard-height: 105px;
+    
+    --dietcard-image-size: 75px;
+    
+    --dietcard-content-margin-left: 10px;
+    
+    --dietcard-meal-name-size: 17px;
+    --dietcard-calories-size: 14px;
+    --dietcard-fire-icon-size: 15px;
+    
+    --dietcard-macros-gap: 8px;
+    --dietcard-macros-margin-top: 10px;
+    --dietcard-bar-width: 7px;
+    --dietcard-bar-height: 37px;
+    --dietcard-macro-text-size: 14px;
+    
+    --dietcard-quantity-width: 48px;
+    --dietcard-quantity-height: 23px;
+    --dietcard-quantity-input-width: 32px;
+    
+    --dietcard-action-size: 18px;
+    --dietcard-action-top: 8px;
+  }
+}
+
+@media (min-width: 381px) and (max-width: 400px) {
+  :root {
+    --dietcard-width: 360px;
+    --dietcard-height: 105px;
+    
+    --dietcard-image-size: 75px;
+    
+    --dietcard-content-margin-left: 10px;
+    
+    --dietcard-meal-name-size: 17px;
+    --dietcard-calories-size: 14px;
+    --dietcard-fire-icon-size: 15px;
+    
+    --dietcard-macros-gap: 8px;
+    --dietcard-macros-margin-top: 10px;
+    --dietcard-bar-width: 7px;
+    --dietcard-bar-height: 37px;
+    --dietcard-macro-text-size: 14px;
+    
+    --dietcard-quantity-width: 48px;
+    --dietcard-quantity-height: 23px;
+    --dietcard-quantity-input-width: 32px;
+    
+    --dietcard-action-size: 18px;
+    --dietcard-action-top: 8px;
+  }
+}
+
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --dietcard-width: 380px;
+    --dietcard-height: 108px;
+    
+    --dietcard-image-size: 78px;
+    
+    --dietcard-content-margin-left: 11px;
+    
+    --dietcard-macros-gap: 9px;
+    --dietcard-macros-margin-top: 11px;
+    --dietcard-bar-height: 38px;
+    
+    --dietcard-quantity-width: 50px;
+    --dietcard-quantity-height: 24px;
+    --dietcard-quantity-input-width: 33px;
+    
+    --dietcard-action-size: 19px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --dietcard-width: 395px;
+    --dietcard-height: 113px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --dietcard-width: 405px;
+    --dietcard-height: 118px;
+    --dietcard-radius: 11px;
+    
+    --dietcard-image-size: 88px;
+    --dietcard-image-radius: 55px;
+    --dietcard-image-margin-top: 7px;
+    --dietcard-image-margin-left: 9px;
+    
+    --dietcard-content-margin-left: 13px;
+    
+    --dietcard-meal-name-size: 19px;
+    --dietcard-calories-size: 16px;
+    --dietcard-fire-icon-size: 17px;
+    
+    --dietcard-macros-gap: 11px;
+    --dietcard-macros-margin-top: 13px;
+    --dietcard-bar-width: 9px;
+    --dietcard-bar-height: 42px;
+    --dietcard-macro-text-size: 16px;
+    
+    --dietcard-quantity-width: 56px;
+    --dietcard-quantity-height: 26px;
+    --dietcard-quantity-input-width: 37px;
+    --dietcard-quantity-input-height: 22px;
+    
+    --dietcard-action-size: 22px;
+    --dietcard-action-top: 10px;
+    --dietcard-action-right: 9px;
+  }
+}

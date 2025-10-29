@@ -1,0 +1,603 @@
+/* ========================================
+   CLIENT EXERCISE PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --clientexercise-back-size: 30px;
+  --clientexercise-back-top: 30px;
+  --clientexercise-back-left: 5px;
+  
+  /* Header */
+  --clientexercise-header-width: 92%;
+  --clientexercise-header-margin-top: 50px;
+  --clientexercise-save-width: 56px;
+  --clientexercise-save-height: 23px;
+  --clientexercise-save-radius: 8px;
+  --clientexercise-save-icon-size: 15px;
+  --clientexercise-save-text-size: 14px;
+  
+  /* Client info */
+  --clientexercise-info-width: 92%;
+  --clientexercise-info-height: 45px;
+  --clientexercise-info-radius: 10px;
+  --clientexercise-info-margin-top: 5px;
+  --clientexercise-avatar-size: 35px;
+  --clientexercise-avatar-margin: 3px;
+  --clientexercise-name-size: 20px;
+  --clientexercise-name-margin: 8px;
+  
+  /* Day Tabs */
+  --clientexercise-tabs-margin-top: 8px;
+  --clientexercise-tabs-gap: 10px;
+  --clientexercise-tab-width: 11%;
+  --clientexercise-tab-height: 54px;
+  --clientexercise-tab-radius: 8px;
+  --clientexercise-tab-text-size: 15px;
+  
+  /* Search */
+  --clientexercise-search-margin-top: 10px;
+  --clientexercise-search-gap: 5px;
+  --clientexercise-search-width: 82%;
+  --clientexercise-search-height: 43px;
+  --clientexercise-search-radius: 50px;
+  --clientexercise-search-icon-margin: 12px;
+  --clientexercise-search-text-size: 20px;
+  --clientexercise-counter-size: 43px;
+  --clientexercise-counter-text-size: 20px;
+  
+  /* List */
+  --clientexercise-list-height: 72vh;
+  
+  /* Preview */
+  --clientexercise-preview-height: 75%;
+  --clientexercise-preview-margin-top: 250px;
+  
+  /* Colors */
+  --active-tab-bg: #E6FCF5;
+  --active-tab-border: #4ECDC4;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.clientexercise-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.clientexercise-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.clientexercise-back-btn {
+  position: absolute;
+  top: var(--clientexercise-back-top);
+  left: var(--clientexercise-back-left);
+  z-index: 10;
+  width: var(--clientexercise-back-size);
+  height: var(--clientexercise-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.clientexercise-back-btn:active {
+  transform: scale(0.95);
+}
+
+.clientexercise-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   HEADER - SAVE BUTTON
+   ======================================== */
+
+.clientexercise-header {
+  width: var(--clientexercise-header-width);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--clientexercise-header-margin-top);
+}
+
+.clientexercise-save-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--clientexercise-save-width);
+  height: var(--clientexercise-save-height);
+  border-radius: var(--clientexercise-save-radius);
+  background: white;
+  border: 1px solid #E9ECEF;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  gap: 2px;
+  padding: 0;
+}
+
+.clientexercise-save-btn:active {
+  transform: scale(0.97);
+}
+
+.clientexercise-save-icon {
+  width: var(--clientexercise-save-icon-size);
+  height: var(--clientexercise-save-icon-size);
+}
+
+.clientexercise-save-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientexercise-save-text-size);
+  font-weight: 600;
+  color: #6C757D;
+  margin-bottom: 2px;
+}
+
+/* ========================================
+   CLIENT INFO BAR
+   ======================================== */
+
+.clientexercise-client-info-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--clientexercise-info-margin-top);
+}
+
+.clientexercise-client-info {
+  width: var(--clientexercise-info-width);
+  height: var(--clientexercise-info-height);
+  border: 1px solid #E9ECEF;
+  background: white;
+  border-radius: var(--clientexercise-info-radius);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 var(--clientexercise-avatar-margin);
+  box-sizing: border-box;
+}
+
+.clientexercise-client-avatar {
+  width: var(--clientexercise-avatar-size);
+  height: var(--clientexercise-avatar-size);
+  margin-left: var(--clientexercise-avatar-margin);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.clientexercise-client-name {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientexercise-name-size);
+  font-weight: 600;
+  color: #333333;
+  margin-left: var(--clientexercise-name-margin);
+}
+
+/* ========================================
+   DAY TABS
+   ======================================== */
+
+.clientexercise-tabs-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--clientexercise-tabs-gap);
+  margin-top: var(--clientexercise-tabs-margin-top);
+}
+
+.clientexercise-tab {
+  width: var(--clientexercise-tab-width);
+  height: var(--clientexercise-tab-height);
+  border-radius: var(--clientexercise-tab-radius);
+  background: white;
+  border: 1px solid #E9ECEF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientexercise-tab-text-size);
+  font-weight: 500;
+  color: #6C757D;
+}
+
+.clientexercise-tab-active {
+  background: #E6FCF5;
+  border-color: #4ECDC4;
+  font-weight: 700;
+  color: #2D3436;
+}
+
+.clientexercise-tab:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   SEARCH BAR
+   ======================================== */
+
+.clientexercise-search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--clientexercise-search-margin-top);
+  gap: var(--clientexercise-search-gap);
+  width: 100%;
+}
+
+.clientexercise-search-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--clientexercise-search-width);
+  height: var(--clientexercise-search-height);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--clientexercise-search-radius);
+  background: white;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.clientexercise-search-icon {
+  margin-left: var(--clientexercise-search-icon-margin);
+  flex-shrink: 0;
+}
+
+.clientexercise-search-input {
+  flex: 1;
+  height: 100%;
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientexercise-search-text-size);
+  color: #565656;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.clientexercise-search-input::placeholder {
+  color: #565656;
+}
+
+.clientexercise-counter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--clientexercise-counter-size);
+  height: var(--clientexercise-counter-size);
+  border-radius: 50%;
+  border: 1px solid #E9ECEF;
+  background: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  padding: 0;
+}
+
+.clientexercise-counter-btn:active {
+  transform: scale(0.95);
+}
+
+.clientexercise-counter-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientexercise-counter-text-size);
+  font-weight: 700;
+  color: #2D3436;
+}
+
+/* ========================================
+   DIVIDER
+   ======================================== */
+
+.clientexercise-divider {
+  width: 100%;
+  height: 1px;
+  background: #F1F3F5;
+  margin-top: 10px;
+}
+
+/* ========================================
+   EXERCISE LIST
+   ======================================== */
+
+.clientexercise-list-container {
+  display: flex;
+  width: 100%;
+  height: var(--clientexercise-list-height);
+  overflow-y: auto;
+}
+
+.clientexercise-list-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.clientexercise-list-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+/* ========================================
+   PREVIEW MODAL
+   ======================================== */
+
+.clientexercise-preview-overlay {
+  position: fixed;
+  width: 100%;
+  height: var(--clientexercise-preview-height);
+  margin-top: var(--clientexercise-preview-margin-top);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+}
+
+.clientexercise-preview-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.clientexercise-preview-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+.clientexercise-preview-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --clientexercise-back-size: 24px;
+    --clientexercise-back-top: 25px;
+    
+    --clientexercise-header-margin-top: 35px;
+    --clientexercise-save-width: 48px;
+    --clientexercise-save-height: 20px;
+    --clientexercise-save-icon-size: 12px;
+    --clientexercise-save-text-size: 12px;
+    
+    --clientexercise-info-height: 38px;
+    --clientexercise-avatar-size: 28px;
+    --clientexercise-name-size: 16px;
+    --clientexercise-name-margin: 6px;
+    
+    --clientexercise-tabs-gap: 6px;
+    --clientexercise-tab-height: 44px;
+    --clientexercise-tab-text-size: 12px;
+    
+    --clientexercise-search-height: 36px;
+    --clientexercise-search-text-size: 16px;
+    --clientexercise-counter-size: 36px;
+    --clientexercise-counter-text-size: 16px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --clientexercise-back-size: 26px;
+    --clientexercise-back-top: 27px;
+    
+    --clientexercise-header-margin-top: 38px;
+    --clientexercise-save-width: 50px;
+    --clientexercise-save-height: 21px;
+    --clientexercise-save-icon-size: 13px;
+    --clientexercise-save-text-size: 12px;
+    
+    --clientexercise-info-height: 40px;
+    --clientexercise-avatar-size: 30px;
+    --clientexercise-name-size: 17px;
+    --clientexercise-name-margin: 6px;
+    
+    --clientexercise-tabs-gap: 7px;
+    --clientexercise-tab-height: 47px;
+    --clientexercise-tab-text-size: 13px;
+    
+    --clientexercise-search-height: 38px;
+    --clientexercise-search-text-size: 17px;
+    --clientexercise-counter-size: 38px;
+    --clientexercise-counter-text-size: 17px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --clientexercise-back-size: 28px;
+    --clientexercise-back-top: 28px;
+    
+    --clientexercise-header-margin-top: 42px;
+    --clientexercise-save-width: 52px;
+    --clientexercise-save-height: 22px;
+    --clientexercise-save-icon-size: 14px;
+    --clientexercise-save-text-size: 13px;
+    
+    --clientexercise-info-height: 42px;
+    --clientexercise-avatar-size: 32px;
+    --clientexercise-name-size: 18px;
+    --clientexercise-name-margin: 7px;
+    
+    --clientexercise-tabs-gap: 8px;
+    --clientexercise-tab-height: 50px;
+    --clientexercise-tab-text-size: 14px;
+    
+    --clientexercise-search-height: 40px;
+    --clientexercise-search-text-size: 18px;
+    --clientexercise-counter-size: 40px;
+    --clientexercise-counter-text-size: 18px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --clientexercise-back-size: 29px;
+    --clientexercise-back-top: 29px;
+    
+    --clientexercise-header-margin-top: 45px;
+    --clientexercise-save-width: 54px;
+    --clientexercise-save-height: 22px;
+    --clientexercise-save-icon-size: 14px;
+    --clientexercise-save-text-size: 13px;
+    
+    --clientexercise-info-height: 43px;
+    --clientexercise-avatar-size: 33px;
+    --clientexercise-name-size: 19px;
+    
+    --clientexercise-tabs-gap: 9px;
+    --clientexercise-tab-height: 52px;
+    --clientexercise-tab-text-size: 14px;
+    
+    --clientexercise-search-height: 41px;
+    --clientexercise-search-text-size: 19px;
+    --clientexercise-counter-size: 41px;
+    --clientexercise-counter-text-size: 19px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --clientexercise-header-margin-top: 50px;
+    --clientexercise-tab-text-size: 15px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --clientexercise-back-size: 32px;
+    --clientexercise-back-top: 32px;
+    
+    --clientexercise-header-margin-top: 55px;
+    --clientexercise-save-width: 60px;
+    --clientexercise-save-height: 25px;
+    --clientexercise-save-icon-size: 16px;
+    --clientexercise-save-text-size: 15px;
+    
+    --clientexercise-info-height: 48px;
+    --clientexercise-avatar-size: 38px;
+    --clientexercise-name-size: 21px;
+    --clientexercise-name-margin: 10px;
+    
+    --clientexercise-tabs-gap: 11px;
+    --clientexercise-tab-height: 58px;
+    --clientexercise-tab-text-size: 16px;
+    
+    --clientexercise-search-height: 46px;
+    --clientexercise-search-text-size: 21px;
+    --clientexercise-counter-size: 46px;
+    --clientexercise-counter-text-size: 21px;
+  }
+}
+
+
+/* ========================================
+   EXERCISE LIST (UPDATED WITH PADDING)
+   ======================================== */
+
+.clientexercise-list-container {
+  display: flex;
+  width: 100%;
+  height: var(--clientexercise-list-height);
+  overflow-y: auto;
+}
+
+.clientexercise-list-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  padding: 0 var(--workout-page-pad); /* ADD THIS */
+  box-sizing: border-box; /* ADD THIS */
+  margin-top: 8px;
+}
+
+.clientexercise-list-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+/* ========================================
+   PREVIEW MODAL (UPDATED WITH PADDING)
+   ======================================== */
+
+.clientexercise-preview-overlay {
+  position: fixed;
+  width: 100%;
+  height: var(--clientexercise-preview-height);
+  margin-top: var(--clientexercise-preview-margin-top);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+  
+}
+
+.clientexercise-preview-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  padding: 0 var(--workout-page-pad); /* ADD THIS */
+  box-sizing: border-box; /* ADD THIS */
+  
+}
+
+.clientexercise-preview-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+.clientexercise-preview-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+}

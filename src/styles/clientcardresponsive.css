@@ -1,0 +1,729 @@
+/* ========================================
+   CLIENT CARD RESPONSIVE STYLES
+   ======================================== */
+
+/* ========================================
+   1) CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Card dimensions */
+  --clientcard-width: 400px;
+  --clientcard-height: 104px;
+  --clientcard-radius: 10px;
+  --clientcard-padding: 12px;
+  --clientcard-margin-top: 10px;
+  
+  /* Avatar */
+  --clientcard-avatar-size: 65px;
+  --clientcard-avatar-radius: 10px;
+  --clientcard-avatar-margin: 12px;
+  
+  /* Content spacing */
+  --clientcard-content-margin: 15px;
+  --clientcard-header-margin-top: 5px;
+  
+  /* Typography */
+  --clientcard-name-size: 20px;
+  --clientcard-mobile-size: 13px;
+  --clientcard-label-size: 13px;
+  --clientcard-value-size: 13px;
+  --clientcard-call-size: 13px;
+  --clientcard-btn-text-size: 15px;
+  --clientcard-save-text-size: 16px;
+  --clientcard-dropdown-text-size: 13px;
+  
+  /* Buttons & Save */
+  --clientcard-save-width: 50px;
+  --clientcard-save-height: 25px;
+  --clientcard-save-radius: 5px;
+  --clientcard-save-margin-top: 8px;
+  
+  /* Request actions */
+  --clientcard-action-width: 88px;
+  --clientcard-action-height: 40px;
+  --clientcard-action-radius: 10px;
+  --clientcard-action-margin: 23px;
+  --clientcard-action-gap: 4px;
+  --clientcard-action-icon-size: 18px;
+  --clientcard-action-padding: 11px;
+  
+  /* Dropdown toggle */
+  --clientcard-toggle-size: 20px;
+  --clientcard-toggle-radius: 10px;
+  --clientcard-toggle-margin-top: 5px;
+  --clientcard-toggle-margin-right: 5px;
+  
+  /* Dropdown menu */
+  --clientcard-dropdown-width: 110px;
+  --clientcard-dropdown-height: 142px;
+  --clientcard-dropdown-radius: 10px;
+  --clientcard-dropdown-top: 35px;
+  --clientcard-dropdown-right: 12px;
+  --clientcard-dropdown-item-margin: 10px;
+  --clientcard-dropdown-item-gap: 10px;
+  --clientcard-dropdown-item-padding: 10px;
+  
+  /* DatePicker */
+  --clientcard-datepicker-width: 90px;
+  --clientcard-datepicker-height: 20px;
+  
+  /* Details row spacing */
+  --clientcard-details-margin-top: 4px;
+  --clientcard-details-gap: 15px;
+  --clientcard-call-margin-left: 18px;
+  --clientcard-call-margin-top: 3px;
+}
+
+/* ========================================
+   2) BASE STYLES
+   ======================================== */
+
+.clientcard-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--clientcard-margin-top);
+}
+
+.clientcard-dialog-container {
+  position: absolute;
+  z-index: 30;
+  left: 0;
+  top: 0;
+}
+
+.clientcard-container {
+  position: relative;
+  display: flex;
+  width: var(--clientcard-width);
+  min-height: var(--clientcard-height);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--clientcard-radius);
+  background: white;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   3) AVATAR
+   ======================================== */
+
+.clientcard-avatar {
+  width: var(--clientcard-avatar-size);
+  height: var(--clientcard-avatar-size);
+  border-radius: var(--clientcard-avatar-radius);
+  margin-top: var(--clientcard-avatar-margin);
+  margin-left: var(--clientcard-avatar-margin);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   4) CONTENT SECTION
+   ======================================== */
+
+.clientcard-content {
+  display: flex;
+  margin-left: var(--clientcard-content-margin);
+  flex: 1;
+  overflow: hidden;
+}
+
+.clientcard-info-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--clientcard-header-margin-top);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ========================================
+   5) HEADER
+   ======================================== */
+
+.clientcard-header {
+  display: flex;
+  flex-direction: column;
+}
+
+.clientcard-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.clientcard-name {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--clientcard-name-size);
+  color: #2D3436;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clientcard-mobile {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--clientcard-mobile-size);
+  color: #777474;
+  margin-top: 0;
+}
+
+/* ========================================
+   6) SAVE BUTTON
+   ======================================== */
+
+.clientcard-save-btn {
+  height: var(--clientcard-save-height);
+  width: var(--clientcard-save-width);
+  background: white;
+  border: 1px solid #FFC2BE;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: var(--clientcard-save-radius);
+  margin-top: var(--clientcard-save-margin-top);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.clientcard-save-text {
+  font-size: var(--clientcard-save-text-size);
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  color: #6C757D;
+}
+
+/* ========================================
+   7) DETAILS ROW
+   ======================================== */
+
+.clientcard-details-row {
+  display: flex;
+  margin-top: var(--clientcard-details-margin-top);
+  gap: var(--clientcard-details-gap);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.clientcard-detail-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.clientcard-detail-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientcard-label-size);
+  color: #8B8888;
+}
+
+.clientcard-detail-value {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--clientcard-value-size);
+  color: #656262;
+  margin-top: 3px;
+}
+
+/* ========================================
+   8) DATEPICKER
+   ======================================== */
+
+.clientcard-datepicker {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--clientcard-value-size);
+  border: 1px solid #D1D1D1;
+  border-radius: 4px;
+  padding: 2px 8px;
+  width: var(--clientcard-datepicker-width);
+  height: var(--clientcard-datepicker-height);
+  color: #656262;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   9) CALL SECTION
+   ======================================== */
+
+.clientcard-call-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: var(--clientcard-call-margin-left);
+  margin-top: var(--clientcard-call-margin-top);
+}
+
+.clientcard-call-section a {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clientcard-call-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.clientcard-call-text {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--clientcard-call-size);
+  color: #656262;
+  margin: 0;
+}
+
+/* ========================================
+   10) REQUEST ACTIONS
+   ======================================== */
+
+.clientcard-request-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: var(--clientcard-action-margin);
+  gap: var(--clientcard-action-gap);
+  flex-shrink: 0;
+}
+
+.clientcard-accept-btn,
+.clientcard-reject-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--clientcard-action-height);
+  width: var(--clientcard-action-width);
+  border-radius: var(--clientcard-action-radius);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.clientcard-accept-btn:active,
+.clientcard-reject-btn:active {
+  transform: scale(0.97);
+}
+
+.clientcard-accept-btn {
+  border: 1px solid #FFC2BE;
+}
+
+.clientcard-reject-btn {
+  border: 1px solid #D1D1D1;
+}
+
+.clientcard-accept-text {
+  font-size: var(--clientcard-btn-text-size);
+  font-family: urbanist, sans-serif;
+  color: #ff7675;
+  font-weight: 700;
+  margin-left: var(--clientcard-action-padding);
+}
+
+.clientcard-reject-text {
+  font-size: var(--clientcard-btn-text-size);
+  font-family: urbanist, sans-serif;
+  color: #6C757D;
+  font-weight: 600;
+  margin-left: var(--clientcard-action-padding);
+}
+
+.clientcard-accept-icon {
+  width: var(--clientcard-action-icon-size);
+  height: var(--clientcard-action-icon-size);
+  margin-right: 4px;
+  color: #ff7675;
+}
+
+.clientcard-reject-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  transform: rotate(45deg);
+  color: #6C757D;
+}
+
+/* ========================================
+   11) DROPDOWN TOGGLE
+   ======================================== */
+
+.clientcard-dropdown-trigger {
+  width: 68px;
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--clientcard-header-margin-top);
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+.clientcard-dropdown-toggle-top,
+.clientcard-dropdown-toggle-edit {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.clientcard-dropdown-toggle-edit {
+  margin-right: var(--clientcard-toggle-margin-right);
+}
+
+.clientcard-dropdown-btn {
+  height: var(--clientcard-toggle-size);
+  width: var(--clientcard-toggle-size);
+  border-radius: var(--clientcard-toggle-radius);
+  margin-top: var(--clientcard-toggle-margin-top);
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s ease;
+}
+
+.clientcard-dropdown-btn:active {
+  transform: scale(0.95);
+}
+
+/* ========================================
+   12) DROPDOWN MENU
+   ======================================== */
+
+.clientcard-dropdown-menu {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  z-index: 20;
+  top: var(--clientcard-dropdown-top);
+  right: var(--clientcard-dropdown-right);
+  border-radius: var(--clientcard-dropdown-radius);
+  background: white;
+  height: var(--clientcard-dropdown-height);
+  width: var(--clientcard-dropdown-width);
+  box-shadow: 0px 1px 25px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+.clientcard-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--clientcard-dropdown-item-gap);
+  margin-left: var(--clientcard-dropdown-item-padding);
+  margin-top: var(--clientcard-dropdown-item-margin);
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.clientcard-dropdown-item:hover {
+  opacity: 0.7;
+}
+
+.clientcard-dropdown-icon {
+  width: 18px;
+  height: 18px;
+  color: #B7B4B7;
+  flex-shrink: 0;
+}
+
+.clientcard-dropdown-text {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--clientcard-dropdown-text-size);
+  color: #656262;
+  margin: 0;
+  margin-top: 2px;
+}
+
+/* ========================================
+   13) MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --clientcard-width: 280px;
+    --clientcard-height: 92px;
+    --clientcard-radius: 8px;
+    --clientcard-padding: 8px;
+    
+    --clientcard-avatar-size: 50px;
+    --clientcard-avatar-radius: 8px;
+    --clientcard-avatar-margin: 8px;
+    
+    --clientcard-content-margin: 10px;
+    
+    --clientcard-name-size: 16px;
+    --clientcard-mobile-size: 11px;
+    --clientcard-label-size: 11px;
+    --clientcard-value-size: 11px;
+    --clientcard-call-size: 11px;
+    --clientcard-btn-text-size: 13px;
+    --clientcard-save-text-size: 13px;
+    --clientcard-dropdown-text-size: 11px;
+    
+    --clientcard-save-width: 42px;
+    --clientcard-save-height: 22px;
+    
+    --clientcard-action-width: 70px;
+    --clientcard-action-height: 34px;
+    --clientcard-action-margin: 14px;
+    --clientcard-action-icon-size: 14px;
+    --clientcard-action-padding: 8px;
+    
+    --clientcard-toggle-size: 16px;
+    
+    --clientcard-dropdown-width: 90px;
+    --clientcard-dropdown-height: 120px;
+    --clientcard-dropdown-top: 28px;
+    --clientcard-dropdown-item-margin: 8px;
+    --clientcard-dropdown-item-gap: 8px;
+    --clientcard-dropdown-item-padding: 8px;
+    
+    --clientcard-datepicker-width: 75px;
+    --clientcard-datepicker-height: 18px;
+    
+    --clientcard-details-gap: 6px;
+    --clientcard-call-margin-left: 12px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --clientcard-width: 335px;
+    --clientcard-height: 96px;
+    --clientcard-radius: 8px;
+    
+    --clientcard-avatar-size: 54px;
+    --clientcard-avatar-radius: 8px;
+    --clientcard-avatar-margin: 9px;
+    
+    --clientcard-content-margin: 12px;
+    
+    --clientcard-name-size: 17px;
+    --clientcard-mobile-size: 11px;
+    --clientcard-label-size: 11px;
+    --clientcard-value-size: 11px;
+    --clientcard-call-size: 11px;
+    --clientcard-btn-text-size: 13px;
+    --clientcard-save-text-size: 14px;
+    --clientcard-dropdown-text-size: 11px;
+    
+    --clientcard-save-width: 44px;
+    --clientcard-save-height: 23px;
+    
+    --clientcard-action-width: 75px;
+    --clientcard-action-height: 36px;
+    --clientcard-action-margin: 16px;
+    --clientcard-action-icon-size: 15px;
+    --clientcard-action-padding: 9px;
+    
+    --clientcard-toggle-size: 17px;
+    
+    --clientcard-dropdown-width: 95px;
+    --clientcard-dropdown-height: 128px;
+    --clientcard-dropdown-top: 30px;
+    --clientcard-dropdown-item-margin: 8px;
+    
+    --clientcard-datepicker-width: 78px;
+    
+    --clientcard-details-gap: 5px;
+    --clientcard-call-margin-left: 14px;
+  }
+}
+
+@media (min-width: 367px) and (max-width: 389px) {
+  :root {
+    --clientcard-width: 345px;
+    --clientcard-height: 96px;
+    --clientcard-radius: 8px;
+    
+    --clientcard-avatar-size: 54px;
+    --clientcard-avatar-radius: 8px;
+    --clientcard-avatar-margin: 9px;
+    
+    --clientcard-content-margin: 12px;
+    
+    --clientcard-name-size: 17px;
+    --clientcard-mobile-size: 11px;
+    --clientcard-label-size: 11px;
+    --clientcard-value-size: 11px;
+    --clientcard-call-size: 11px;
+    --clientcard-btn-text-size: 13px;
+    --clientcard-save-text-size: 14px;
+    --clientcard-dropdown-text-size: 11px;
+    
+    --clientcard-save-width: 44px;
+    --clientcard-save-height: 23px;
+    
+    --clientcard-action-width: 75px;
+    --clientcard-action-height: 36px;
+    --clientcard-action-margin: 16px;
+    --clientcard-action-icon-size: 15px;
+    --clientcard-action-padding: 9px;
+    
+    --clientcard-toggle-size: 17px;
+    
+    --clientcard-dropdown-width: 95px;
+    --clientcard-dropdown-height: 128px;
+    --clientcard-dropdown-top: 30px;
+    --clientcard-dropdown-item-margin: 8px;
+    
+    --clientcard-datepicker-width: 78px;
+    
+    --clientcard-details-gap: 10px;
+    --clientcard-call-margin-left: 14px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 390px) and (max-width: 400px) {
+  :root {
+    --clientcard-width: 360px;
+    --clientcard-height: 98px;
+    --clientcard-radius: 9px;
+    
+    --clientcard-avatar-size: 58px;
+    --clientcard-avatar-radius: 9px;
+    --clientcard-avatar-margin: 10px;
+    
+    --clientcard-content-margin: 13px;
+    
+    --clientcard-name-size: 18px;
+    --clientcard-mobile-size: 12px;
+    --clientcard-label-size: 12px;
+    --clientcard-value-size: 12px;
+    --clientcard-call-size: 12px;
+    --clientcard-btn-text-size: 14px;
+    --clientcard-save-text-size: 14px;
+    --clientcard-dropdown-text-size: 12px;
+    
+    --clientcard-save-width: 46px;
+    --clientcard-save-height: 24px;
+    
+    --clientcard-action-width: 80px;
+    --clientcard-action-height: 38px;
+    --clientcard-action-margin: 18px;
+    --clientcard-action-icon-size: 16px;
+    --clientcard-action-padding: 10px;
+    
+    --clientcard-toggle-size: 18px;
+    
+    --clientcard-dropdown-width: 100px;
+    --clientcard-dropdown-height: 132px;
+    --clientcard-dropdown-top: 32px;
+    
+    --clientcard-datepicker-width: 82px;
+    
+    --clientcard-details-gap: 7px;
+    --clientcard-call-margin-left: 15px;
+  }
+}
+
+/* Default range (401px - 427px) - uses root defaults mostly */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --clientcard-width: 385px;
+    --clientcard-height: 100px;
+    
+    --clientcard-avatar-size: 60px;
+    --clientcard-avatar-margin: 11px;
+    
+    --clientcard-name-size: 19px;
+    
+    --clientcard-save-width: 48px;
+    
+    --clientcard-action-width: 84px;
+    --clientcard-action-margin: 20px;
+    
+    --clientcard-toggle-size: 19px;
+    
+    --clientcard-dropdown-width: 105px;
+    --clientcard-dropdown-height: 136px;
+    --clientcard-dropdown-top: 33px;
+    
+    --clientcard-datepicker-width: 85px;
+    
+    --clientcard-details-gap: 10px;
+    --clientcard-call-margin-left: 16px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --clientcard-width: 400px;
+    --clientcard-height: 104px;
+    
+    --clientcard-avatar-size: 65px;
+    
+    --clientcard-name-size: 20px;
+    --clientcard-mobile-size: 13px;
+    --clientcard-label-size: 13px;
+    --clientcard-value-size: 13px;
+    --clientcard-call-size: 13px;
+    --clientcard-btn-text-size: 15px;
+    
+    --clientcard-action-width: 88px;
+    --clientcard-action-height: 40px;
+    --clientcard-action-margin: 23px;
+    
+    --clientcard-dropdown-width: 110px;
+    --clientcard-dropdown-height: 142px;
+    --clientcard-details-gap: 13px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --clientcard-width: 420px;
+    --clientcard-height: 108px;
+    --clientcard-radius: 11px;
+    
+    --clientcard-avatar-size: 68px;
+    --clientcard-avatar-radius: 11px;
+    --clientcard-avatar-margin: 13px;
+    
+    --clientcard-content-margin: 16px;
+    
+    --clientcard-name-size: 21px;
+    --clientcard-mobile-size: 14px;
+    --clientcard-label-size: 14px;
+    --clientcard-value-size: 14px;
+    --clientcard-call-size: 14px;
+    --clientcard-btn-text-size: 16px;
+    --clientcard-save-text-size: 17px;
+    --clientcard-dropdown-text-size: 14px;
+    
+    --clientcard-save-width: 52px;
+    --clientcard-save-height: 26px;
+    
+    --clientcard-action-width: 92px;
+    --clientcard-action-height: 42px;
+    --clientcard-action-margin: 25px;
+    --clientcard-action-icon-size: 19px;
+    --clientcard-action-padding: 12px;
+    
+    --clientcard-toggle-size: 22px;
+    
+    --clientcard-dropdown-width: 115px;
+    --clientcard-dropdown-height: 148px;
+    --clientcard-dropdown-top: 38px;
+    --clientcard-dropdown-item-margin: 11px;
+    --clientcard-dropdown-item-gap: 11px;
+    
+    --clientcard-datepicker-width: 95px;
+    --clientcard-datepicker-height: 22px;
+    
+    --clientcard-details-gap: 16px;
+    --clientcard-call-margin-left: 20px;
+  }
+}

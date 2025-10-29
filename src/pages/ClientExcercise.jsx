@@ -10,54 +10,12 @@ import {
   upsertWorkoutPlansBulk,
 } from "../utils/supabaseQueries";
 import toast from "react-hot-toast";
-
-// const exercise = {
-//   exercise_name: "Incline Bench Press",
-//   target: "Chest",
-//   reps: "10-15",
-//   sets: "3",
-//   rest: "1 min",
-//   gif_url: "Incline Bench Press",
-// };
-// const exercise1 = {
-//   exercise_name: "Decline Cable Fly",
-//   target: "Chest",
-//   reps: "10-15",
-//   sets: "3",
-//   rest: "1 min",
-//   gif_url: "Decline Cable Fly",
-// };
-// const exercise2 = {
-//   exercise_name: "Cable Fly",
-//   target: "Chest",
-//   reps: "10-15",
-//   sets: "3",
-//   rest: "1 min",
-//   gif_url: "Cable Fly",
-// };
-// const exercise3 = {
-//   exercise_name: "Pec Dec Fly",
-//   target: "Chest",
-//   reps: "10-15",
-//   sets: "3",
-//   rest: "1 min",
-//   gif_url: "Pec Dec Fly",
-// };
-// const exercise4 = {
-//   exercise_name: "Incline Dumbell Fly",
-//   target: "Chest",
-//   reps: "10-15",
-//   sets: "3",
-//   rest: "1 min",
-//   gif_url: "Incline Dumbell Fly",
-// };
-
-// const allExercises = [exercise, exercise1, exercise2, exercise3, exercise4];
+import "../styles/clientexerciseresponsive.css";
 
 const ClientExcercise = () => {
   const location = useLocation();
   const routeUserId = location.state?.user_id;
-  // Replace your existing state with this
+  const clientName = location.state?.name;
   const navigate = useNavigate();
   const [isActiveDay, setActiveDay] = useState("Fri");
   const [isPreviewEnabled, setIsPreviewEnabled] = useState(false);
@@ -97,11 +55,11 @@ const ClientExcercise = () => {
   const selectedNamesForDay = new Set(
     dayExercises[isActiveDay].map((ex) => ex.exercise_name)
   );
+  
   function handlePreviewClick() {
     setIsPreviewEnabled(!isPreviewEnabled);
   }
 
-  // Add for specific day, block duplicates within that day only
   const addExerciseForDay = (day, exerciseToAdd) => {
     setDayExercises((prev) => {
       const already = prev[day].some(
@@ -129,194 +87,217 @@ const ClientExcercise = () => {
   };
 
   async function handleSaveAll() {
-  if (!userId) {
-    toast.error('Missing user');
-    return;
-  }
+    if (!userId) {
+      toast.error("Missing user");
+      return;
+    }
 
-  // Build a single rows array for all seven days
-  const rows = [];
-  for (const day of Object.keys(dayExercises)) {
-    const list = dayExercises[day];
-    if (!list || list.length === 0) continue;
-    for (const ex of list) {
-      rows.push({
-        user_id: userId,
-        day_of_week: day,
-        exercise_name: ex.exercise_name,
-        reps: ex.reps,
-        sets: ex.sets,
-      });
+    const rows = [];
+    for (const day of Object.keys(dayExercises)) {
+      const list = dayExercises[day];
+      if (!list || list.length === 0) continue;
+      for (const ex of list) {
+        rows.push({
+          user_id: userId,
+          day_of_week: day,
+          exercise_name: ex.exercise_name,
+          reps: ex.reps,
+          sets: ex.sets,
+        });
+      }
+    }
+
+    if (rows.length === 0) {
+      toast("Nothing to save");
+      return;
+    }
+
+    const { error } = await upsertWorkoutPlansBulk(rows);
+    if (error) {
+      console.error("Save error:", error.message);
+      toast.error("Failed to save");
+    } else {
+      toast.success("All days saved");
     }
   }
 
-  if (rows.length === 0) {
-    toast('Nothing to save');
-    return;
-  }
-
-  const { error } = await upsertWorkoutPlansBulk(rows);
-  if (error) {
-    console.error('Save error:', error.message);
-    toast.error('Failed to save');
-  } else {
-    toast.success('All days saved');
-  }
-}
-
   return (
-    <div
-      className="relative flex flex-col justify-between items-center"
-      style={{
-        background: "#FFFFFF",
-      }}
-    >
-      <div className="flex flex-col">
-        <BackArrow
-          alt="back arrow"
+    <div className="clientexercise-viewport">
+      <div className="clientexercise-page">
+        {/* Back Arrow */}
+        <button
+          className="clientexercise-back-btn"
           onClick={() => navigate(-1)}
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            display: "flex",
-            top: "30px",
-            left: "5px",
-            zIndex: 1,
-          }}
-        />
-      </div>
-      <div className="w-[92%] flex justify-end mt-[50px]">
-        <div className="flex justify-center items-center w-[56px] h-[23px] rounded-[8px] bg-white border border-[#E9ECEF]" onClick={handleSaveAll}>
-          <ProfileEditPen className="h-[15px] w-[15px] ml-[px]" />
-          <button className="z-1 h-full mb-[2px] ml-[2px] justify-center items-center text-[#6C757D] font-urbanist font-semibold text-[14px]">
-            Save
-          </button>
-        </div>
-      </div>
-      <div className="w-full flex justify-center items-center mt-[5px]">
-        <div className="w-[92%] h-[45px] border border-[#E9ECEF] bg-white rounded-[10px] justify-start items-center">
-          <div className="flex items-center h-full">
-            <img
-              src={oatmeal}
-              className="h-[35px] w-[35px] ml-[3px] text-[15px]"
-              alt="No img available"
-            />
-            <p className="text-[20px] font-urbanist font-semibold text-[#333333] ml-[8px]">
-              <span>Nilvana Lara</span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div className="w-full flex justify-center items-center gap-x-[10px] mt-[8px]">
-        {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day, index) => (
-          <div
-            key={index}
-            className={`w-[11%] h-[54px] rounded-[8px] ${
-              isActiveDay === day
-                ? "bg-[#E6FCF5] border border-[#4ECDC4]"
-                : "bg-white border border-[#E9ECEF]"
-            }`}
-          >
-            <p
-              className={`flex justify-center items-center h-full text-[15px] font-urbanist ${
-                isActiveDay === day ? "text-[#2D3436]" : "text-[#6C757D]"
-              } ${isActiveDay === day ? "font-bold" : "font-medium"}`}
-              onClick={() => {
-                console.log(day);
-                setActiveDay(day);
-              }}
-            >
-              {day}
-            </p>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-center items-center mt-[10px] gap-x-[5px] w-full">
-        <div className="gap-x-[10px] flex items-center justify-start w-[82%] h-[43px] border border-[#E9ECEF] rounded-[50px] bg-white">
-          <Search className="ml-[12px]" />
-          <p className="flex text-center text-[20px] font-urbanist text-[#565656]">
-            <input
-              className="w-full h-full text-[20px] font-urbanist text-[#565656]"
-              placeholder="Search Excercise Name"
-              style={{ outline: "none", border: "none" }}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </p>
-        </div>
-        <div
-          className="flex items-center justify-center h-[43px] w-[43px] rounded-[100%] border border-[#E9ECEF] bg-white"
-          onClick={handlePreviewClick}
-          style={{ boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.08)" }}
+          aria-label="Go back"
         >
-          <p className="font-urbanist font-bold text-[20px] text-[#2D3436]">
-            {dayExercises[isActiveDay].length}
-          </p>
-        </div>
-      </div>
-      <div className="w-full mt-[10px]">
-        <div className="justify-between items-center h-[1px] bg-[#F1F3F5]"></div>
-      </div>
-      <div
-        className="flex h-[72vh] overflow-y-scroll"
-        style={{
-          scrollbarWidth: "thin",
-          scrollbarColor: "transparent transparent",
-        }}
-      >
-        <div className="flex flex-col items-center">
-          {filteredMeals.map((exObj) => {
-            const selected = selectedNamesForDay.has(exObj.exercise_name);
-            const editKey = `${isActiveDay}:${exObj.exercise_name}`;
-            const isEditing = selected ? false : editing[editKey] ?? true;
-            return (
-              <WorkoutCard
-                key={`${exObj.exercise_name}-${isActiveDay}`}
-                exercise={exObj}
-                addButton
-                mode="select"
-                isEditing={isEditing} // locked if already selected
-                isSelectedForDay={selected} // NEW
-                onBeginEdit={() =>
-                  setEditing((m) => ({ ...m, [editKey]: true }))
-                }
-                onAdd={(exWithVals) => {
-                  addExerciseForDay(isActiveDay, exWithVals);
-                  setEditing((m) => ({ ...m, [editKey]: false })); // lock after add
-                }}
-              />
-            );
-          })}
-        </div>
-      </div>
+          <BackArrow className="clientexercise-back-icon" />
+        </button>
 
-      {isPreviewEnabled && (
-        <div className="fixed w-full h-[75%] mt-[250px] flex items-center justify-center bg-black bg-opacity-70">
-          <div
-            className="h-full overflow-y-scroll"
+        {/* Save Button */}
+        <div className="clientexercise-header">
+          <button
+            className="clientexercise-save-btn"
+            onClick={handleSaveAll}
             style={{
-              scrollbarWidth: "thin",
-              scrollbarColor: "transparent transparent",
+              backgroundColor: "var(--dietcard-bg)",
+              borderColor: "var(--profile-border)",
             }}
           >
-            <div className="flex flex-col justify-center items-center">
-              {dayExercises[isActiveDay].map((exercise) => (
-                <WorkoutCard
-                  key={`${isActiveDay}-${exercise.exercise_name}`}
-                  exercise={exercise}
-                  addButton={"preview"}
-                  mode="preview"
-                  isEditing={false}
-                  onRemove={(e) => {
-                    e?.stopPropagation?.();
-                    removeExercise(exercise);
-                  }}
-                />
-              ))}
-            </div>
+            <ProfileEditPen className="clientexercise-save-icon" />
+            <span
+              className="clientexercise-save-text"
+              style={{ color: "var(--faded-text)" }}
+            >
+              Save
+            </span>
+          </button>
+        </div>
+
+        {/* Client Info Bar */}
+        <div className="clientexercise-client-info-wrapper">
+          <div
+            className="clientexercise-client-info"
+            style={{
+              backgroundColor: "var(--dietcard-bg)",
+              borderColor: "var(--profile-border)",
+            }}
+          >
+            <img
+              src={oatmeal}
+              className="clientexercise-client-avatar"
+              alt="Client avatar"
+            />
+            <span
+              className="clientexercise-client-name"
+              style={{ color: "var(--general-charcoal-text)" }}
+            >
+              {clientName || "Nilvana Lara"}
+            </span>
           </div>
         </div>
-      )}
+
+        {/* Day Tabs */}
+        <div className="clientexercise-tabs-wrapper">
+          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+            (day, index) => (
+              <button
+                key={index}
+                className={`clientexercise-tab ${
+                  isActiveDay === day ? "clientexercise-tab-active" : ""
+                }`}
+                onClick={() => setActiveDay(day)}
+                style={{
+                  backgroundColor:
+                    isActiveDay === day
+                      ? "var(--active-tab-bg)"
+                      : "var(--dietcard-bg)",
+                  borderColor:
+                    isActiveDay === day
+                      ? "var(--active-tab-border)"
+                      : "var(--profile-border)",
+                  color:
+                    isActiveDay === day
+                      ? "var(--general-charcoal-text)"
+                      : "var(--faded-text)",
+                }}
+              >
+                {day}
+              </button>
+            )
+          )}
+        </div>
+
+        {/* Search Bar and Counter */}
+        <div className="clientexercise-search-wrapper">
+          <div
+            className="clientexercise-search-container"
+            style={{
+              backgroundColor: "var(--dietcard-bg)",
+              borderColor: "var(--profile-border)",
+            }}
+          >
+            <Search className="clientexercise-search-icon" />
+            <input
+              className="clientexercise-search-input"
+              placeholder="Search Exercise Name"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{ color: "var(--faded-text)" }}
+            />
+          </div>
+          <button
+            className="clientexercise-counter-btn"
+            onClick={handlePreviewClick}
+            style={{
+              backgroundColor: "var(--dietcard-bg)",
+              borderColor: "var(--profile-border)",
+            }}
+          >
+            <span
+              className="clientexercise-counter-text"
+              style={{ color: "var(--general-charcoal-text)" }}
+            >
+              {dayExercises[isActiveDay].length}
+            </span>
+          </button>
+        </div>
+
+        {/* Divider */}
+        <div
+          className="clientexercise-divider"
+          style={{ backgroundColor: "var(--profile-border)" }}
+        />
+
+        {/* Exercise List */}
+        <div className="clientexercise-list-container">
+          <div className="clientexercise-list-scroll">
+            {filteredMeals.map((exObj) => {
+              const selected = selectedNamesForDay.has(exObj.exercise_name);
+              const editKey = `${isActiveDay}:${exObj.exercise_name}`;
+              const isEditing = selected ? false : editing[editKey] ?? true;
+              return (
+                <WorkoutCard
+                  key={`${exObj.exercise_name}-${isActiveDay}`}
+                  exercise={exObj}
+                  addButton
+                  mode="select"
+                  isEditing={isEditing}
+                  isSelectedForDay={selected}
+                  onBeginEdit={() =>
+                    setEditing((m) => ({ ...m, [editKey]: true }))
+                  }
+                  onAdd={(exWithVals) => {
+                    addExerciseForDay(isActiveDay, exWithVals);
+                    setEditing((m) => ({ ...m, [editKey]: false }));
+                  }}
+                />
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Preview Modal */}
+        {isPreviewEnabled && (
+          <div className="clientexercise-preview-overlay">
+            <div className="clientexercise-preview-scroll">
+              <div className="clientexercise-preview-content">
+                {dayExercises[isActiveDay].map((exercise) => (
+                  <WorkoutCard
+                    key={`${isActiveDay}-${exercise.exercise_name}`}
+                    exercise={exercise}
+                    addButton={"preview"}
+                    mode="preview"
+                    isEditing={false}
+                    onRemove={(e) => {
+                      e?.stopPropagation?.();
+                      removeExercise(exercise);
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

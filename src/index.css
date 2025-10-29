@@ -713,6 +713,8 @@ html {
   --workout-back-size: 30px;
   --workout-back-offset: 10px;
   
+  --clientexercise-list-padding-x: 12px;
+
   /* Card dimensions - responsive width, fixed height */
   /* --workout-card-max-width: 395px; */
   --workout-card-height: 160px;
@@ -1366,4 +1368,10 @@ html {
   .daydate-slot {
     padding: 6px 2px;
   }
+}
+
+input::placeholder {
+  /* font-size: 1.2em; */
+  font-style: italic;
+  opacity: 0.2;
 }

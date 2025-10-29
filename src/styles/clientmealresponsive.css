@@ -1,0 +1,532 @@
+/* ========================================
+   CLIENT MEAL PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --clientmeal-back-size: 30px;
+  --clientmeal-back-top: 30px;
+  --clientmeal-back-left: 5px;
+  
+  /* Header */
+  --clientmeal-header-width: 92%;
+  --clientmeal-header-margin-top: 50px;
+  --clientmeal-save-width: 56px;
+  --clientmeal-save-height: 23px;
+  --clientmeal-save-radius: 8px;
+  --clientmeal-save-icon-size: 15px;
+  --clientmeal-save-text-size: 14px;
+  
+  /* Client info */
+  --clientmeal-info-width: 92%;
+  --clientmeal-info-height: 45px;
+  --clientmeal-info-radius: 10px;
+  --clientmeal-info-margin-top: 5px;
+  --clientmeal-avatar-size: 35px;
+  --clientmeal-avatar-margin: 3px;
+  --clientmeal-name-size: 20px;
+  --clientmeal-name-margin: 8px;
+  
+  /* Tabs */
+  --clientmeal-tabs-margin-top: 8px;
+  --clientmeal-tabs-gap: 5px;
+  --clientmeal-tab-width: 22%;
+  --clientmeal-tab-height: 54px;
+  --clientmeal-tab-radius: 8px;
+  --clientmeal-tab-text-size: 20px;
+  
+  /* Search */
+  --clientmeal-search-margin-top: 10px;
+  --clientmeal-search-gap: 5px;
+  --clientmeal-search-width: 82%;
+  --clientmeal-search-height: 43px;
+  --clientmeal-search-radius: 50px;
+  --clientmeal-search-icon-margin: 12px;
+  --clientmeal-search-text-size: 20px;
+  --clientmeal-counter-size: 43px;
+  --clientmeal-counter-text-size: 20px;
+  
+  /* List */
+  --clientmeal-list-height: 72vh;
+  
+  /* Preview */
+  --clientmeal-preview-height: 75%;
+  --clientmeal-preview-margin-top: 250px;
+  
+  /* Colors */
+  --active-tab-bg: #E6FCF5;
+  --active-tab-border: #4ECDC4;
+  /* --active-tav-bg-dark: #275552; */
+  --active-tab-border-dark: #5EDDD4;
+}
+
+.theme-darl{
+  --active-tab-bg: #275552;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.clientmeal-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.clientmeal-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.clientmeal-back-btn {
+  position: absolute;
+  top: var(--clientmeal-back-top);
+  left: var(--clientmeal-back-left);
+  z-index: 10;
+  width: var(--clientmeal-back-size);
+  height: var(--clientmeal-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.clientmeal-back-btn:active {
+  transform: scale(0.95);
+}
+
+.clientmeal-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   HEADER - SAVE BUTTON
+   ======================================== */
+
+.clientmeal-header {
+  width: var(--clientmeal-header-width);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--clientmeal-header-margin-top);
+}
+
+.clientmeal-save-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--clientmeal-save-width);
+  height: var(--clientmeal-save-height);
+  border-radius: var(--clientmeal-save-radius);
+  background: white;
+  border: 1px solid #E9ECEF;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  gap: 2px;
+  padding: 0;
+}
+
+.clientmeal-save-btn:active {
+  transform: scale(0.97);
+}
+
+.clientmeal-save-icon {
+  width: var(--clientmeal-save-icon-size);
+  height: var(--clientmeal-save-icon-size);
+}
+
+.clientmeal-save-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmeal-save-text-size);
+  font-weight: 600;
+  color: #6C757D;
+  margin-bottom: 2px;
+}
+
+/* ========================================
+   CLIENT INFO BAR
+   ======================================== */
+
+.clientmeal-client-info-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--clientmeal-info-margin-top);
+}
+
+.clientmeal-client-info {
+  width: var(--clientmeal-info-width);
+  height: var(--clientmeal-info-height);
+  border: 1px solid #E9ECEF;
+  background: white;
+  border-radius: var(--clientmeal-info-radius);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 var(--clientmeal-avatar-margin);
+  box-sizing: border-box;
+}
+
+.clientmeal-client-avatar {
+  width: var(--clientmeal-avatar-size);
+  height: var(--clientmeal-avatar-size);
+  margin-left: var(--clientmeal-avatar-margin);
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.clientmeal-client-name {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmeal-name-size);
+  font-weight: 600;
+  color: #2D3436;
+  margin-left: var(--clientmeal-name-margin);
+}
+
+/* ========================================
+   MEAL TIME TABS
+   ======================================== */
+
+.clientmeal-tabs-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--clientmeal-tabs-gap);
+  margin-top: var(--clientmeal-tabs-margin-top);
+}
+
+.clientmeal-tab {
+  width: var(--clientmeal-tab-width);
+  height: var(--clientmeal-tab-height);
+  border-radius: var(--clientmeal-tab-radius);
+  background: white;
+  border: 1px solid #E9ECEF;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmeal-tab-text-size);
+  font-weight: 500;
+  color: #6C757D;
+}
+
+.clientmeal-tab-active {
+  background: #E6FCF5;
+  border-color: #4ECDC4;
+  font-weight: 600;
+  color: #2D3436;
+}
+
+.clientmeal-tab:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   SEARCH BAR
+   ======================================== */
+
+.clientmeal-search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--clientmeal-search-margin-top);
+  gap: var(--clientmeal-search-gap);
+  width: 100%;
+}
+
+.clientmeal-search-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--clientmeal-search-width);
+  height: var(--clientmeal-search-height);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--clientmeal-search-radius);
+  background: white;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.clientmeal-search-icon {
+  margin-left: var(--clientmeal-search-icon-margin);
+  flex-shrink: 0;
+}
+
+.clientmeal-search-input {
+  flex: 1;
+  height: 100%;
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmeal-search-text-size);
+  color: #565656;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.clientmeal-search-input::placeholder {
+  color: #565656;
+}
+
+.clientmeal-counter-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--clientmeal-counter-size);
+  height: var(--clientmeal-counter-size);
+  border-radius: 50%;
+  border: 1px solid #E9ECEF;
+  background: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  padding: 0;
+}
+
+.clientmeal-counter-btn:active {
+  transform: scale(0.95);
+}
+
+.clientmeal-counter-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmeal-counter-text-size);
+  font-weight: 700;
+  color: #2D3436;
+}
+
+/* ========================================
+   DIVIDER
+   ======================================== */
+
+.clientmeal-divider {
+  width: 100%;
+  height: 1px;
+  background: #F1F3F5;
+  margin-top: 10px;
+}
+
+/* ========================================
+   MEAL LIST
+   ======================================== */
+
+.clientmeal-list-container {
+  display: flex;
+  width: 100%;
+  height: var(--clientmeal-list-height);
+  overflow-y: auto;
+}
+
+.clientmeal-list-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.clientmeal-list-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+/* ========================================
+   PREVIEW MODAL
+   ======================================== */
+
+.clientmeal-preview-overlay {
+  position: fixed;
+  width: 100%;
+  height: var(--clientmeal-preview-height);
+  margin-top: var(--clientmeal-preview-margin-top);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 50;
+}
+
+.clientmeal-preview-scroll {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.clientmeal-preview-scroll::-webkit-scrollbar {
+  width: 0;
+}
+
+.clientmeal-preview-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --clientmeal-back-size: 24px;
+    --clientmeal-back-top: 25px;
+    
+    --clientmeal-header-margin-top: 35px;
+    --clientmeal-save-width: 48px;
+    --clientmeal-save-height: 20px;
+    --clientmeal-save-icon-size: 12px;
+    --clientmeal-save-text-size: 12px;
+    
+    --clientmeal-info-height: 38px;
+    --clientmeal-avatar-size: 28px;
+    --clientmeal-name-size: 16px;
+    --clientmeal-name-margin: 6px;
+    
+    --clientmeal-tab-height: 44px;
+    --clientmeal-tab-text-size: 16px;
+    
+    --clientmeal-search-height: 36px;
+    --clientmeal-search-text-size: 16px;
+    --clientmeal-counter-size: 36px;
+    --clientmeal-counter-text-size: 16px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --clientmeal-back-size: 26px;
+    --clientmeal-back-top: 27px;
+    
+    --clientmeal-header-margin-top: 38px;
+    --clientmeal-save-width: 50px;
+    --clientmeal-save-height: 21px;
+    --clientmeal-save-icon-size: 13px;
+    --clientmeal-save-text-size: 12px;
+    
+    --clientmeal-info-height: 40px;
+    --clientmeal-avatar-size: 30px;
+    --clientmeal-name-size: 17px;
+    --clientmeal-name-margin: 6px;
+    
+    --clientmeal-tab-height: 47px;
+    --clientmeal-tab-text-size: 17px;
+    
+    --clientmeal-search-height: 38px;
+    --clientmeal-search-text-size: 17px;
+    --clientmeal-counter-size: 38px;
+    --clientmeal-counter-text-size: 17px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --clientmeal-back-size: 28px;
+    --clientmeal-back-top: 28px;
+    
+    --clientmeal-header-margin-top: 42px;
+    --clientmeal-save-width: 52px;
+    --clientmeal-save-height: 22px;
+    --clientmeal-save-icon-size: 14px;
+    --clientmeal-save-text-size: 13px;
+    
+    --clientmeal-info-height: 42px;
+    --clientmeal-avatar-size: 32px;
+    --clientmeal-name-size: 18px;
+    --clientmeal-name-margin: 7px;
+    
+    --clientmeal-tab-height: 50px;
+    --clientmeal-tab-text-size: 18px;
+    
+    --clientmeal-search-height: 40px;
+    --clientmeal-search-text-size: 18px;
+    --clientmeal-counter-size: 40px;
+    --clientmeal-counter-text-size: 18px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --clientmeal-back-size: 29px;
+    --clientmeal-back-top: 29px;
+    
+    --clientmeal-header-margin-top: 45px;
+    --clientmeal-save-width: 54px;
+    --clientmeal-save-height: 22px;
+    --clientmeal-save-icon-size: 14px;
+    --clientmeal-save-text-size: 13px;
+    
+    --clientmeal-info-height: 43px;
+    --clientmeal-avatar-size: 33px;
+    --clientmeal-name-size: 19px;
+    
+    --clientmeal-tab-height: 52px;
+    --clientmeal-tab-text-size: 19px;
+    
+    --clientmeal-search-height: 41px;
+    --clientmeal-search-text-size: 19px;
+    --clientmeal-counter-size: 41px;
+    --clientmeal-counter-text-size: 19px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --clientmeal-header-margin-top: 50px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --clientmeal-back-size: 32px;
+    --clientmeal-back-top: 32px;
+    
+    --clientmeal-header-margin-top: 55px;
+    --clientmeal-save-width: 60px;
+    --clientmeal-save-height: 25px;
+    --clientmeal-save-icon-size: 16px;
+    --clientmeal-save-text-size: 15px;
+    
+    --clientmeal-info-height: 48px;
+    --clientmeal-avatar-size: 38px;
+    --clientmeal-name-size: 21px;
+    --clientmeal-name-margin: 10px;
+    
+    --clientmeal-tab-height: 58px;
+    --clientmeal-tab-text-size: 21px;
+    
+    --clientmeal-search-height: 46px;
+    --clientmeal-search-text-size: 21px;
+    --clientmeal-counter-size: 46px;
+    --clientmeal-counter-text-size: 21px;
+  }
+}

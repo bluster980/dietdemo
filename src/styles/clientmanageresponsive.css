@@ -1,0 +1,549 @@
+/* ========================================
+   CLIENT MANAGE PAGE RESPONSIVE STYLES
+   ======================================== */
+
+/* ========================================
+   1) CSS CUSTOM PROPERTIES
+   ======================================== */
+
+:root {
+  /* Page spacing */
+  --clientmanage-page-pad-x: 3%;
+  --clientmanage-header-margin-top: 50px;
+  
+  /* Trainer Badge */
+  --clientmanage-badge-width: 65px;
+  --clientmanage-badge-height: 26px;
+  --clientmanage-badge-radius: 10px;
+  --clientmanage-badge-text-size: 16px;
+  
+  /* Toggle Switch */
+  --clientmanage-toggle-width: 325px;
+  --clientmanage-toggle-height: 51px;
+  --clientmanage-toggle-radius: 50px;
+  --clientmanage-toggle-gap: 10px;
+  --clientmanage-toggle-margin-top: 10px;
+  --clientmanage-toggle-text-size: 20px;
+  --clientmanage-toggle-left-width: 40%;
+  --clientmanage-toggle-right-width: 60%;
+  --clientmanage-toggle-bg-left-width: 161px;
+  --clientmanage-toggle-bg-right-width: 185px;
+  --clientmanage-toggle-bg-right-offset: 0px;
+  --clientmanage-toggle-padding-left: 10px;
+  --clientmanage-toggle-padding-right: 15px;
+  
+  /* Notification Button */
+  --clientmanage-notif-size: 51px;
+  --clientmanage-notif-margin-bottom: 10px;
+  --clientmanage-notif-icon-size: 24px;
+  
+  /* Search Bar */
+  --clientmanage-search-width: 94%;
+  --clientmanage-search-height: 43px;
+  --clientmanage-search-radius: 50px;
+  --clientmanage-search-margin-top: 10px;
+  --clientmanage-search-icon-margin: 12px;
+  --clientmanage-search-text-size: 20px;
+  --clientmanage-search-icon-size: 22px;
+  
+  /* Divider */
+  --clientmanage-divider-margin-top: 10px;
+  --clientmanage-divider-height: 1px;
+  
+  /* List Container */
+  --clientmanage-list-height: 75vh;
+  --clientmanage-list-padding-bottom: 20px;
+  
+  /* Empty State */
+  --clientmanage-empty-height: 40vh;
+  --clientmanage-empty-animation-size: 250px;
+  --clientmanage-empty-title-size: 18px;
+  --clientmanage-empty-subtitle-size: 14px;
+  
+  /* Colors */
+  --toggle-border: #ff7675;
+  --toggle-active-bg: #ff7675;
+}
+
+/* ========================================
+   2) BASE LAYOUT
+   ======================================== */
+
+.clientmanage-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: var(--qna-bg, #FFFFFF);
+}
+
+.clientmanage-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   3) HEADER - TRAINER BADGE
+   ======================================== */
+
+.clientmanage-header {
+  width: var(--clientmanage-search-width);
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--clientmanage-header-margin-top);
+}
+
+.clientmanage-trainer-badge {
+  width: var(--clientmanage-badge-width);
+  height: var(--clientmanage-badge-height);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--clientmanage-badge-radius);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clientmanage-trainer-id {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmanage-badge-text-size);
+  font-weight: 600;
+  color: #2D3436;
+  text-align: center;
+}
+
+/* ========================================
+   4) TOGGLE SWITCH & NOTIFICATION
+   ======================================== */
+
+.clientmanage-controls-wrapper {
+  position: relative;
+  display: flex;
+  gap: var(--clientmanage-toggle-gap);
+  margin-top: var(--clientmanage-toggle-margin-top);
+  align-items: center;
+}
+
+.clientmanage-toggle-container {
+  position: relative;
+  width: var(--clientmanage-toggle-width);
+  height: var(--clientmanage-toggle-height);
+  border: 1px solid var(--toggle-border);
+  border-radius: var(--clientmanage-toggle-radius);
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.clientmanage-toggle-options {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  gap: 30px;
+  height: 100%;
+  width: 95%;
+  justify-content: center;
+  align-items: center;
+}
+
+.clientmanage-toggle-option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  user-select: none;
+}
+
+.clientmanage-toggle-option:active {
+  transform: scale(0.98);
+}
+
+.clientmanage-toggle-left {
+  width: var(--clientmanage-toggle-left-width);
+  margin-left: var(--clientmanage-toggle-padding-left);
+}
+
+.clientmanage-toggle-right {
+  width: var(--clientmanage-toggle-right-width);
+  margin-left: var(--clientmanage-toggle-padding-right);
+}
+
+.clientmanage-toggle-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmanage-toggle-text-size);
+  font-weight: 600;
+  color: #000000;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Toggle Backgrounds */
+.clientmanage-toggle-bg {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  height: var(--clientmanage-toggle-height);
+  background: var(--toggle-active-bg);
+}
+
+.clientmanage-toggle-bg-right {
+  right: var(--clientmanage-toggle-bg-right-offset);
+  width: var(--clientmanage-toggle-bg-right-width);
+  border-bottom-left-radius: 100px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+.clientmanage-toggle-bg-left {
+  left: 0;
+  width: var(--clientmanage-toggle-bg-left-width);
+  border-bottom-left-radius: 50px;
+  border-top-left-radius: 50px;
+  border-bottom-right-radius: 100px;
+}
+
+/* Notification Button */
+.clientmanage-notification-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: var(--clientmanage-notif-size);
+  height: var(--clientmanage-notif-size);
+  border-radius: 50%;
+  border: 1px solid #E9ECEF;
+  background: white;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  margin-bottom: var(--clientmanage-notif-margin-bottom);
+  padding: 0;
+}
+
+.clientmanage-notification-btn:active {
+  transform: scale(0.95);
+}
+
+.clientmanage-notification-icon {
+  width: var(--clientmanage-notif-icon-size);
+  height: var(--clientmanage-notif-icon-size);
+}
+
+/* Notification Overlay */
+.clientmanage-notification-overlay {
+  position: fixed;
+  z-index: 90;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ========================================
+   5) SEARCH BAR
+   ======================================== */
+
+.clientmanage-search-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: var(--clientmanage-search-width);
+  height: var(--clientmanage-search-height);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--clientmanage-search-radius);
+  margin-top: var(--clientmanage-search-margin-top);
+  background: white;
+  box-sizing: border-box;
+  gap: 10px;
+}
+
+.clientmanage-search-icon {
+  margin-left: var(--clientmanage-search-icon-margin);
+  width: var(--clientmanage-search-icon-size);
+  height: var(--clientmanage-search-icon-size);
+  flex-shrink: 0;
+}
+
+.clientmanage-search-input {
+  flex: 1;
+  width: 86%;
+  height: 100%;
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmanage-search-text-size);
+  color: #565656;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.clientmanage-search-input::placeholder {
+  color: #565656;
+}
+
+/* ========================================
+   6) DIVIDER
+   ======================================== */
+
+.clientmanage-divider {
+  width: 100%;
+  height: var(--clientmanage-divider-height);
+  background: #F1F3F5;
+  margin-top: var(--clientmanage-divider-margin-top);
+}
+
+/* ========================================
+   7) CLIENT LIST
+   ======================================== */
+
+.clientmanage-list-container {
+  display: flex;
+  width: 100%;
+  height: var(--clientmanage-list-height);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.clientmanage-list-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.clientmanage-list-scroll {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: var(--clientmanage-list-padding-bottom);
+}
+
+/* ========================================
+   8) EMPTY STATE
+   ======================================== */
+
+.clientmanage-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: var(--clientmanage-empty-height);
+  color: #6C757D;
+}
+
+.clientmanage-empty-animation {
+  width: var(--clientmanage-empty-animation-size);
+  height: var(--clientmanage-empty-animation-size);
+}
+
+.clientmanage-empty-title {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmanage-empty-title-size);
+  font-weight: 600;
+  margin: 8px 0 4px 0;
+}
+
+.clientmanage-empty-subtitle {
+  font-family: urbanist, sans-serif;
+  font-size: var(--clientmanage-empty-subtitle-size);
+  margin: 0;
+}
+
+/* ========================================
+   9) MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --clientmanage-header-margin-top: 35px;
+    
+    --clientmanage-badge-width: 50px;
+    --clientmanage-badge-height: 22px;
+    --clientmanage-badge-radius: 8px;
+    --clientmanage-badge-text-size: 13px;
+    
+    --clientmanage-toggle-width: 260px;
+    --clientmanage-toggle-height: 40px;
+    --clientmanage-toggle-gap: 8px;
+    --clientmanage-toggle-text-size: 15px;
+    --clientmanage-toggle-bg-left-width: 128px;
+    --clientmanage-toggle-bg-right-width: 148px;
+    --clientmanage-toggle-bg-right-offset: 50px;
+    
+    --clientmanage-notif-size: 40px;
+    --clientmanage-notif-icon-size: 18px;
+    
+    --clientmanage-search-height: 36px;
+    --clientmanage-search-icon-margin: 10px;
+    --clientmanage-search-text-size: 15px;
+    --clientmanage-search-icon-size: 18px;
+    
+    --clientmanage-empty-animation-size: 180px;
+    --clientmanage-empty-title-size: 15px;
+    --clientmanage-empty-subtitle-size: 12px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --clientmanage-header-margin-top: 38px;
+    
+    --clientmanage-badge-width: 54px;
+    --clientmanage-badge-height: 23px;
+    --clientmanage-badge-radius: 8px;
+    --clientmanage-badge-text-size: 14px;
+    
+    --clientmanage-toggle-width: 275px;
+    --clientmanage-toggle-height: 43px;
+    --clientmanage-toggle-gap: 8px;
+    --clientmanage-toggle-text-size: 16px;
+    --clientmanage-toggle-bg-left-width: 135px;
+    --clientmanage-toggle-bg-right-width: 155px;
+    --clientmanage-toggle-bg-right-offset: 0px;
+    
+    --clientmanage-notif-size: 43px;
+    --clientmanage-notif-icon-size: 20px;
+    
+    --clientmanage-search-height: 38px;
+    --clientmanage-search-icon-margin: 10px;
+    --clientmanage-search-text-size: 16px;
+    --clientmanage-search-icon-size: 19px;
+    
+    --clientmanage-empty-animation-size: 195px;
+    --clientmanage-empty-title-size: 16px;
+    --clientmanage-empty-subtitle-size: 12px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --clientmanage-header-margin-top: 42px;
+    
+    --clientmanage-badge-width: 58px;
+    --clientmanage-badge-height: 24px;
+    --clientmanage-badge-radius: 9px;
+    --clientmanage-badge-text-size: 14px;
+    
+    --clientmanage-toggle-width: 290px;
+    --clientmanage-toggle-height: 46px;
+    --clientmanage-toggle-gap: 9px;
+    --clientmanage-toggle-text-size: 17px;
+    --clientmanage-toggle-bg-left-width: 143px;
+    --clientmanage-toggle-bg-right-width: 165px;
+    --clientmanage-toggle-bg-right-offset: 0px;
+    
+    --clientmanage-notif-size: 46px;
+    --clientmanage-notif-icon-size: 21px;
+    
+    --clientmanage-search-height: 40px;
+    --clientmanage-search-icon-margin: 11px;
+    --clientmanage-search-text-size: 17px;
+    --clientmanage-search-icon-size: 20px;
+    
+    --clientmanage-empty-animation-size: 210px;
+    --clientmanage-empty-title-size: 16px;
+    --clientmanage-empty-subtitle-size: 13px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --clientmanage-header-margin-top: 45px;
+    
+    --clientmanage-badge-width: 60px;
+    --clientmanage-badge-height: 25px;
+    --clientmanage-badge-text-size: 15px;
+    
+    --clientmanage-toggle-width: 305px;
+    --clientmanage-toggle-height: 48px;
+    --clientmanage-toggle-text-size: 18px;
+    --clientmanage-toggle-bg-left-width: 151px;
+    --clientmanage-toggle-bg-right-width: 173px;
+    --clientmanage-toggle-bg-right-offset: 0px;
+    
+    --clientmanage-notif-size: 48px;
+    --clientmanage-notif-icon-size: 22px;
+    
+    --clientmanage-search-height: 41px;
+    --clientmanage-search-text-size: 18px;
+    --clientmanage-search-icon-size: 21px;
+    
+    --clientmanage-empty-animation-size: 225px;
+    --clientmanage-empty-title-size: 17px;
+    --clientmanage-empty-subtitle-size: 13px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --clientmanage-header-margin-top: 50px;
+    
+    --clientmanage-badge-width: 65px;
+    --clientmanage-badge-height: 26px;
+    --clientmanage-badge-text-size: 16px;
+    
+    --clientmanage-toggle-width: 325px;
+    --clientmanage-toggle-height: 51px;
+    --clientmanage-toggle-text-size: 20px;
+    
+    --clientmanage-notif-size: 51px;
+    --clientmanage-notif-icon-size: 24px;
+    
+    --clientmanage-search-height: 43px;
+    --clientmanage-search-text-size: 20px;
+    --clientmanage-search-icon-size: 22px;
+    
+    --clientmanage-empty-animation-size: 250px;
+    --clientmanage-empty-title-size: 18px;
+    --clientmanage-empty-subtitle-size: 14px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --clientmanage-header-margin-top: 55px;
+    
+    --clientmanage-badge-width: 70px;
+    --clientmanage-badge-height: 28px;
+    --clientmanage-badge-radius: 11px;
+    --clientmanage-badge-text-size: 17px;
+    
+    --clientmanage-toggle-width: 345px;
+    --clientmanage-toggle-height: 54px;
+    --clientmanage-toggle-gap: 11px;
+    --clientmanage-toggle-text-size: 21px;
+    --clientmanage-toggle-bg-left-width: 170px;
+    --clientmanage-toggle-bg-right-width: 195px;
+    --clientmanage-toggle-bg-right-offset: 0px;
+    
+    --clientmanage-notif-size: 54px;
+    --clientmanage-notif-icon-size: 26px;
+    
+    --clientmanage-search-height: 46px;
+    --clientmanage-search-icon-margin: 13px;
+    --clientmanage-search-text-size: 21px;
+    --clientmanage-search-icon-size: 24px;
+    
+    --clientmanage-empty-animation-size: 270px;
+    --clientmanage-empty-title-size: 19px;
+    --clientmanage-empty-subtitle-size: 15px;
+  }
+}

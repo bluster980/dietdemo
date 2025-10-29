@@ -4,7 +4,7 @@ import CallClient from "../assets/callclient.svg";
 import RemoveClient from "../assets/removeclient.svg";
 import EnterArrow from "../assets/enterarrow.svg";
 import ConfirmDialog from "./ConfirmDialog";
-import oatmeal from "../assets/oatmeal.png";
+// import oatmeal from "../assets/oatmeal.png";
 import Diet from "../assets/diet.svg";
 import Edit from "../assets/edit.svg";
 import DietDemo from "../assets/dietdemo.svg";
@@ -15,8 +15,9 @@ import PlusCross from "../assets/pluscross.svg";
 import DatePicker from "react-datepicker";
 import {updatePlanExpiry} from "../utils/supabaseQueries";
 import "react-datepicker/dist/react-datepicker.css";
-// eslint-disable-next-line no-unused-vars
-import { color, transform } from "framer-motion";
+import "../styles/clientcardresponsive.css";
+import manIcon from "../assets/manicon.jpg";
+import womanIcon from "../assets/womanicon.jpg";
 
 const ClientCard = ({
   client,
@@ -31,44 +32,28 @@ const ClientCard = ({
   onRejectClick,
   onRemoveClient,
 }) => {
-  // console.log('ClientCard:', client);
   const navigate = useNavigate();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [isEditingExpiry, setIsEditingExpiry] = useState(false);
   const [dialogType, setDialogType] = useState(null);
   const [expiryDate, setExpiryDate] = useState(() => {
-    // client.subscription_expiry is “dd-mm-yyyy” or “dd MMM yyyy” from parent
     if (!client?.subscription_expiry) return null;
-    // Try parse dd-mm-yyyy first, else dd MMM yyyy
     const s = String(client.subscription_expiry);
     let d = null;
-    // dd-mm-yyyy -> Date UTC
     const m1 = /^(\d{2})-(\d{2})-(\d{4})$/.exec(s);
     if (m1) {
       const [, dd, mm, yyyy] = m1;
       d = new Date(Date.UTC(+yyyy, +mm - 1, +dd));
     } else {
-      // dd MMM yyyy (e.g., 18 Sep 2025)
       const parts = s.split(" ");
       if (parts.length === 3) {
-        d = new Date(s); // may work in many locales, fallback below if NaN
+        d = new Date(s);
         if (isNaN(d)) {
-          // Map month short manually to index
           const [dd, mon, yyyy] = parts;
           const months = [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
+            "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
           ];
           const mi = months.indexOf(mon);
           if (mi >= 0) d = new Date(Date.UTC(+yyyy, mi, +dd));
@@ -78,7 +63,6 @@ const ClientCard = ({
     return d && !isNaN(d) ? d : null;
   });
 
-  // Keep a derived string for display (dd MMM yyyy)
   const displayExpiry = expiryDate
     ? expiryDate
         .toLocaleDateString("en-GB", {
@@ -89,7 +73,6 @@ const ClientCard = ({
         .replace(/ /g, " ")
     : "N/A";
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     if (!isDropdownOpen) return;
     function handleClickOutside(event) {
@@ -102,7 +85,7 @@ const ClientCard = ({
   }, [isDropdownOpen, onCloseDropdown]);
 
   const handleRemoveClick = (type) => {
-    setDialogType(type); // "remove" or "reject"
+    setDialogType(type);
     setIsDialogOpen(true);
   };
 
@@ -111,7 +94,7 @@ const ClientCard = ({
   };
 
   const handleDropdownClick = (e) => {
-    e.stopPropagation(); // Prevent card click event
+    e.stopPropagation();
     onDropdownToggle();
   };
 
@@ -121,7 +104,6 @@ const ClientCard = ({
       setIsEditingExpiry(false);
       return;
     }
-    // Format to DB string (yyyy-mm-dd)
     const y = expiryDate.getUTCFullYear();
     const m = String(expiryDate.getUTCMonth() + 1).padStart(2, "0");
     const d = String(expiryDate.getUTCDate()).padStart(2, "0");
@@ -151,7 +133,7 @@ const ClientCard = ({
     }
 
     onUpdateClient(client.user_id, {
-      subscription_expiry: `${d}-${m}-${y}`, // if your list expects dd-mm-yyyy display
+      subscription_expiry: `${d}-${m}-${y}`,
       days,
     });
 
@@ -175,10 +157,10 @@ const ClientCard = ({
     return diff > 0 ? diff : "Expired";
   };
 
+  console.log("ClientCard:", client);
   return (
-    <div className="w-full flex justify-center items-center mt-[10px]">
-      {/* confirm dialog for user deletion or not. */}
-      <div className="absolute z-30 left-[0px] top-[0px]">
+    <div className="clientcard-wrapper">
+      <div className="clientcard-dialog-container">
         <ConfirmDialog
           isOpen={isDialogOpen}
           onClose={handleDialogClose}
@@ -187,55 +169,58 @@ const ClientCard = ({
             if (dialogType === "remove" && onRemoveClient)
               await onRemoveClient();
             if (dialogType === "reject" && onRejectClick) await onRejectClick();
-            setDialogType(null); // clear after use
+            setDialogType(null);
           }}
         />
       </div>
 
       <div
-        className="relative flex w-[400px] h-[104px] border border-[#E9ECEF] rounded-[10px] bg-white"
+        className="clientcard-container"
         onClick={onClick}
-        style={{ boxShadow: "0px 3px 10px rgba(0, 0, 0, 0.04)" }}
+        style={{ 
+          backgroundColor: "var(--dietcard-bg)", 
+          borderColor: "var(--profile-border)" 
+        }}
       >
         <img
-          src={oatmeal}
-          className="w-[65px] h-[65px] rounded-[10px] mt-[12px] ml-[12px] text-[15px]"
-          alt="No img available"
+          src={client.gender === "man" ? manIcon : womanIcon}
+          className="clientcard-avatar"
+          alt="Client avatar"
+          style={{borderRadius: '50%'}}
         />
-        <div className="flex ml-[15px] ">
-          <div className="flex flex-col mt-[5px]">
-            <div className="flex flex-col">
-              <div className="flex justify-between items-center">
-                <span className="font-urbanist font-semibold text-[20px] text-[#2D3436] h-[26px]">
+        
+        <div className="clientcard-content">
+          <div className="clientcard-info-section">
+            <div className="clientcard-header">
+              <div className="clientcard-header-row">
+                <span className="clientcard-name" style={{ color: "var(--general-charcoal-text)" }}>
                   {client.name}
                 </span>
                 {isEditingExpiry && (
                   <div
-                    className="h-[25px] w-[50px] bg-white border border-[#FFC2BE] flex justify-center items-center rounded-[5px] mt-[8px]"
+                    className="clientcard-save-btn"
                     onClick={() => {
                       handleSaveEdit();
                       setIsEditingExpiry(false);
                     }}
                   >
-                    <span className="text-[16px] font-urbanist font-semibold text-[#6C757D]">
-                      Save
-                    </span>
+                    <span className="clientcard-save-text">Save</span>
                   </div>
                 )}
               </div>
-              <span className="font-urbanist font-semibold text-[13px] text-[#777474] mt-[0px]">
+              <span className="clientcard-mobile" style={{ color: "var(--faded-text)" }}>
                 +91 {client.mobile_number}
               </span>
             </div>
-            <div className="flex mt-[4px]">
-              <div className="flex flex-col">
-                <span className="font-urbanist text-[13px] text-[#8B8888]">
+
+            <div className="clientcard-details-row">
+              <div className="clientcard-detail-group">
+                <span className="clientcard-detail-label" style={{ color: "var(--faded-text)" }}>
                   Plan Expiry
                 </span>
-
                 {isEditingExpiry ? (
                   <DatePicker
-                    selected={expiryDate} // Date or null
+                    selected={expiryDate}
                     onChange={(date) => setExpiryDate(date || null)}
                     minDate={
                       new Date(new Date().setDate(new Date().getDate() + 1))
@@ -243,30 +228,31 @@ const ClientCard = ({
                     dateFormat="dd MMM yyyy"
                     placeholderText="Select date"
                     autoFocus
-                    className="font-urbanist font-semibold text-[13px] border border-gray-300 rounded px-2 py-1 w-[90px] h-[20px] text-[#656262]"
+                    className="clientcard-datepicker"
                   />
                 ) : (
-                  <span className="font-urbanist font-semibold text-[13px] text-[#656262] mt-[3px]">
+                  <span className="clientcard-detail-value" style={{ color: "var(--faded-text)" }}>
                     {displayExpiry}
                   </span>
                 )}
               </div>
-              <p className="flex flex-col ml-[15px]">
-                <span className="font-urbanist text-[13px] text-[#8B8888]">
+
+              <div className="clientcard-detail-group">
+                <span className="clientcard-detail-label" style={{ color: "var(--faded-text)" }}>
                   Days Remaining
                 </span>
-                <span className="font-urbanist font-semibold text-[13px] text-[#656262] mt-[3px]">
+                <span className="clientcard-detail-value" style={{ color: "var(--faded-text)" }}>
                   {isEditingExpiry
                     ? calculateDaysRemaining(expiryDate)
                     : client?.days || "N/A"}
                 </span>
-              </p>
+              </div>
 
               {!isClientRequest && (
-                <div className="flex flex-col justify-center items-center ml-[18px] mt-[3px]">
-                  <a href={client.mobile_number}>
-                    <CallClient />
-                    <p className="font-urbanist font-semibold text-[13px] text-[#656262]">
+                <div className="clientcard-call-section">
+                  <a href={`tel:${client.mobile_number}`}>
+                    <CallClient className="clientcard-call-icon" />
+                    <p className="clientcard-call-text" style={{ color: "var(--faded-text)" }}>
                       Call
                     </p>
                   </a>
@@ -274,43 +260,32 @@ const ClientCard = ({
               )}
             </div>
           </div>
+
           {isClientRequest && (
-            <div className="flex flex-col justify-center items-center ml-[23px] gap-y-[4px]">
+            <div className="clientcard-request-actions">
               <div
-                className="flex justify-between items-center h-[40px] w-[88px] border border-[#FFC2BE] rounded-[10px]"
-                onClick={() => onAcceptClick && onAcceptClick()} // direct call
-                style={{ cursor: "pointer" }}
+                className="clientcard-accept-btn"
+                onClick={() => onAcceptClick && onAcceptClick()}
               >
-                <p className="text-[15px] font-urbanist text-[#ff7675] font-bold ml-[11px]">
-                  <span>Accept</span>
-                </p>
-                <RightArrow
-                  className="w-[18px] h-[18px] mr-[4px]"
-                  style={{ color: "#ff7675" }}
-                />
+                <span className="clientcard-accept-text">Accept</span>
+                <RightArrow className="clientcard-accept-icon" />
               </div>
               <div
-                className="flex justify-between items-center h-[40px] w-[88px] border border-[#d1d1d1] rounded-[10px]"
+                className="clientcard-reject-btn"
                 onClick={() => handleRemoveClick("reject")}
-                style={{ cursor: "pointer" }}
               >
-                <p className="text-[15px] font-urbanist text-[#6C757D] font-semibold ml-[11px]">
-                  <span>Reject</span>
-                </p>
-                <PlusCross
-                  className="w-[20px] h-[20px] mr-[4px]"
-                  style={{ transform: "rotate(45deg)", color: "#6C757D" }}
-                />
+                <span className="clientcard-reject-text">Reject</span>
+                <PlusCross className="clientcard-reject-icon" />
               </div>
             </div>
           )}
+
           {!isClientRequest && (
-            <div className="w-[68px] flex flex-col mt-[5px]">
+            <div className="clientcard-dropdown-trigger">
               {!isEditingExpiry && (
-                <div className="flex justify-end items-end">
+                <div className="clientcard-dropdown-toggle-top">
                   <div
-                    className="h-[20px] w-[20px] rounded-[10px] mt-[5px]"
-                    style={{ boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.15)" }}
+                    className="clientcard-dropdown-btn"
                     onClick={handleDropdownClick}
                   >
                     <EnterArrow />
@@ -318,10 +293,9 @@ const ClientCard = ({
                 </div>
               )}
               {isEditingExpiry && (
-                <div className="flex justify-end items-end mr-[5px]">
+                <div className="clientcard-dropdown-toggle-edit">
                   <div
-                    className="h-[20px] w-[20px] rounded-[10px] mt-[5px]"
-                    style={{ boxShadow: "0px 1px 5px rgba(0, 0, 0, 0.15)" }}
+                    className="clientcard-dropdown-btn"
                     onClick={handleDropdownClick}
                   >
                     <EnterArrow />
@@ -331,54 +305,55 @@ const ClientCard = ({
             </div>
           )}
         </div>
+
         {isDropdownOpen && (
           <div
             ref={dropdownRef}
-            className="absolute flex flex-col text-center z-20 top-[0px] right-[12px] rounded-[10px] bg-white h-[142px] w-[110px] mt-[35px]"
-            style={{ boxShadow: "0px 1px 25px rgba(0, 0, 0, 0.15)" }}
+            className="clientcard-dropdown-menu"
+            style={{ 
+              backgroundColor: "var(--dietcard-bg)",
+              borderColor: "var(--profile-border)"
+            }}
           >
             <div
-              className="flex items-center mt-[10px] gap-x-[10px] ml-[10px]"
+              className="clientcard-dropdown-item"
               onClick={() => navigate('/trainer/clientmeal', { state: { user_id: client.user_id, name: client.name } })}
-              style={{ color: "#B7B4B7" }}
             >
-              <DietDemo />
-              <p className="font-urbanist font-semibold text-[13px] text-[#656262] mt-[3px]">
+              <DietDemo className="clientcard-dropdown-icon" />
+              <p className="clientcard-dropdown-text" style={{ color: "var(--faded-text)" }}>
                 Diet
               </p>
             </div>
             <div
-              className="flex items-center mt-[8px] gap-x-[10px] ml-[10px]"
+              className="clientcard-dropdown-item"
               onClick={() => navigate('/trainer/clientexcercise', { state: { user_id: client.user_id, name: client.name } })}
-              style={{ color: "#B7B4B7" }}
             >
-              <WorkoutMod />
-              <p className="font-urbanist font-semibold text-[13px] text-[#656262] mt-[2px]">
+              <WorkoutMod className="clientcard-dropdown-icon" />
+              <p className="clientcard-dropdown-text" style={{ color: "var(--faded-text)" }}>
                 Workout
               </p>
             </div>
             <div
-              className="flex items-center mt-[10px] gap-x-[10px] ml-[11.5px]"
+              className="clientcard-dropdown-item"
               onClick={() => {
                 setIsEditingExpiry(true);
                 onCloseDropdown();
               }}
-              style={{ color: "#B7B4B7" }}
             >
-              <Edit />
-              <p className="font-urbanist font-semibold text-[13px] text-[#656262] mt-[2px] ml-[0.6px]">
+              <Edit className="clientcard-dropdown-icon" />
+              <p className="clientcard-dropdown-text" style={{ color: "var(--faded-text)" }}>
                 Edit
               </p>
             </div>
             <div
-              className="flex items-center mt-[10px] gap-x-[10px] ml-[12px]"
+              className="clientcard-dropdown-item"
               onClick={() => {
                 onActionClick("Remove");
                 handleRemoveClick("remove");
               }}
             >
-              <RemoveClient style={{ color: "#B7B4B7" }} />
-              <p className="font-urbanist font-semibold text-[13px] text-[#656262] mt-[2px]">
+              <RemoveClient className="clientcard-dropdown-icon" />
+              <p className="clientcard-dropdown-text" style={{ color: "var(--faded-text)" }}>
                 Remove
               </p>
             </div>
