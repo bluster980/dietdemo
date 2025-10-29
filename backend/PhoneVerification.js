@@ -97,7 +97,7 @@ async function jwtCreation(req, res) {
     // const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 2; // 2h
     console.log("user_id from phoneverification before", user_id);
     const token = jwt.sign(
-      { sub: user_id, role: "authenticated" },
+      { sub: user_id, role: "authenticated", user_role: role },
       SUPABASE_LEGACY_JWT_SECRET,
       { algorithm: "HS256", expiresIn: "30d" } // or ES256 with kid if you configured asymmetric keys
     );
