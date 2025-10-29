@@ -56,7 +56,7 @@ export function AuthProvider({ children }) {
   };
 
   // Public welcome at '/'
-  const PUBLIC_PATHS = new Set(['/']);
+  const PUBLIC_PATHS = new Set(['/', '/welcome', '/otp1']);
 
   // Minimal guard: presence + local exp check only
   useEffect(() => {
@@ -99,7 +99,8 @@ export function AuthProvider({ children }) {
     const now = Math.floor(Date.now() / 1000);
     const isAuthed = !!t && !!uid && exp && exp > now;
 
-    if (PUBLIC_PATHS.has(location.pathname) && isAuthed) {
+    // Redirect authenticated users away from landing pages
+    if ((location.pathname === '/' || location.pathname === '/welcome') && isAuthed) {
       const redirectPath = getAuthenticatedRedirectPath();
       navigate(redirectPath, { replace: true });
     }
