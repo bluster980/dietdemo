@@ -39,7 +39,7 @@ const saveTokenToBackend = async (token) => {
     // Get device info (optional)
     const deviceInfo = `${navigator.userAgent.substring(0, 100)}`;
     
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/fcm/store-token`, {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/fcm/store-token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const removeTokenOnLogout = async () => {
   try {
     const token = await messaging.getToken();
     
-    await fetch(`${import.meta.env.VITE_API_URL}/api/fcm/remove-token`, {
+    await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/fcm/remove-token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fcmToken: token })
