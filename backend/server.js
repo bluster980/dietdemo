@@ -10,6 +10,7 @@ const path = require('path');
 const { encodeImage, decodeFromImageUrl, ensureUploadsDir } = require('./Steganography');
 const { jwtCreation } = require('./PhoneVerification');
 const { handleGenerateUploadUrl, handleVerifyUpload } = require('./r2Upload');
+const { storeFcmToken, removeFcmToken } = require('./fcmNotifications');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -100,6 +101,10 @@ app.post('/api/upload/verify', asyncHandler(handleVerifyUpload));
 
 // Static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// FCM routes
+app.post('/api/fcm/store-token', asyncHandler(storeFcmToken));
+app.post('/api/fcm/remove-token', asyncHandler(removeFcmToken));
 
 // =====================================
 // Error Handlers

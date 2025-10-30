@@ -3,15 +3,6 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import svgr from 'vite-plugin-svgr';
 
-// export default defineConfig({
-//   plugins: [react(), svgr({ exportAsDefault: true, include: '**/*.svg' })],
-//   server: {
-//     host: '0.0.0.0',
-//     port: 5173,
-//   },
-// });
-
-
 export default defineConfig({
   plugins: [
     react(),
@@ -59,6 +50,23 @@ export default defineConfig({
         maximumFileSizeToCacheInBytes: 5_000_000,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webp,gif}'],
       },
+      devOptions: {
+        enabled: true,
+        type: 'module'
+      }
     }),
+    // Add second instance for Firebase messaging service worker
+    VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'public',
+      filename: 'firebase-messaging-sw.js',
+      injectManifest: {
+        globPatterns: []
+      }
+    })
   ],
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+  },
 });

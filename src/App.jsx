@@ -1,5 +1,6 @@
 // src/App.jsx
 import React from 'react';
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Welcome from './pages/Welcome';
 import Userverification from './pages/Userverification';
@@ -37,10 +38,24 @@ import ProfileNew from './pages/ProfileNew';
 import { PrivateRoute, PublicOnlyRoute } from './context/AuthContext';
 import DiaryResponsive from './pages/DiaryResponsive';
 import CalorieCircle from './pages/CalorieCircle';
+import { requestNotificationPermission, onMessageListener } from './utils/pushnotifications';
 
 function App() {
   // const [generatedOTP, setGeneratedOTP] = useState("");
   // const [, setMobileNumber] = useState("");
+  useEffect(() => {
+    // Request notification permission when app loads
+    requestNotificationPermission();
+    
+    // Listen for foreground messages
+    onMessageListener()
+      .then((payload) => {
+        console.log('Received foreground message:', payload);
+        // Show a toast or notification UI here
+        alert(`New notification: ${payload.notification.title}`);
+      })
+      .catch((err) => console.log('Failed to receive message:', err));
+  }, []);
 
   return (
     <>
