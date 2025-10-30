@@ -1,0 +1,526 @@
+/* ========================================
+   TRAINER VERIFICATION PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --trainerverification-back-size: 30px;
+  --trainerverification-back-top: 40px;
+  --trainerverification-back-left: 5px;
+  
+  /* Content */
+  --trainerverification-content-margin-top: 80px;
+  
+  /* Logo */
+  --trainerverification-logo-width: 100%;
+  --trainerverification-logo-height: 100%;
+  
+  /* Typography */
+  --trainerverification-title-size: 30px;
+  --trainerverification-title-margin-top: 5px;
+  --trainerverification-subtitle-size: 18px;
+  --trainerverification-subtitle-margin-top: 20px;
+  
+  /* ID Inputs */
+  --trainerverification-input-margin-top: 5px;
+  --trainerverification-input-gap: 5px;
+  --trainerverification-input-prefix-width: 35px;
+  --trainerverification-input-digits-width: 62px;
+  --trainerverification-input-height: 31px;
+  --trainerverification-input-size: 20px;
+  --trainerverification-input-radius: 8px;
+  --trainerverification-separator-size: 35px;
+  
+  /* Error */
+  --trainerverification-error-size: 15px;
+  --trainerverification-error-margin-top: 8px;
+  
+  /* Instructions */
+  --trainerverification-instructions-margin-top: 15px;
+  --trainerverification-instructions-title-size: 18px;
+  --trainerverification-instructions-text-size: 15px;
+  --trainerverification-instructions-gap: 5px;
+  --trainerverification-bullet-size: 8px;
+  --trainerverification-bullet-margin: 8px;
+  
+  /* Button */
+  --trainerverification-button-width: 360px;
+  --trainerverification-button-height: 60px;
+  --trainerverification-button-radius: 15px;
+  --trainerverification-button-text-size: 23px;
+  --trainerverification-cta-margin-top: 30px;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.trainerverification-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.trainerverification-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.trainerverification-back-btn {
+  position: absolute;
+  top: var(--trainerverification-back-top);
+  left: var(--trainerverification-back-left);
+  z-index: 10;
+  width: var(--trainerverification-back-size);
+  height: var(--trainerverification-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.trainerverification-back-btn:active {
+  transform: scale(0.95);
+}
+
+.trainerverification-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   CONTENT SECTION
+   ======================================== */
+
+.trainerverification-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--trainerverification-content-margin-top);
+  width: 100%;
+}
+
+/* ========================================
+   LOGO
+   ======================================== */
+
+.trainerverification-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.trainerverification-logo {
+  width: var(--trainerverification-logo-width);
+  height: var(--trainerverification-logo-height);
+  max-width: 100%;
+}
+
+/* ========================================
+   FORM SECTION
+   ======================================== */
+
+.trainerverification-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.trainerverification-title {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--trainerverification-title-size);
+  color: #2D3436;
+  margin-top: var(--trainerverification-title-margin-top);
+  line-height: 1;
+  text-align: center;
+}
+
+.trainerverification-subtitle {
+  font-family: urbanist, sans-serif;
+  font-size: var(--trainerverification-subtitle-size);
+  margin-top: var(--trainerverification-subtitle-margin-top);
+  line-height: 1;
+  text-align: center;
+}
+
+.trainerverification-subtitle-light {
+  color: #6C757D;
+  font-weight: 400;
+}
+
+.trainerverification-subtitle-bold {
+  color: #2D3436;
+  font-weight: 500;
+}
+
+/* ========================================
+   ID INPUT GROUP
+   ======================================== */
+
+.trainerverification-input-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--trainerverification-input-gap);
+  margin-top: var(--trainerverification-input-margin-top);
+}
+
+.trainerverification-input {
+  height: var(--trainerverification-input-height);
+  border: 1px solid #E9ECEF;
+  border-radius: var(--trainerverification-input-radius);
+  text-align: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: var(--trainerverification-input-size);
+  color: #2D3436;
+  outline: none;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.trainerverification-input:focus {
+  border-color: #4ECDC4;
+  box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.2);
+}
+
+.trainerverification-input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.trainerverification-input-prefix {
+  width: var(--trainerverification-input-prefix-width);
+}
+
+.trainerverification-input-digits {
+  width: var(--trainerverification-input-digits-width);
+}
+
+.trainerverification-separator {
+  font-family: urbanist, sans-serif;
+  font-size: var(--trainerverification-separator-size);
+  color: #6C757D;
+  line-height: 1;
+}
+
+/* ========================================
+   ERROR MESSAGE
+   ======================================== */
+
+.trainerverification-error {
+  font-family: urbanist, sans-serif;
+  font-size: var(--trainerverification-error-size);
+  color: #ff7675;
+  margin-top: var(--trainerverification-error-margin-top);
+  text-align: center;
+  width: 90%;
+  max-width: 360px;
+}
+
+/* ========================================
+   INSTRUCTIONS
+   ======================================== */
+
+.trainerverification-instructions {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--trainerverification-instructions-margin-top);
+}
+
+.trainerverification-instructions-title {
+  font-family: urbanist, sans-serif;
+  font-size: var(--trainerverification-instructions-title-size);
+  font-weight: 500;
+  color: #2D3436;
+  text-align: center;
+}
+
+.trainerverification-instructions-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: var(--trainerverification-instructions-gap);
+}
+
+.trainerverification-instruction-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: var(--trainerverification-instructions-gap);
+}
+
+.trainerverification-bullet {
+  width: var(--trainerverification-bullet-size);
+  height: var(--trainerverification-bullet-size);
+  border-radius: 50%;
+  background: #4ECDC4;
+  flex-shrink: 0;
+}
+
+.trainerverification-instruction-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--trainerverification-instructions-text-size);
+  font-weight: 400;
+  color: #6C757D;
+  margin-left: var(--trainerverification-bullet-margin);
+}
+
+/* ========================================
+   CTA BUTTON
+   ======================================== */
+
+.trainerverification-cta {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--trainerverification-cta-margin-top);
+}
+
+
+/* ========================================
+   HELPER TEXT
+   ======================================== */
+
+.trainerverification-helper-text {
+  font-family: urbanist, sans-serif;
+  font-size: 13px;
+  color: #FF7675;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ========================================
+   DISABLED INPUT STATES
+   ======================================== */
+
+.trainerverification-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Media query adjustments */
+@media (max-width: 320px) {
+  .trainerverification-helper-text {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 366px) {
+  .trainerverification-helper-text {
+    font-size: 12px;
+    margin-top: 7px;
+  }
+}
+
+@media (min-width: 481px) {
+  .trainerverification-helper-text {
+    font-size: 14px;
+    margin-top: 9px;
+  }
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --trainerverification-back-size: 24px;
+    --trainerverification-back-top: 30px;
+    
+    --trainerverification-content-margin-top: 55px;
+    
+    --trainerverification-title-size: 23px;
+    --trainerverification-title-margin-top: 4px;
+    --trainerverification-subtitle-size: 15px;
+    --trainerverification-subtitle-margin-top: 15px;
+    
+    --trainerverification-input-margin-top: 4px;
+    --trainerverification-input-gap: 4px;
+    --trainerverification-input-prefix-width: 28px;
+    --trainerverification-input-digits-width: 50px;
+    --trainerverification-input-height: 26px;
+    --trainerverification-input-size: 16px;
+    --trainerverification-input-radius: 6px;
+    --trainerverification-separator-size: 28px;
+    
+    --trainerverification-error-size: 12px;
+    --trainerverification-error-margin-top: 6px;
+    
+    --trainerverification-instructions-margin-top: 12px;
+    --trainerverification-instructions-title-size: 15px;
+    --trainerverification-instructions-text-size: 12px;
+    --trainerverification-instructions-gap: 4px;
+    --trainerverification-bullet-size: 6px;
+    --trainerverification-bullet-margin: 6px;
+    
+    --trainerverification-button-width: 280px;
+    --trainerverification-button-height: 48px;
+    --trainerverification-button-radius: 12px;
+    --trainerverification-button-text-size: 18px;
+    --trainerverification-cta-margin-top: 22px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --trainerverification-back-size: 26px;
+    --trainerverification-back-top: 33px;
+    
+    --trainerverification-content-margin-top: 60px;
+    
+    --trainerverification-title-size: 25px;
+    --trainerverification-subtitle-size: 16px;
+    --trainerverification-subtitle-margin-top: 16px;
+    
+    --trainerverification-input-prefix-width: 30px;
+    --trainerverification-input-digits-width: 54px;
+    --trainerverification-input-height: 28px;
+    --trainerverification-input-size: 17px;
+    --trainerverification-input-radius: 7px;
+    --trainerverification-separator-size: 30px;
+    
+    --trainerverification-error-size: 13px;
+    
+    --trainerverification-instructions-title-size: 16px;
+    --trainerverification-instructions-text-size: 13px;
+    --trainerverification-bullet-size: 7px;
+    --trainerverification-bullet-margin: 7px;
+    
+    --trainerverification-button-width: 305px;
+    --trainerverification-button-height: 52px;
+    --trainerverification-button-radius: 13px;
+    --trainerverification-button-text-size: 19px;
+    --trainerverification-cta-margin-top: 24px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --trainerverification-back-size: 28px;
+    --trainerverification-back-top: 36px;
+    
+    --trainerverification-content-margin-top: 68px;
+    
+    --trainerverification-title-size: 27px;
+    --trainerverification-subtitle-size: 17px;
+    --trainerverification-subtitle-margin-top: 18px;
+    
+    --trainerverification-input-prefix-width: 32px;
+    --trainerverification-input-digits-width: 57px;
+    --trainerverification-input-height: 29px;
+    --trainerverification-input-size: 18px;
+    --trainerverification-separator-size: 32px;
+    
+    --trainerverification-error-size: 14px;
+    
+    --trainerverification-instructions-margin-top: 13px;
+    --trainerverification-instructions-title-size: 17px;
+    --trainerverification-instructions-text-size: 14px;
+    
+    --trainerverification-button-width: 330px;
+    --trainerverification-button-height: 56px;
+    --trainerverification-button-radius: 14px;
+    --trainerverification-button-text-size: 21px;
+    --trainerverification-cta-margin-top: 26px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --trainerverification-back-size: 29px;
+    --trainerverification-back-top: 38px;
+    
+    --trainerverification-content-margin-top: 74px;
+    
+    --trainerverification-title-size: 29px;
+    --trainerverification-subtitle-margin-top: 19px;
+    
+    --trainerverification-input-prefix-width: 34px;
+    --trainerverification-input-digits-width: 60px;
+    --trainerverification-input-height: 30px;
+    --trainerverification-input-size: 19px;
+    --trainerverification-separator-size: 34px;
+    
+    --trainerverification-instructions-margin-top: 14px;
+    
+    --trainerverification-button-width: 345px;
+    --trainerverification-button-height: 58px;
+    --trainerverification-button-text-size: 22px;
+    --trainerverification-cta-margin-top: 28px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --trainerverification-content-margin-top: 80px;
+    --trainerverification-title-size: 30px;
+    --trainerverification-button-width: 360px;
+    --trainerverification-button-height: 60px;
+    --trainerverification-cta-margin-top: 30px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --trainerverification-back-size: 32px;
+    --trainerverification-back-top: 44px;
+    
+    --trainerverification-content-margin-top: 88px;
+    
+    --trainerverification-title-size: 33px;
+    --trainerverification-subtitle-size: 19px;
+    --trainerverification-subtitle-margin-top: 22px;
+    
+    --trainerverification-input-margin-top: 6px;
+    --trainerverification-input-gap: 6px;
+    --trainerverification-input-prefix-width: 38px;
+    --trainerverification-input-digits-width: 67px;
+    --trainerverification-input-height: 34px;
+    --trainerverification-input-size: 22px;
+    --trainerverification-input-radius: 9px;
+    --trainerverification-separator-size: 38px;
+    
+    --trainerverification-error-size: 16px;
+    --trainerverification-error-margin-top: 9px;
+    
+    --trainerverification-instructions-margin-top: 17px;
+    --trainerverification-instructions-title-size: 19px;
+    --trainerverification-instructions-text-size: 16px;
+    --trainerverification-instructions-gap: 6px;
+    --trainerverification-bullet-size: 9px;
+    --trainerverification-bullet-margin: 9px;
+    
+    --trainerverification-button-width: 380px;
+    --trainerverification-button-height: 64px;
+    --trainerverification-button-radius: 16px;
+    --trainerverification-button-text-size: 24px;
+    --trainerverification-cta-margin-top: 33px;
+  }
+}

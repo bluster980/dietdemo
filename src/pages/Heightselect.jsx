@@ -7,11 +7,11 @@ import man from "../assets/man.png";
 import woman from "../assets/woman.png";
 import { useGender } from "../context/GenderContext";
 import { updateUserFieldLocally, patchUserCache } from "../utils/userOnboarding";
+import "../styles/heightselectresponsive.css";
 
 const Heightselect = () => {
   const navigate = useNavigate();
   const { selectedGender } = useGender();
-
   const [height, setHeight] = useState(134);
 
   const onHeightSubmit = (height) => {
@@ -21,86 +21,74 @@ const Heightselect = () => {
   };
 
   return (
-    <div
-      className="flex flex-col justify-between items-center"
-      style={{
-        background: " #FFFFFF",
-      }}
-    >
-      <div className="flex flex-col">
-        <BackArrow
-          alt="back arrow"
+    <div className="heightselect-viewport">
+      <div className="heightselect-page" style={{ backgroundColor: "var(--bg)" }}>
+        {/* Back Arrow */}
+        <button
+          className="heightselect-back-btn"
           onClick={() => navigate(-1)}
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            display: "flex",
-            top: "40px",
-            left: "5px",
-            zIndex: 1,
-          }}
-        />
-        <h1
-          className="text-[#2D3436] font-semibold font-urbanist text-[35px] mt-[130px]"
-          style={{
-            lineHeight: "1",
-            textAlign: "center",
-            width: "370px",
-          }}
+          aria-label="Go back"
         >
-          What is your Height?
-        </h1>
-        <div>
-          <div className="flex ml-[20px]">
-            <div className="flex flex-col justify-center">
-              <div className="flex mt-[58px]">
+          <BackArrow className="heightselect-back-icon" style={{color: "var(--general-charcoal-text)"}}/>
+        </button>
+
+        {/* Content Container */}
+        <div className="heightselect-content">
+          {/* Title */}
+          <h1
+            className="heightselect-title"
+            style={{ color: "var(--general-charcoal-text)" }}
+          >
+            What is your Height?
+          </h1>
+
+          {/* Main Section with Image and Ruler */}
+          <div className="heightselect-main">
+            <div className="heightselect-left-section">
+              {/* Height Display */}
+              <div className="heightselect-display">
                 <h1
-                  className="text-[#2D3436] font-semibold font-urbanist text-[40px]"
-                  style={{
-                    lineHeight: "1",
-                    textAlign: "right",
-                    width: "100px",
-                    marginRight: "10px",
-                  }}
+                  className="heightselect-value"
+                  style={{ color: "var(--general-charcoal-text)" }}
                 >
                   {height - 3}
                 </h1>
                 <h1
-                  className="text-[#2D3436] font-semibold font-urbanist text-[23px] mt-[7px]"
-                  style={{
-                    lineHeight: "1",
-                    textAlign: "left",
-                    width: "40px",
-                  }}
+                  className="heightselect-unit"
+                  style={{ color: "var(--general-charcoal-text)" }}
                 >
                   Cm
                 </h1>
               </div>
-              <img
-                src={selectedGender === "man" ? man : woman}
-                alt={`Gender ${selectedGender}`}
-                style={{
-                  width: "200px",
-                  height: "450px",
-                  cursor: "pointer",
-                  filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-                }}
-              />
+
+              {/* Character Image */}
+              <div className="heightselect-image-container">
+                <img
+                  src={selectedGender === "man" ? man : woman}
+                  alt={`Gender ${selectedGender}`}
+                  className="heightselect-image"
+                />
+              </div>
             </div>
-            <div className="w-[170px] h-[400px] mt-[35px] items-end">
-              <Rulervertical onChange={setHeight} />
+
+            {/* Ruler Section */}
+            <div className="heightselect-ruler-wrapper">
+              <div className="heightselect-ruler-container">
+                <Rulervertical onChange={setHeight} />
+              </div>
             </div>
           </div>
-          <div className="w-full flex justify-center mt-[35px]">
+
+          {/* Confirm Button */}
+          <div className="heightselect-button-wrapper">
             <PrimaryButton
               text="CONFIRM"
-              onClick={() => onHeightSubmit(height-3)}
+              onClick={() => onHeightSubmit(height - 3)}
               customStyle={{
-                width: "93%",
-                height: "52px",
-                borderRadius: "15px",
-                fontSize: "23px",
+                width: "var(--heightselect-button-width)",
+                height: "var(--heightselect-button-height)",
+                borderRadius: "var(--heightselect-button-radius)",
+                fontSize: "var(--heightselect-button-text-size)",
                 boxShadow: "0px 12px 26px rgba(255, 118, 117, 0.30)",
               }}
             />

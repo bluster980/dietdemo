@@ -1,0 +1,448 @@
+/* ========================================
+   QUESTIONNAIRE PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --questionnaire-back-size: 30px;
+  --questionnaire-back-top: 40px;
+  --questionnaire-back-left: 5px;
+  
+  /* Form */
+  --questionnaire-form-margin-top: 140px;
+  --questionnaire-form-width: 360px;
+  
+  /* Labels */
+  --questionnaire-label-size: 25px;
+  --questionnaire-label-spacing: 20px;
+  
+  /* Fields */
+  --questionnaire-field-margin-top: 5px;
+  --questionnaire-field-height: 50px;
+  --questionnaire-field-radius: 12px;
+  --questionnaire-field-text-size: 21px;
+  --questionnaire-field-padding: 20px;
+  
+  /* Dropdown */
+  --questionnaire-dropdown-option-height: 50px;
+  --questionnaire-dropdown-option-size: 20px;
+  --questionnaire-dropdown-option-padding: 20px;
+  
+  /* Error */
+  --questionnaire-error-size: 15px;
+  --questionnaire-error-margin-top: 4px;
+  --questionnaire-error-margin-left: 5px;
+  
+  /* Button */
+  --questionnaire-button-height: 52px;
+  --questionnaire-button-radius: 15px;
+  --questionnaire-button-text-size: 23px;
+  --questionnaire-button-margin-top: 43px;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.questionnaire-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.questionnaire-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  padding-bottom: 30px;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.questionnaire-back-btn {
+  position: absolute;
+  top: var(--questionnaire-back-top);
+  left: var(--questionnaire-back-left);
+  z-index: 10;
+  width: var(--questionnaire-back-size);
+  height: var(--questionnaire-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.questionnaire-back-btn:active {
+  transform: scale(0.95);
+}
+
+.questionnaire-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   FORM
+   ======================================== */
+
+.questionnaire-form {
+  display: flex;
+  flex-direction: column;
+  width: var(--questionnaire-form-width);
+  max-width: 90%;
+  margin-top: var(--questionnaire-form-margin-top);
+}
+
+.questionnaire-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--questionnaire-label-size);
+  font-weight: 600;
+  color: #2D3436;
+  line-height: 1.2;
+  align-self: flex-start;
+}
+
+.questionnaire-label-spaced {
+  margin-top: var(--questionnaire-label-spacing);
+}
+
+/* ========================================
+   FIELD WRAPPER
+   ======================================== */
+
+.questionnaire-field-wrapper {
+  position: relative;
+  width: 100%;
+  margin-top: var(--questionnaire-field-margin-top);
+}
+
+/* ========================================
+   DROPDOWN BUTTON
+   ======================================== */
+
+.questionnaire-dropdown-button {
+  position: relative;
+  width: 100%;
+  height: var(--questionnaire-field-height);
+  padding-left: var(--questionnaire-field-padding);
+  padding-right: 50px;
+  font-family: urbanist, sans-serif;
+  font-size: var(--questionnaire-field-text-size);
+  border: 1px solid #E5E7EB;
+  background: white;
+  border-radius: var(--questionnaire-field-radius);
+  text-align: left;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  /* color: var(--general-charcoal-text); */
+}
+
+.questionnaire-dropdown-active {
+  border-color: #FF7675;
+}
+
+.questionnaire-dropdown-error {
+  border-color: #ef4444;
+}
+
+.questionnaire-dropdown-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  color: var(--faded-text);
+  pointer-events: none;
+}
+
+/* ========================================
+   DROPDOWN MENU
+   ======================================== */
+
+.questionnaire-dropdown-menu {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #E5E7EB;
+  margin-top: 2px;
+  z-index: 10;
+  border-radius: var(--questionnaire-field-radius);
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.questionnaire-dropdown-option {
+  height: var(--questionnaire-dropdown-option-height);
+  padding-left: var(--questionnaire-dropdown-option-padding);
+  display: flex;
+  align-items: center;
+  font-family: urbanist, sans-serif;
+  font-size: var(--questionnaire-dropdown-option-size);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-bottom: 1px solid #E5E7EB;
+  /* color: var(--general-charcoal-text); */
+}
+
+.questionnaire-dropdown-option:last-child {
+  border-bottom: none;
+}
+
+.questionnaire-dropdown-option:hover {
+  background: var(--profile-section-card-bg);
+}
+
+.questionnaire-dropdown-option-selected {
+  font-weight: 700;
+  background: var(--profile-section-card-bg);
+  color: black;
+}
+
+.questionnaire-dropdown-first {
+  border-top-left-radius: var(--questionnaire-field-radius);
+  border-top-right-radius: var(--questionnaire-field-radius);
+}
+
+.questionnaire-dropdown-last {
+  border-bottom-left-radius: var(--questionnaire-field-radius);
+  border-bottom-right-radius: var(--questionnaire-field-radius);
+}
+
+/* ========================================
+   INPUT FIELD
+   ======================================== */
+
+.questionnaire-input {
+  width: 100%;
+  height: var(--questionnaire-field-height);
+  padding-left: var(--questionnaire-field-padding);
+  padding-right: var(--questionnaire-field-padding);
+  font-family: urbanist, sans-serif;
+  font-size: var(--questionnaire-field-text-size);
+  font-weight: 700;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--questionnaire-field-radius);
+  background: white;
+  outline: none;
+  text-align: left;
+  transition: border-color 0.2s ease;
+}
+
+.questionnaire-input:focus {
+  border-color: #FF7675;
+}
+
+.questionnaire-input-error {
+  border-color: #ef4444;
+}
+
+.questionnaire-input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 400;
+}
+
+/* Remove spinner for number input */
+.questionnaire-input::-webkit-inner-spin-button,
+.questionnaire-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.questionnaire-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* ========================================
+   ERROR TEXT
+   ======================================== */
+
+.questionnaire-error-text {
+  font-family: urbanist, sans-serif;
+  font-size: var(--questionnaire-error-size);
+  color: #ef4444;
+  margin-top: var(--questionnaire-error-margin-top);
+  margin-left: var(--questionnaire-error-margin-left);
+}
+
+/* ========================================
+   BUTTON
+   ======================================== */
+
+.questionnaire-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--questionnaire-button-margin-top);
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --questionnaire-back-size: 24px;
+    --questionnaire-back-top: 30px;
+    
+    --questionnaire-form-margin-top: 90px;
+    --questionnaire-form-width: 280px;
+    
+    --questionnaire-label-size: 19px;
+    --questionnaire-label-spacing: 15px;
+    
+    --questionnaire-field-height: 42px;
+    --questionnaire-field-radius: 10px;
+    --questionnaire-field-text-size: 17px;
+    --questionnaire-field-padding: 15px;
+    
+    --questionnaire-dropdown-option-height: 42px;
+    --questionnaire-dropdown-option-size: 16px;
+    --questionnaire-dropdown-option-padding: 15px;
+    
+    --questionnaire-error-size: 12px;
+    
+    --questionnaire-button-height: 44px;
+    --questionnaire-button-radius: 12px;
+    --questionnaire-button-text-size: 18px;
+    --questionnaire-button-margin-top: 32px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --questionnaire-back-size: 26px;
+    --questionnaire-back-top: 33px;
+    
+    --questionnaire-form-margin-top: 105px;
+    --questionnaire-form-width: 310px;
+    
+    --questionnaire-label-size: 21px;
+    --questionnaire-label-spacing: 16px;
+    
+    --questionnaire-field-height: 45px;
+    --questionnaire-field-radius: 11px;
+    --questionnaire-field-text-size: 18px;
+    --questionnaire-field-padding: 17px;
+    
+    --questionnaire-dropdown-option-height: 45px;
+    --questionnaire-dropdown-option-size: 17px;
+    --questionnaire-dropdown-option-padding: 17px;
+    
+    --questionnaire-error-size: 13px;
+    
+    --questionnaire-button-height: 46px;
+    --questionnaire-button-radius: 13px;
+    --questionnaire-button-text-size: 19px;
+    --questionnaire-button-margin-top: 36px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --questionnaire-back-size: 28px;
+    --questionnaire-back-top: 36px;
+    
+    --questionnaire-form-margin-top: 120px;
+    --questionnaire-form-width: 340px;
+    
+    --questionnaire-label-size: 23px;
+    --questionnaire-label-spacing: 18px;
+    
+    --questionnaire-field-height: 47px;
+    --questionnaire-field-text-size: 19px;
+    --questionnaire-field-padding: 18px;
+    
+    --questionnaire-dropdown-option-height: 47px;
+    --questionnaire-dropdown-option-size: 18px;
+    --questionnaire-dropdown-option-padding: 18px;
+    
+    --questionnaire-error-size: 14px;
+    
+    --questionnaire-button-height: 48px;
+    --questionnaire-button-radius: 14px;
+    --questionnaire-button-text-size: 21px;
+    --questionnaire-button-margin-top: 39px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --questionnaire-back-size: 29px;
+    --questionnaire-back-top: 38px;
+    
+    --questionnaire-form-margin-top: 130px;
+    --questionnaire-form-width: 350px;
+    
+    --questionnaire-label-size: 24px;
+    --questionnaire-label-spacing: 19px;
+    
+    --questionnaire-field-height: 49px;
+    --questionnaire-field-text-size: 20px;
+    --questionnaire-field-padding: 19px;
+    
+    --questionnaire-dropdown-option-height: 49px;
+    --questionnaire-dropdown-option-size: 19px;
+    --questionnaire-dropdown-option-padding: 19px;
+    
+    --questionnaire-button-height: 50px;
+    --questionnaire-button-text-size: 22px;
+    --questionnaire-button-margin-top: 41px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --questionnaire-form-margin-top: 140px;
+    --questionnaire-button-height: 52px;
+    --questionnaire-button-margin-top: 43px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --questionnaire-back-size: 32px;
+    --questionnaire-back-top: 44px;
+    
+    --questionnaire-form-margin-top: 150px;
+    --questionnaire-form-width: 380px;
+    
+    --questionnaire-label-size: 27px;
+    --questionnaire-label-spacing: 22px;
+    
+    --questionnaire-field-height: 54px;
+    --questionnaire-field-radius: 13px;
+    --questionnaire-field-text-size: 22px;
+    --questionnaire-field-padding: 22px;
+    
+    --questionnaire-dropdown-option-height: 54px;
+    --questionnaire-dropdown-option-size: 21px;
+    --questionnaire-dropdown-option-padding: 22px;
+    
+    --questionnaire-error-size: 16px;
+    
+    --questionnaire-button-height: 56px;
+    --questionnaire-button-radius: 16px;
+    --questionnaire-button-text-size: 24px;
+    --questionnaire-button-margin-top: 46px;
+  }
+}

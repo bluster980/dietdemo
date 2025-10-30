@@ -1,0 +1,482 @@
+/* ========================================
+   USER VERIFICATION PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --userverification-back-size: 30px;
+  --userverification-back-top: 20px;
+  --userverification-back-left: 5px;
+  
+  /* Content */
+  --userverification-content-margin-top: 50px;
+  
+  /* Logo */
+  --userverification-logo-width: 100%;
+  --userverification-logo-height: 100%;
+  
+  /* Typography */
+  --userverification-title-size: 35px;
+  --userverification-title-margin-top: -32px;
+  --userverification-subtitle-size: 16px;
+  --userverification-subtitle-margin-top: 5px;
+  --userverification-label-size: 18px;
+  --userverification-label-margin-top: 8px;
+  
+  /* Input */
+  --userverification-input-width: 150px;
+  --userverification-input-height: 40px;
+  --userverification-input-size: 20px;
+  --userverification-input-margin-top: -5px;
+  
+  /* Line */
+  --userverification-line-width: 250px;
+  --userverification-line-margin-top: 2px;
+  
+  /* Role checkboxes */
+  --userverification-roles-margin-top: 10px;
+  --userverification-roles-gap: 10px;
+  --userverification-checkbox-size: 18px;
+  --userverification-role-label-size: 16px;
+  --userverification-role-label-margin: 5px;
+  
+  /* Button */
+  --userverification-button-width: 360px;
+  --userverification-button-height: 61px;
+  --userverification-button-radius: 15px;
+  --userverification-button-text-size: 22px;
+  --userverification-button-margin-top: 15px;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.userverification-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.userverification-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.userverification-back-btn {
+  position: absolute;
+  top: var(--userverification-back-top);
+  left: var(--userverification-back-left);
+  z-index: 10;
+  width: var(--userverification-back-size);
+  height: var(--userverification-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.userverification-back-btn:active {
+  transform: scale(0.95);
+}
+
+.userverification-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   CONTENT SECTION
+   ======================================== */
+
+.userverification-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--userverification-content-margin-top);
+  width: 100%;
+}
+
+/* ========================================
+   LOGO
+   ======================================== */
+
+.userverification-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.userverification-logo {
+  width: var(--userverification-logo-width);
+  height: var(--userverification-logo-height);
+  max-width: 100%;
+}
+
+/* ========================================
+   FORM SECTION
+   ======================================== */
+
+.userverification-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.userverification-title {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--userverification-title-size);
+  color: #2D3436;
+  margin-top: var(--userverification-title-margin-top);
+  text-align: center;
+}
+
+.userverification-subtitle {
+  display: flex;
+  flex-direction: column;
+  font-family: urbanist, sans-serif;
+  font-size: var(--userverification-subtitle-size);
+  margin-top: var(--userverification-subtitle-margin-top);
+  text-align: center;
+  line-height: 1.2;
+  color: rgba(0, 0, 0, 0.37);
+}
+
+.userverification-subtitle p {
+  margin: 0;
+}
+
+.userverification-subtitle-highlight {
+  font-weight: 500;
+  color: #2D3436;
+}
+
+.userverification-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--userverification-label-size);
+  font-weight: 600;
+  margin-top: var(--userverification-label-margin-top);
+  color: #2D3436;
+  text-align: center;
+}
+
+/* ========================================
+   INPUT FIELD
+   ======================================== */
+
+.userverification-input {
+  width: var(--userverification-input-width);
+  height: var(--userverification-input-height);
+  font-family: poppins, sans-serif;
+  font-size: var(--userverification-input-size);
+  font-weight: 600;
+  color: black;
+  outline: none;
+  border: none;
+  text-align: center;
+  margin-top: var(--userverification-input-margin-top);
+  background: transparent;
+}
+
+.userverification-input::placeholder {
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.userverification-line {
+  width: var(--userverification-line-width);
+  margin-top: var(--userverification-line-margin-top);
+}
+
+/* ========================================
+   ROLE SELECTION
+   ======================================== */
+
+.userverification-roles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--userverification-roles-margin-top);
+  gap: var(--userverification-roles-gap);
+}
+
+.userverification-role-option {
+  display: flex;
+  align-items: center;
+}
+
+.userverification-checkbox {
+  width: var(--userverification-checkbox-size);
+  height: var(--userverification-checkbox-size);
+  cursor: pointer;
+  accent-color: #FF7675;
+}
+
+.userverification-role-label {
+  font-family: urbanist, sans-serif;
+  font-size: var(--userverification-role-label-size);
+  margin-left: var(--userverification-role-label-margin);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========================================
+   BUTTON CONTAINER
+   ======================================== */
+
+.userverification-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #FF7675;
+  border-radius: var(--userverification-button-radius);
+  width: var(--userverification-button-width);
+  height: var(--userverification-button-height);
+  margin-top: var(--userverification-button-margin-top);
+  box-shadow: 0px 12px 26px rgba(255, 118, 117, 0.30);
+  font-family: urbanist, sans-serif;
+  font-size: var(--userverification-button-text-size);
+}
+
+.pe_signin_button {
+  margin-top: 0;
+  font-size: var(--userverification-button-text-size);
+}
+
+/* ========================================
+   BUTTON DISABLED STATE
+   ======================================== */
+
+.userverification-button-disabled {
+  cursor: not-allowed !important;
+}
+
+.userverification-button-disabled .pe_signin_button {
+  pointer-events: none;
+}
+
+/* ========================================
+   HELPER TEXT
+   ======================================== */
+
+.userverification-helper-text {
+  font-family: urbanist, sans-serif;
+  font-size: 13px;
+  color: #FF7675;
+  margin-top: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Media query adjustments for helper text */
+@media (max-width: 320px) {
+  .userverification-helper-text {
+    font-size: 11px;
+    margin-top: 6px;
+  }
+}
+
+@media (min-width: 321px) and (max-width: 366px) {
+  .userverification-helper-text {
+    font-size: 12px;
+    margin-top: 7px;
+  }
+}
+
+@media (min-width: 481px) {
+  .userverification-helper-text {
+    font-size: 14px;
+    margin-top: 9px;
+  }
+}
+
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --userverification-back-size: 24px;
+    --userverification-back-top: 16px;
+    
+    --userverification-content-margin-top: 35px;
+    
+    --userverification-title-size: 26px;
+    --userverification-title-margin-top: -24px;
+    --userverification-subtitle-size: 13px;
+    --userverification-subtitle-margin-top: 4px;
+    --userverification-label-size: 15px;
+    --userverification-label-margin-top: 6px;
+    
+    --userverification-input-width: 120px;
+    --userverification-input-height: 34px;
+    --userverification-input-size: 17px;
+    --userverification-input-margin-top: -4px;
+    
+    --userverification-line-width: 200px;
+    
+    --userverification-roles-margin-top: 8px;
+    --userverification-roles-gap: 8px;
+    --userverification-checkbox-size: 15px;
+    --userverification-role-label-size: 13px;
+    --userverification-role-label-margin: 4px;
+    
+    --userverification-button-width: 280px;
+    --userverification-button-height: 48px;
+    --userverification-button-radius: 12px;
+    --userverification-button-text-size: 18px;
+    --userverification-button-margin-top: 12px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --userverification-back-size: 26px;
+    --userverification-back-top: 17px;
+    
+    --userverification-content-margin-top: 10px;
+    
+    --userverification-title-size: 29px;
+    --userverification-title-margin-top: -26px;
+    --userverification-subtitle-size: 14px;
+    --userverification-label-size: 16px;
+    --userverification-label-margin-top: 7px;
+    
+    --userverification-input-width: 130px;
+    --userverification-input-height: 36px;
+    --userverification-input-size: 18px;
+    
+    --userverification-line-width: 215px;
+    
+    --userverification-roles-margin-top: 9px;
+    --userverification-roles-gap: 9px;
+    --userverification-checkbox-size: 16px;
+    --userverification-role-label-size: 14px;
+    
+    --userverification-button-width: 305px;
+    --userverification-button-height: 56px;
+    --userverification-button-radius: 13px;
+    --userverification-button-text-size: 19px;
+    --userverification-button-margin-top: 13px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --userverification-back-size: 28px;
+    --userverification-back-top: 18px;
+    
+    --userverification-content-margin-top: 45px;
+    
+    --userverification-title-size: 32px;
+    --userverification-title-margin-top: -28px;
+    --userverification-subtitle-size: 15px;
+    --userverification-label-size: 17px;
+    
+    --userverification-input-width: 140px;
+    --userverification-input-height: 38px;
+    --userverification-input-size: 19px;
+    
+    --userverification-line-width: 230px;
+    
+    --userverification-checkbox-size: 17px;
+    --userverification-role-label-size: 15px;
+    
+    --userverification-button-width: 330px;
+    --userverification-button-height: 58px;
+    --userverification-button-radius: 14px;
+    --userverification-button-text-size: 20px;
+    --userverification-button-margin-top: 14px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --userverification-back-size: 29px;
+    --userverification-back-top: 19px;
+    
+    --userverification-content-margin-top: 48px;
+    
+    --userverification-title-size: 34px;
+    --userverification-title-margin-top: -30px;
+    --userverification-label-size: 17px;
+    
+    --userverification-input-width: 145px;
+    --userverification-input-height: 39px;
+    
+    --userverification-line-width: 240px;
+    
+    --userverification-button-width: 345px;
+    --userverification-button-height: 60px;
+    --userverification-button-text-size: 21px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --userverification-content-margin-top: 50px;
+    --userverification-title-size: 35px;
+    --userverification-button-width: 360px;
+    --userverification-button-height: 61px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --userverification-back-size: 32px;
+    --userverification-back-top: 22px;
+    
+    --userverification-content-margin-top: 55px;
+    
+    --userverification-title-size: 38px;
+    --userverification-title-margin-top: -35px;
+    --userverification-subtitle-size: 17px;
+    --userverification-label-size: 19px;
+    --userverification-label-margin-top: 9px;
+    
+    --userverification-input-width: 160px;
+    --userverification-input-height: 42px;
+    --userverification-input-size: 21px;
+    
+    --userverification-line-width: 270px;
+    
+    --userverification-roles-margin-top: 11px;
+    --userverification-roles-gap: 12px;
+    --userverification-checkbox-size: 19px;
+    --userverification-role-label-size: 17px;
+    --userverification-role-label-margin: 6px;
+    
+    --userverification-button-width: 380px;
+    --userverification-button-height: 64px;
+    --userverification-button-radius: 16px;
+    --userverification-button-text-size: 23px;
+    --userverification-button-margin-top: 16px;
+  }
+}

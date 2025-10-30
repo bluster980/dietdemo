@@ -1,0 +1,424 @@
+/* ========================================
+   HEIGHT SELECT PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --heightselect-back-size: 30px;
+  --heightselect-back-top: 40px;
+  --heightselect-back-left: 5px;
+  
+  /* Title */
+  --heightselect-title-size: 35px;
+  --heightselect-title-margin-top: 130px;
+  --heightselect-title-width: 370px;
+  
+  /* Main section */
+  --heightselect-main-margin-top: 0px;
+  --heightselect-main-margin-left: 20px;
+  
+  /* Height Display */
+  --heightselect-display-margin-top: 58px;
+  --heightselect-value-size: 40px;
+  --heightselect-value-width: 100px;
+  --heightselect-value-margin-right: 10px;
+  --heightselect-unit-size: 23px;
+  --heightselect-unit-width: 40px;
+  --heightselect-unit-margin-top: 7px;
+  
+  /* Image */
+  --heightselect-image-width: 200px;
+  --heightselect-image-height: 450px;
+  
+  /* Ruler */
+  --heightselect-ruler-width: 170px;
+  --heightselect-ruler-height:500px;
+  --heightselect-ruler-margin-top: 35px;
+  
+  /* Button */
+  --heightselect-button-width: 93%;
+  --heightselect-button-height: 52px;
+  --heightselect-button-radius: 15px;
+  --heightselect-button-text-size: 23px;
+  --heightselect-button-margin-top: 35px;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.heightselect-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.heightselect-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.heightselect-back-btn {
+  position: absolute;
+  top: var(--heightselect-back-top);
+  left: var(--heightselect-back-left);
+  z-index: 10;
+  width: var(--heightselect-back-size);
+  height: var(--heightselect-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.heightselect-back-btn:active {
+  transform: scale(0.95);
+}
+
+.heightselect-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   CONTENT
+   ======================================== */
+
+.heightselect-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ========================================
+   TITLE
+   ======================================== */
+
+.heightselect-title {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--heightselect-title-size);
+  color: #2D3436;
+  margin-top: var(--heightselect-title-margin-top);
+  line-height: 1;
+  text-align: center;
+  width: var(--heightselect-title-width);
+  max-width: 90%;
+}
+
+/* ========================================
+   MAIN SECTION
+   ======================================== */
+
+.heightselect-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: var(--heightselect-main-margin-top);
+  margin-left: var(--heightselect-main-margin-left);
+}
+
+.heightselect-left-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ========================================
+   HEIGHT DISPLAY
+   ======================================== */
+
+.heightselect-display {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  margin-top: var(--heightselect-display-margin-top);
+}
+
+.heightselect-value {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--heightselect-value-size);
+  color: #2D3436;
+  line-height: 1;
+  text-align: right;
+  width: var(--heightselect-value-width);
+  margin-right: var(--heightselect-value-margin-right);
+}
+
+.heightselect-unit {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--heightselect-unit-size);
+  color: #2D3436;
+  line-height: 1;
+  text-align: left;
+  width: var(--heightselect-unit-width);
+  margin-top: var(--heightselect-unit-margin-top);
+}
+
+/* ========================================
+   CHARACTER IMAGE
+   ======================================== */
+
+.heightselect-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.heightselect-image {
+  width: var(--heightselect-image-width);
+  height: var(--heightselect-image-height);
+  object-fit: contain;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+}
+
+/* ========================================
+   RULER SECTION
+   ======================================== */
+
+.heightselect-ruler-wrapper {
+  display: flex;
+  align-items: flex-end;
+}
+
+.heightselect-ruler-container {
+  width: var(--heightselect-ruler-width);
+  height: var(--heightselect-ruler-height);
+  margin-top: var(--heightselect-ruler-margin-top);
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.heightselect-ruler-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========================================
+   BUTTON
+   ======================================== */
+
+.heightselect-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--heightselect-button-margin-top);
+  padding: 0 3.5%;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --heightselect-back-size: 24px;
+    --heightselect-back-top: 30px;
+    
+    --heightselect-title-size: 26px;
+    --heightselect-title-margin-top: 90px;
+    --heightselect-title-width: 280px;
+    
+    --heightselect-main-margin-left: 10px;
+    
+    --heightselect-display-margin-top: 40px;
+    --heightselect-value-size: 30px;
+    --heightselect-value-width: 70px;
+    --heightselect-value-margin-right: 7px;
+    --heightselect-unit-size: 17px;
+    --heightselect-unit-width: 30px;
+    --heightselect-unit-margin-top: 5px;
+    
+    --heightselect-image-width: 140px;
+    --heightselect-image-height: 315px;
+    
+    --heightselect-ruler-width: 120px;
+    --heightselect-ruler-height: 280px;
+    --heightselect-ruler-margin-top: 25px;
+    
+    --heightselect-button-height: 44px;
+    --heightselect-button-radius: 12px;
+    --heightselect-button-text-size: 18px;
+    --heightselect-button-margin-top: 25px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --heightselect-back-size: 26px;
+    --heightselect-back-top: 33px;
+    
+    --heightselect-title-size: 29px;
+    --heightselect-title-margin-top: 100px;
+    --heightselect-title-width: 310px;
+    
+    --heightselect-main-margin-left: 12px;
+    
+    --heightselect-display-margin-top: 45px;
+    --heightselect-value-size: 33px;
+    --heightselect-value-width: 78px;
+    --heightselect-value-margin-right: 8px;
+    --heightselect-unit-size: 19px;
+    --heightselect-unit-width: 33px;
+    --heightselect-unit-margin-top: 5px;
+    
+    --heightselect-image-width: 158px;
+    --heightselect-image-height: 356px;
+    
+    --heightselect-ruler-width: 165px;
+    --heightselect-ruler-height: 380px;
+    --heightselect-ruler-margin-top: 28px;
+    
+    --heightselect-button-height: 46px;
+    --heightselect-button-radius: 13px;
+    --heightselect-button-text-size: 19px;
+    --heightselect-button-margin-top: 28px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --heightselect-back-size: 28px;
+    --heightselect-back-top: 36px;
+    
+    --heightselect-title-size: 32px;
+    --heightselect-title-margin-top: 115px;
+    --heightselect-title-width: 340px;
+    
+    --heightselect-main-margin-left: 15px;
+    
+    --heightselect-display-margin-top: 50px;
+    --heightselect-value-size: 36px;
+    --heightselect-value-width: 88px;
+    --heightselect-value-margin-right: 9px;
+    --heightselect-unit-size: 21px;
+    --heightselect-unit-width: 37px;
+    --heightselect-unit-margin-top: 6px;
+    
+    --heightselect-image-width: 178px;
+    --heightselect-image-height: 401px;
+    
+    --heightselect-ruler-width: 150px;
+    --heightselect-ruler-height: 400px;
+    --heightselect-ruler-margin-top: 31px;
+    
+    --heightselect-button-height: 48px;
+    --heightselect-button-radius: 14px;
+    --heightselect-button-text-size: 21px;
+    --heightselect-button-margin-top: 31px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --heightselect-back-size: 29px;
+    --heightselect-back-top: 38px;
+    
+    --heightselect-title-size: 34px;
+    --heightselect-title-margin-top: 123px;
+    --heightselect-title-width: 360px;
+    
+    --heightselect-main-margin-left: 18px;
+    
+    --heightselect-display-margin-top: 54px;
+    --heightselect-value-size: 38px;
+    --heightselect-value-width: 94px;
+    --heightselect-unit-size: 22px;
+    --heightselect-unit-width: 39px;
+    --heightselect-unit-margin-top: 6px;
+    
+    --heightselect-image-width: 189px;
+    --heightselect-image-height: 426px;
+    
+    --heightselect-ruler-width: 160px;
+    --heightselect-ruler-height: 445px;
+    --heightselect-ruler-margin-top: 33px;
+    
+    --heightselect-button-height: 50px;
+    --heightselect-button-text-size: 22px;
+    --heightselect-button-margin-top: 33px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --heightselect-title-margin-top: 130px;
+    --heightselect-title-size: 35px;
+    --heightselect-button-height: 52px;
+    --heightselect-button-margin-top: 35px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --heightselect-back-size: 32px;
+    --heightselect-back-top: 44px;
+    
+    --heightselect-title-size: 38px;
+    --heightselect-title-margin-top: 140px;
+    --heightselect-title-width: 390px;
+    
+    --heightselect-main-margin-left: 22px;
+    
+    --heightselect-display-margin-top: 62px;
+    --heightselect-value-size: 43px;
+    --heightselect-value-width: 110px;
+    --heightselect-value-margin-right: 11px;
+    --heightselect-unit-size: 25px;
+    --heightselect-unit-width: 45px;
+    --heightselect-unit-margin-top: 8px;
+    
+    --heightselect-image-width: 220px;
+    --heightselect-image-height: 495px;
+    
+    --heightselect-ruler-width: 185px;
+    --heightselect-ruler-height: 440px;
+    --heightselect-ruler-margin-top: 38px;
+    
+    --heightselect-button-height: 56px;
+    --heightselect-button-radius: 16px;
+    --heightselect-button-text-size: 24px;
+    --heightselect-button-margin-top: 38px;
+  }
+}
+
+/* Landscape adjustments */
+@media (max-height: 700px) and (orientation: landscape) {
+  :root {
+    --heightselect-title-margin-top: 60px;
+    --heightselect-display-margin-top: 25px;
+    --heightselect-image-height: 250px;
+    --heightselect-image-width: 111px;
+    --heightselect-ruler-height: 220px;
+    --heightselect-ruler-margin-top: 20px;
+    --heightselect-button-margin-top: 20px;
+  }
+}

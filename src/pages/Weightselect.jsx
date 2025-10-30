@@ -7,11 +7,11 @@ import man from "../assets/man.png";
 import woman from "../assets/woman.png";
 import { useGender } from "../context/GenderContext";
 import { updateUserFieldLocally, patchUserCache } from "../utils/userOnboarding";
+import "../styles/weightselectresponsive.css";
 
 const Weightselect = () => {
   const navigate = useNavigate();
   const { selectedGender } = useGender();
-
   const [weight, setWeight] = useState(35);
 
   const onWeightSubmit = (weight) => {
@@ -21,84 +21,69 @@ const Weightselect = () => {
   };
 
   return (
-    <div
-      className="flex flex-col justify-between items-center"
-      style={{
-        background: "#FFFFFF",
-      }}
-    >
-      <div className="flex flex-col">
-        <BackArrow
-          alt="back arrow"
+    <div className="weightselect-viewport">
+      <div className="weightselect-page" style={{ backgroundColor: "var(--bg)" }}>
+        {/* Back Arrow */}
+        <button
+          className="weightselect-back-btn"
           onClick={() => navigate(-1)}
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            display: "flex",
-            top: "40px",
-            left: "5px",
-            zIndex: 1,
-          }}
-        />
-        <h1
-          className="text-[#2D3436] font-semibold font-urbanist text-[35px] mt-[100px]"
-          style={{
-            lineHeight: "1",
-            textAlign: "center",
-            width: "370px",
-          }}
+          aria-label="Go back"
         >
-          What is your weight?
-        </h1>
-        <div>
-          <div className="flex mt-[30px] items-center">
+          <BackArrow className="weightselect-back-icon" style={{color: "var(--general-charcoal-text)"}} />
+        </button>
+
+        {/* Content Container */}
+        <div className="weightselect-content">
+          {/* Title */}
+          <h1
+            className="weightselect-title"
+            style={{ color: "var(--general-charcoal-text)" }}
+          >
+            What is your weight?
+          </h1>
+
+          {/* Weight Display */}
+          <div className="weightselect-display">
             <h1
-              className="text-[#2D3436] font-semibold font-urbanist text-[40px]"
-              style={{
-                lineHeight: "1",
-                textAlign: "right",
-                width: "210px",
-                marginRight: "8px",
-              }}
+              className="weightselect-value"
+              style={{ color: "var(--general-charcoal-text)" }}
             >
               {weight - 5}
             </h1>
             <h1
-              className="text-[#2D3436] font-semibold font-urbanist text-[23px] mt-[3px]"
-              style={{
-                lineHeight: "1",
-                textAlign: "left",
-                width: "150px",
-              }}
+              className="weightselect-unit"
+              style={{ color: "var(--general-charcoal-text)" }}
             >
               kg
             </h1>
           </div>
-          <div className="flex justify-center items-center mt-[-10px]">
+
+          {/* Character Image */}
+          <div className="weightselect-image-container">
             <img
               src={selectedGender === "man" ? man : woman}
               alt={`Gender ${selectedGender}`}
-              style={{
-                width: "175px",
-                height: "406px",
-                cursor: "pointer",
-                filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-              }}
+              className="weightselect-image"
             />
           </div>
-          <div className="w-full max-w-[400px] mt-8 overflow-x-scroll scrollbar-hide">
-            <Ruler onChange={setWeight} />
+
+          {/* Ruler Component */}
+          <div className="weightselect-ruler-wrapper">
+            <div className="weightselect-ruler-container">
+              <Ruler onChange={setWeight} />
+            </div>
           </div>
-          <div className="w-full flex justify-center mt-[25px]">
+
+          {/* Confirm Button */}
+          <div className="weightselect-button-wrapper">
             <PrimaryButton
               text="CONFIRM"
-              onClick={() => onWeightSubmit(weight-5)}
+              onClick={() => onWeightSubmit(weight - 5)}
               customStyle={{
-                width: "90%",
-                height: "52px",
-                borderRadius: "15px",
-                fontSize: "23px",
+                width: "var(--weightselect-button-width)",
+                height: "var(--weightselect-button-height)",
+                borderRadius: "var(--weightselect-button-radius)",
+                fontSize: "var(--weightselect-button-text-size)",
                 boxShadow: "0px 12px 26px rgba(255, 118, 117, 0.30)",
               }}
             />

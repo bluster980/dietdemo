@@ -1,0 +1,368 @@
+/* ========================================
+   GENDER SELECT PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --genderselect-back-size: 30px;
+  --genderselect-back-top: 40px;
+  --genderselect-back-left: 5px;
+  
+  /* Title */
+  --genderselect-title-size: 35px;
+  --genderselect-title-margin-top: 105px;
+  --genderselect-title-width: 370px;
+  
+  /* Cards */
+  --genderselect-cards-margin-top: 34px;
+  --genderselect-cards-gap: 80px;
+  --genderselect-card-width: 175px;
+  --genderselect-card-height: 500px;
+  --genderselect-card-radius: 20px;
+  --genderselect-image-width: 175px;
+  --genderselect-image-height: 406px;
+  --genderselect-image-margin-top: 20px;
+  
+  /* Labels */
+  --genderselect-labels-margin-top: -50px;
+  --genderselect-label-size: 35px;
+  --genderselect-label-width: 180px;
+  
+  /* Button */
+  --genderselect-button-width: 88%;
+  --genderselect-button-height: 52px;
+  --genderselect-button-radius: 15px;
+  --genderselect-button-text-size: 23px;
+  --genderselect-button-margin-top: 55px;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.genderselect-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.genderselect-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding-bottom: 70px;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.genderselect-back-btn {
+  position: absolute;
+  top: var(--genderselect-back-top);
+  left: var(--genderselect-back-left);
+  z-index: 10;
+  width: var(--genderselect-back-size);
+  height: var(--genderselect-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.genderselect-back-btn:active {
+  transform: scale(0.95);
+}
+
+.genderselect-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   TITLE
+   ======================================== */
+
+.genderselect-title {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--genderselect-title-size);
+  color: #2D3436;
+  margin-top: var(--genderselect-title-margin-top);
+  line-height: 1;
+  text-align: left;
+  width: var(--genderselect-title-width);
+  max-width: 90%;
+}
+
+/* ========================================
+   GENDER CARDS
+   ======================================== */
+
+.genderselect-cards-container {
+  display: flex;
+  gap: var(--genderselect-cards-gap);
+  margin-top: var(--genderselect-cards-margin-top);
+  justify-content: center;
+  align-items: center;
+}
+
+.genderselect-card {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: var(--genderselect-card-width);
+  height: var(--genderselect-card-height);
+  overflow: hidden;
+  border-radius: var(--genderselect-card-radius);
+  border: 1px solid #E5E7EB;
+  box-shadow: 0px 4px 14px rgba(17, 24, 39, 0.06);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.genderselect-card:active {
+  transform: scale(0.98);
+}
+
+.genderselect-card-selected {
+  background: #F3FFFE;
+  border-color: #4ECDC4;
+  box-shadow: 0px 4px 20px rgba(78, 205, 196, 0.25);
+}
+
+.genderselect-image {
+  width: var(--genderselect-image-width);
+  height: var(--genderselect-image-height);
+  margin-top: var(--genderselect-image-margin-top);
+  object-fit: contain;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+}
+
+/* ========================================
+   LABELS
+   ======================================== */
+
+.genderselect-labels {
+  display: flex;
+  justify-content: center;
+  gap: var(--genderselect-cards-gap);
+  margin-top: var(--genderselect-labels-margin-top);
+}
+
+.genderselect-label {
+  font-family: urbanist, sans-serif;
+  font-weight: 500;
+  font-size: var(--genderselect-label-size);
+  color: #1F2937;
+  line-height: 1;
+  text-align: center;
+  width: var(--genderselect-label-width);
+}
+
+/* ========================================
+   BUTTON
+   ======================================== */
+
+.genderselect-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--genderselect-button-margin-top);
+  padding: 0 6%;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --genderselect-back-size: 24px;
+    --genderselect-back-top: 30px;
+    
+    --genderselect-title-size: 26px;
+    --genderselect-title-margin-top: 75px;
+    --genderselect-title-width: 280px;
+    
+    --genderselect-cards-margin-top: 25px;
+    --genderselect-cards-gap: 30px;
+    --genderselect-card-width: 120px;
+    --genderselect-card-height: 340px;
+    --genderselect-card-radius: 14px;
+    --genderselect-image-width: 120px;
+    --genderselect-image-height: 278px;
+    --genderselect-image-margin-top: 14px;
+    
+    --genderselect-labels-margin-top: -35px;
+    --genderselect-label-size: 24px;
+    --genderselect-label-width: 120px;
+    
+    --genderselect-button-height: 44px;
+    --genderselect-button-radius: 12px;
+    --genderselect-button-text-size: 18px;
+    --genderselect-button-margin-top: 40px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --genderselect-back-size: 26px;
+    --genderselect-back-top: 33px;
+    
+    --genderselect-title-size: 28px;
+    --genderselect-title-margin-top: 82px;
+    --genderselect-title-width: 300px;
+    
+    --genderselect-cards-margin-top: 2px;
+    --genderselect-cards-gap: 20px;
+    --genderselect-card-width: 150px;
+    --genderselect-card-height: 400px;
+    --genderselect-card-radius: 16px;
+    --genderselect-image-width: 150px;
+    --genderselect-image-height: 332px;
+    --genderselect-image-margin-top: 16px;
+    
+    --genderselect-labels-margin-top: -100px;
+    --genderselect-label-size: 28px;
+    --genderselect-label-width: 135px;
+    
+    --genderselect-button-height: 46px;
+    --genderselect-button-radius: 13px;
+    --genderselect-button-text-size: 19px;
+    --genderselect-button-margin-top: 44px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --genderselect-back-size: 28px;
+    --genderselect-back-top: 36px;
+    
+    --genderselect-title-size: 31px;
+    --genderselect-title-margin-top: 92px;
+    --genderselect-title-width: 330px;
+    
+    --genderselect-cards-margin-top: 30px;
+    --genderselect-cards-gap: 20px;
+    --genderselect-card-width: 160px;
+    --genderselect-card-height: 430px;
+    --genderselect-card-radius: 18px;
+    --genderselect-image-width: 160px;
+    --genderselect-image-height: 368px;
+    --genderselect-image-margin-top: 18px;
+    
+    --genderselect-labels-margin-top: -90px;
+    --genderselect-label-size: 31px;
+    --genderselect-label-width: 150px;
+    
+    --genderselect-button-height: 48px;
+    --genderselect-button-radius: 14px;
+    --genderselect-button-text-size: 21px;
+    --genderselect-button-margin-top: 48px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --genderselect-back-size: 29px;
+    --genderselect-back-top: 38px;
+    
+    --genderselect-title-size: 33px;
+    --genderselect-title-margin-top: 98px;
+    --genderselect-title-width: 350px;
+    
+    --genderselect-cards-margin-top: 2px;
+    --genderselect-cards-gap: 20px;
+    --genderselect-card-width: 170px;
+    --genderselect-card-height: 460px;
+    --genderselect-card-radius: 19px;
+    --genderselect-image-width: 170px;
+    --genderselect-image-height: 382px;
+    --genderselect-image-margin-top: 19px;
+    
+    --genderselect-labels-margin-top: -116px;
+    --genderselect-label-size: 33px;
+    --genderselect-label-width: 160px;
+    
+    --genderselect-button-height: 50px;
+    --genderselect-button-text-size: 22px;
+    --genderselect-button-margin-top: 51px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --genderselect-title-margin-top: 105px;
+    --genderselect-cards-margin-top: 2px;
+    --genderselect-title-size: 35px;
+    --genderselect-cards-gap: 20px;
+    --genderselect-button-height: 52px;
+    --genderselect-button-margin-top: 55px;
+    --genderselect-card-width: 190px;
+    --genderselect-card-height: 500px;
+    --genderselect-image-height: 420px;
+    --genderselect-labels-margin-top: -116px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --genderselect-back-size: 32px;
+    --genderselect-back-top: 44px;
+    
+    --genderselect-title-size: 38px;
+    --genderselect-title-margin-top: 115px;
+    --genderselect-title-width: 390px;
+    
+    --genderselect-cards-margin-top: 38px;
+    --genderselect-cards-gap: 90px;
+    --genderselect-card-width: 185px;
+    --genderselect-card-height: 520px;
+    --genderselect-card-radius: 22px;
+    --genderselect-image-width: 185px;
+    --genderselect-image-height: 426px;
+    --genderselect-image-margin-top: 22px;
+    
+    --genderselect-labels-margin-top: -136px;
+    --genderselect-label-size: 38px;
+    --genderselect-label-width: 190px;
+    
+    --genderselect-button-height: 56px;
+    --genderselect-button-radius: 16px;
+    --genderselect-button-text-size: 24px;
+    --genderselect-button-margin-top: 60px;
+  }
+}
+
+/* Landscape adjustments */
+@media (max-height: 700px) and (orientation: landscape) {
+  :root {
+    --genderselect-title-margin-top: 60px;
+    --genderselect-cards-margin-top: 20px;
+    --genderselect-card-height: 300px;
+    --genderselect-image-height: 240px;
+    --genderselect-labels-margin-top: -25px;
+    --genderselect-button-margin-top: 30px;
+  }
+}

@@ -1,11 +1,11 @@
 import React, { useRef, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PrimaryButton from "../components/PrimaryButton";
 import BackArrow from "../assets/backarrow.svg";
 import Trainerverificationlogo from "../assets/trainerverificationlogo.svg";
 import { isTrainerIdAvailable, insertTrainerId } from "../utils/supabaseQueries";
-// import { getUserData } from "../utils/userOnboarding";
-// import {updateTrainerField} from '../utils/trainerOnboarding'
+import "../styles/trainerverificationresponsive.css";
 
 const Trainerverification = () => {
   const navigate = useNavigate();
@@ -14,13 +14,22 @@ const Trainerverification = () => {
   const [prefix, setPrefix] = useState("");
   const [digits, setDigits] = useState("");
   const [error, setError] = useState("");
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+   // ADD THIS EFFECT - Monitor input validity
+  useEffect(() => {
+    const isValid = prefix.length === 2 && digits.length === 3;
+    setIsButtonDisabled(!isValid);
+  }, [prefix, digits]);
 
   const handlePrefixChange = (e) => {
     const val = e.target.value.toUpperCase().replace(/[^A-Z]/g, "");
     if (val.length <= 2) {
       setPrefix(val);
+      setError("");
       if (val.length === 2) {
-        digitsRef.current.focus(); // auto move to digits input
+        digitsRef.current.focus();
       }
     }
   };
@@ -29,6 +38,7 @@ const Trainerverification = () => {
     const val = e.target.value.replace(/[^0-9]/g, "");
     if (val.length <= 3) {
       setDigits(val);
+      setError("");
     }
   };
 
@@ -36,7 +46,6 @@ const Trainerverification = () => {
     if (e.key === "Backspace" && digits === "") {
       setPrefix((prev) => {
         const newPrefix = prev.slice(0, -1);
-        // Delay focus slightly to avoid interfering with value change
         setTimeout(() => {
           prefixRef.current.focus();
         }, 0);
@@ -49,10 +58,9 @@ const Trainerverification = () => {
     const id = `${prefix.toUpperCase()}-${digits}`;
     setError("");
 
-    // Basic format check
     if (!/^[A-Z]{2}-\d{3}$/.test(id)) {
       setError(
-        "Trainer ID must be 2 letters followed by 3 digits (e.g. AB-123)"
+        "Trainer ID must be 2 letters & 3 digits (e.g. AB-123)"
       );
       return false;
     }
@@ -67,12 +75,14 @@ const Trainerverification = () => {
   };
 
   const handleSubmit = async () => {
+    if (isButtonDisabled || isSubmitting) return;
     const trainerId = await validateTrainerId();
     if (!trainerId) return;
 
     const userId = localStorage.getItem("user_id");
     if (!userId) {
       setError("Something went wrong. Please try again. about user_id");
+      setIsSubmitting(false);
       return;
     }
 
@@ -84,109 +94,145 @@ const Trainerverification = () => {
       navigate("/trainer/manageclient");
     } else {
       setError("Something went wrong. Please try again. else part");
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div
-      className="flex flex-col justify-between items-center"
-      style={{
-        background: "#FFFFFF",
-      }}
-    >
-      <div className="flex flex-col items-center">
-        <BackArrow
+    <div className="trainerverification-viewport">
+      <div className="trainerverification-page" style={{ backgroundColor: "var(--bg)" }}>
+        {/* Back Arrow */}
+        <button
+          className="trainerverification-back-btn"
           onClick={() => navigate(-1)}
-          style={{
-            width: "30px",
-            height: "30px",
-            position: "absolute",
-            display: "flex",
-            top: "40px",
-            left: "5px",
-          }}
-        />
-      </div>
-      <div className="flex flex-col items-center mt-[80px]">
-        <Trainerverificationlogo
-          style={{
-            width: "100%",
-            height: "100%",
-          }}
-        />
-        <div className="flex flex-col items-center">
-          <h1
-            className="text-[#2D3436] font-semibold font-urbanist text-[30px] mt-[5px]"
-            style={{
-              lineHeight: "1",
-            }}
-          >
-            Trainer Verification
-          </h1>
-          <p className="text-[18px] mt-[20px] leading-none text-center font-urbanist">
-            <span className="text-[#6C757D]">Create your</span>{" "}
-            <span className="text-[#2D3436] font-medium">Trainer ID</span>
-          </p>
-          <div className="flex justify-center items-center gap-x-[5px] mt-[5px]">
-            <input
-              ref={prefixRef}
-              className="w-[35px] h-[31px] border rounded-[8px] border-[#E9ECEF] text-[#2D3436] text-[20px] font-jetbrainsmono text-center"
-              placeholder="JP"
-              maxLength={2}
-              value={prefix}
-              onChange={handlePrefixChange}
-              style={{boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.04)"}}
-            ></input>
-            <p className="justify-center items-center font-urbanist text-[#6C757D] text-[35px] ">
-              <span>-</span>
-            </p>
-            <input
-              ref={digitsRef}
-              className="w-[62px] h-[31px] border rounded-[8px] border-[#E9ECEF] text-[#2D3436] text-[20px] font-jetbrainsmono text-center"
-              placeholder="180"
-              type="text"
-              value={digits}
-              onChange={handleDigitsChange}
-              onKeyDown={handleDigitsKeyDown}
-              style={{boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.04)"}}
-            ></input>
-          </div>
-          {/* Error Message */}
-          {error && (
-            <p className="text-red-500 text-[15px] mt-2 w-[100%] font-urbanist">{error}</p>
-          )}
-          <div className="flex flex-col mt-[15px]">
-            <p className="text-[#2D3436] font-urbanist font-medium text-[18px]">
-              <span>Trainer ID must be:</span>
-            </p>
-            <div className="flex flex-col justify-center items-start mt-[5px]">
-              <div className="flex justify-center items-center">
-                <div className='h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[px]'></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]">
-                  The first two letters must be from A to Z.
-                </span>
-              </div>
-              <div className="flex justify-center items-center mt-[5px]">
-                <div className='h-[8px] w-[8px] rounded-[50%] bg-[#4ECDC4] mt-[0px]'></div>
-                <span className="font-urbanist font-regular text-[#6C757D] text-[15px] ml-[8px]">
-                  Next three digits must be 0-9.
-                </span>
-              </div>
-            </div>
+          aria-label="Go back"
+        >
+          <BackArrow className="trainerverification-back-icon" color="var(--general-charcoal-text)" />
+        </button>
+
+        {/* Content */}
+        <div className="trainerverification-content">
+          {/* Logo */}
+          <div className="trainerverification-logo-wrapper">
+            <Trainerverificationlogo className="trainerverification-logo" />
           </div>
 
-          <div className="w-full flex justify-center mt-[30px]">
-            <PrimaryButton
-              text="CREATE & PROCEED"
-              onClick={handleSubmit}
-              customStyle={{
-                width: "360px",
-                height: "60px",
-                borderRadius: "15px",
-                fontSize: "23px",
-                boxShadow: "0px 12px 26px rgba(255, 118, 117, 0.30)",
-              }}
-            />
+          {/* Form Section */}
+          <div className="trainerverification-form">
+            <h1
+              className="trainerverification-title"
+              style={{ color: "var(--general-charcoal-text)" }}
+            >
+              Trainer Verification
+            </h1>
+
+            <p className="trainerverification-subtitle">
+              <span
+                className="trainerverification-subtitle-light"
+                style={{ color: "var(--faded-text)" }}
+              >
+                Create your
+              </span>{" "}
+              <span
+                className="trainerverification-subtitle-bold"
+                style={{ color: "var(--general-charcoal-text)" }}
+              >
+                Trainer ID
+              </span>
+            </p>
+
+            {/* ID Input */}
+            <div className="trainerverification-input-group">
+              <input
+                ref={prefixRef}
+                className="trainerverification-input trainerverification-input-prefix"
+                placeholder="JP"
+                maxLength={2}
+                value={prefix}
+                onChange={handlePrefixChange}
+                disabled={isSubmitting} // ADD THIS
+                autoFocus 
+                style={{
+                  backgroundColor: "var(--profile-section-card-bg)",
+                  borderColor: "var(--profile-border)",
+                  color: "var(--general-charcoal-text)",
+                }}
+              />
+              <span
+                className="trainerverification-separator"
+                style={{ color: "var(--faded-text)" }}
+              >
+                -
+              </span>
+              <input
+                ref={digitsRef}
+                className="trainerverification-input trainerverification-input-digits"
+                placeholder="180"
+                type="text"
+                value={digits}
+                onChange={handleDigitsChange}
+                onKeyDown={handleDigitsKeyDown}
+                disabled={isSubmitting}
+                style={{
+                  backgroundColor: "var(--profile-section-card-bg)",
+                  borderColor: "var(--profile-border)",
+                  color: "var(--general-charcoal-text)",
+                }}
+              />
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <p className="trainerverification-error">{error}</p>
+            )}
+
+            {/* Instructions */}
+            <div className="trainerverification-instructions">
+              <p
+                className="trainerverification-instructions-title"
+                style={{ color: "var(--general-charcoal-text)" }}
+              >
+                Trainer ID must be:
+              </p>
+              <div className="trainerverification-instructions-list">
+                <div className="trainerverification-instruction-item">
+                  <div className="trainerverification-bullet"></div>
+                  <span
+                    className="trainerverification-instruction-text"
+                    style={{ color: "var(--faded-text)" }}
+                  >
+                    The first two letters must be from A to Z.
+                  </span>
+                </div>
+                <div className="trainerverification-instruction-item">
+                  <div className="trainerverification-bullet"></div>
+                  <span
+                    className="trainerverification-instruction-text"
+                    style={{ color: "var(--faded-text)" }}
+                  >
+                    Next three digits must be 0-9.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="trainerverification-cta">
+              <PrimaryButton
+                text={isSubmitting ? "CREATING..." : "CREATE & PROCEED"}
+                onClick={handleSubmit}
+                disabled={isButtonDisabled || isSubmitting}
+                customStyle={{
+                  width: "var(--trainerverification-button-width)",
+                  height: "var(--trainerverification-button-height)",
+                  borderRadius: "var(--trainerverification-button-radius)",
+                  fontSize: "var(--trainerverification-button-text-size)",
+                  boxShadow: "0px 12px 26px rgba(255, 118, 117, 0.30)",
+                  opacity: isButtonDisabled || isSubmitting ? 0.5 : 1,
+                  cursor: isButtonDisabled || isSubmitting ? "not-allowed" : "pointer",
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>

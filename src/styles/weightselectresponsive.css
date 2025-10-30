@@ -1,0 +1,386 @@
+/* ========================================
+   WEIGHT SELECT PAGE RESPONSIVE STYLES
+   ======================================== */
+
+:root {
+  /* Back button */
+  --weightselect-back-size: 30px;
+  --weightselect-back-top: 40px;
+  --weightselect-back-left: 5px;
+  
+  /* Title */
+  --weightselect-title-size: 35px;
+  --weightselect-title-margin-top: 100px;
+  --weightselect-title-width: 370px;
+  
+  /* Weight Display */
+  --weightselect-display-margin-top: 30px;
+  --weightselect-value-size: 40px;
+  --weightselect-value-width: 210px;
+  --weightselect-value-margin-right: 8px;
+  --weightselect-unit-size: 23px;
+  --weightselect-unit-width: 150px;
+  --weightselect-unit-margin-top: 3px;
+  
+  /* Image */
+  --weightselect-image-margin-top: -10px;
+  --weightselect-image-width: 175px;
+  --weightselect-image-height: 406px;
+  
+  /* Ruler */
+  --weightselect-ruler-margin-top: 32px;
+  --weightselect-ruler-max-width: 400px;
+  
+  /* Button */
+  --weightselect-button-width: 95%;
+  --weightselect-button-height: 52px;
+  --weightselect-button-radius: 15px;
+  --weightselect-button-text-size: 23px;
+  --weightselect-button-margin-top: 25px;
+}
+
+/* ========================================
+   BASE LAYOUT
+   ======================================== */
+
+.weightselect-viewport {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  background: #FFFFFF;
+}
+
+.weightselect-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   BACK BUTTON
+   ======================================== */
+
+.weightselect-back-btn {
+  position: absolute;
+  top: var(--weightselect-back-top);
+  left: var(--weightselect-back-left);
+  z-index: 10;
+  width: var(--weightselect-back-size);
+  height: var(--weightselect-back-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.weightselect-back-btn:active {
+  transform: scale(0.95);
+}
+
+.weightselect-back-icon {
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================
+   CONTENT
+   ======================================== */
+
+.weightselect-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ========================================
+   TITLE
+   ======================================== */
+
+.weightselect-title {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--weightselect-title-size);
+  color: #2D3436;
+  margin-top: var(--weightselect-title-margin-top);
+  line-height: 1;
+  text-align: center;
+  width: var(--weightselect-title-width);
+  max-width: 90%;
+}
+
+/* ========================================
+   WEIGHT DISPLAY
+   ======================================== */
+
+.weightselect-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--weightselect-display-margin-top);
+}
+
+.weightselect-value {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--weightselect-value-size);
+  color: #2D3436;
+  line-height: 1;
+  text-align: right;
+  width: var(--weightselect-value-width);
+  margin-right: var(--weightselect-value-margin-right);
+}
+
+.weightselect-unit {
+  font-family: urbanist, sans-serif;
+  font-weight: 600;
+  font-size: var(--weightselect-unit-size);
+  color: #2D3436;
+  line-height: 1;
+  text-align: left;
+  width: var(--weightselect-unit-width);
+  margin-top: var(--weightselect-unit-margin-top);
+}
+
+/* ========================================
+   CHARACTER IMAGE
+   ======================================== */
+
+.weightselect-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: var(--weightselect-image-margin-top);
+}
+
+.weightselect-image {
+  width: var(--weightselect-image-width);
+  height: var(--weightselect-image-height);
+  object-fit: contain;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+}
+
+/* ========================================
+   RULER SECTION
+   ======================================== */
+
+.weightselect-ruler-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--weightselect-ruler-margin-top);
+}
+
+.weightselect-ruler-container {
+  width: 100%;
+  max-width: var(--weightselect-ruler-max-width);
+  overflow-x: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.weightselect-ruler-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========================================
+   BUTTON
+   ======================================== */
+
+.weightselect-button-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: var(--weightselect-button-margin-top);
+  padding: 0 5%;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   MEDIA QUERIES
+   ======================================== */
+
+/* Very small phones (320px and below) */
+@media (max-width: 320px) {
+  :root {
+    --weightselect-back-size: 24px;
+    --weightselect-back-top: 30px;
+    
+    --weightselect-title-size: 26px;
+    --weightselect-title-margin-top: 70px;
+    --weightselect-title-width: 280px;
+    
+    --weightselect-display-margin-top: 22px;
+    --weightselect-value-size: 32px;
+    --weightselect-value-width: 160px;
+    --weightselect-value-margin-right: 6px;
+    --weightselect-unit-size: 18px;
+    --weightselect-unit-width: 110px;
+    --weightselect-unit-margin-top: 2px;
+    
+    --weightselect-image-margin-top: -8px;
+    --weightselect-image-width: 130px;
+    --weightselect-image-height: 302px;
+    
+    --weightselect-ruler-margin-top: 24px;
+    --weightselect-ruler-max-width: 300px;
+    
+    --weightselect-button-height: 44px;
+    --weightselect-button-radius: 12px;
+    --weightselect-button-text-size: 18px;
+    --weightselect-button-margin-top: 18px;
+  }
+}
+
+/* Small phones (321px - 366px) */
+@media (min-width: 321px) and (max-width: 366px) {
+  :root {
+    --weightselect-back-size: 26px;
+    --weightselect-back-top: 33px;
+    
+    --weightselect-title-size: 29px;
+    --weightselect-title-margin-top: 78px;
+    --weightselect-title-width: 310px;
+    
+    --weightselect-display-margin-top: 24px;
+    --weightselect-value-size: 35px;
+    --weightselect-value-width: 175px;
+    --weightselect-value-margin-right: 7px;
+    --weightselect-unit-size: 20px;
+    --weightselect-unit-width: 120px;
+    
+    --weightselect-image-margin-top: -9px;
+    --weightselect-image-width: 145px;
+    --weightselect-image-height: 337px;
+    
+    --weightselect-ruler-margin-top: 26px;
+    --weightselect-ruler-max-width: 330px;
+    
+    --weightselect-button-height: 46px;
+    --weightselect-button-radius: 13px;
+    --weightselect-button-text-size: 19px;
+    --weightselect-button-margin-top: 20px;
+  }
+}
+
+/* Standard phones (367px - 400px) */
+@media (min-width: 367px) and (max-width: 400px) {
+  :root {
+    --weightselect-back-size: 28px;
+    --weightselect-back-top: 36px;
+    
+    --weightselect-title-size: 32px;
+    --weightselect-title-margin-top: 88px;
+    --weightselect-title-width: 340px;
+    
+    --weightselect-display-margin-top: 27px;
+    --weightselect-value-size: 37px;
+    --weightselect-value-width: 190px;
+    --weightselect-unit-size: 21px;
+    --weightselect-unit-width: 130px;
+    
+    --weightselect-image-width: 160px;
+    --weightselect-image-height: 372px;
+    
+    --weightselect-ruler-margin-top: 29px;
+    --weightselect-ruler-max-width: 370px;
+    
+    --weightselect-button-height: 48px;
+    --weightselect-button-radius: 14px;
+    --weightselect-button-text-size: 21px;
+    --weightselect-button-margin-top: 22px;
+  }
+}
+
+/* Default range (401px - 427px) */
+@media (min-width: 401px) and (max-width: 427px) {
+  :root {
+    --weightselect-back-size: 29px;
+    --weightselect-back-top: 38px;
+    
+    --weightselect-title-size: 34px;
+    --weightselect-title-margin-top: 95px;
+    --weightselect-title-width: 360px;
+    
+    --weightselect-display-margin-top: 29px;
+    --weightselect-value-size: 39px;
+    --weightselect-value-width: 200px;
+    --weightselect-unit-size: 22px;
+    --weightselect-unit-width: 140px;
+    
+    --weightselect-image-width: 168px;
+    --weightselect-image-height: 390px;
+    
+    --weightselect-ruler-margin-top: 31px;
+    --weightselect-ruler-max-width: 390px;
+    
+    --weightselect-button-height: 50px;
+    --weightselect-button-text-size: 22px;
+    --weightselect-button-margin-top: 24px;
+  }
+}
+
+/* Large phones (428px - 480px) */
+@media (min-width: 428px) and (max-width: 480px) {
+  :root {
+    --weightselect-title-margin-top: 100px;
+    --weightselect-title-size: 35px;
+    --weightselect-ruler-max-width: 400px;
+    --weightselect-button-height: 52px;
+    --weightselect-button-margin-top: 25px;
+  }
+}
+
+/* Extra large (481px+) */
+@media (min-width: 481px) {
+  :root {
+    --weightselect-back-size: 32px;
+    --weightselect-back-top: 44px;
+    
+    --weightselect-title-size: 38px;
+    --weightselect-title-margin-top: 110px;
+    --weightselect-title-width: 390px;
+    
+    --weightselect-display-margin-top: 33px;
+    --weightselect-value-size: 43px;
+    --weightselect-value-width: 230px;
+    --weightselect-value-margin-right: 10px;
+    --weightselect-unit-size: 25px;
+    --weightselect-unit-width: 160px;
+    --weightselect-unit-margin-top: 4px;
+    
+    --weightselect-image-width: 190px;
+    --weightselect-image-height: 442px;
+    
+    --weightselect-ruler-margin-top: 36px;
+    --weightselect-ruler-max-width: 450px;
+    
+    --weightselect-button-height: 56px;
+    --weightselect-button-radius: 16px;
+    --weightselect-button-text-size: 24px;
+    --weightselect-button-margin-top: 28px;
+  }
+}
+
+/* Landscape adjustments */
+@media (max-height: 700px) and (orientation: landscape) {
+  :root {
+    --weightselect-title-margin-top: 50px;
+    --weightselect-display-margin-top: 15px;
+    --weightselect-image-height: 250px;
+    --weightselect-image-width: 108px;
+    --weightselect-ruler-margin-top: 15px;
+    --weightselect-button-margin-top: 15px;
+  }
+}
