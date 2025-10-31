@@ -12,6 +12,7 @@ const { jwtCreation } = require('./PhoneVerification');
 const { handleGenerateUploadUrl, handleVerifyUpload } = require('./r2Upload');
 const { storeFcmToken, removeFcmToken } = require('./fcmNotifications');
 
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -99,12 +100,13 @@ app.post('/api/auth/jwt', asyncHandler(jwtCreation));
 app.post('/api/upload/generate-url', asyncHandler(handleGenerateUploadUrl));
 app.post('/api/upload/verify', asyncHandler(handleVerifyUpload));
 
-// Static files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // FCM routes
 app.post('/api/fcm/store-token', asyncHandler(storeFcmToken));
 app.post('/api/fcm/remove-token', asyncHandler(removeFcmToken));
+
+// Static files
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 // =====================================
 // Error Handlers
