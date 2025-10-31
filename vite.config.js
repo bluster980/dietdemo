@@ -7,58 +7,58 @@ export default defineConfig({
   plugins: [
     react(),
     svgr({ exportAsDefault: true, include: '**/*.svg' }),
-    VitePWA({
-      registerType: 'autoUpdate',
-      manifest: {
-        name: 'Diet Delta',
-        short_name: 'DietDelta',
-        description: 'A fitness app built for trainer and clients',
-        theme_color: '#FFFFFF',
-        background_color: '#ffffff',
-        display: 'standalone',
-        scope: '/',
-        start_url: '/',
-        icons: [
-          {
-            src: '/icons/download48.png',
-            sizes: '48x48',
-            type: 'image/png',
-          },
-          {
-            src: '/icons/download96.png',
-            sizes: '96x96',
-            type: 'image/png',
-          },
-          {
-            src: '/icons/download192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: '/icons/download256.png',
-            sizes: '256x256',
-            type: 'image/png',
-          },
-          {
-            src: '/icons/download512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-        ],
-      },
-      workbox: {
-        maximumFileSizeToCacheInBytes: 5_000_000,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webp,gif}'],
-        // Don't handle push notifications in PWA service worker
-        skipWaiting: true,
-        clientsClaim: true,
-        // Don't cache firebase-messaging-sw.js
-        navigateFallbackDenylist: [/^\/firebase-messaging-sw\.js$/],
-      },
-      devOptions: {
-        enabled: true,
-      } 
-    }),
+    // VitePWA({
+    //   registerType: 'autoUpdate',
+    //   manifest: {
+    //     name: 'Diet Delta',
+    //     short_name: 'DietDelta',
+    //     description: 'A fitness app built for trainer and clients',
+    //     theme_color: '#FFFFFF',
+    //     background_color: '#ffffff',
+    //     display: 'standalone',
+    //     scope: '/',
+    //     start_url: '/',
+    //     icons: [
+    //       {
+    //         src: '/icons/download48.png',
+    //         sizes: '48x48',
+    //         type: 'image/png',
+    //       },
+    //       {
+    //         src: '/icons/download96.png',
+    //         sizes: '96x96',
+    //         type: 'image/png',
+    //       },
+    //       {
+    //         src: '/icons/download192.png',
+    //         sizes: '192x192',
+    //         type: 'image/png',
+    //       },
+    //       {
+    //         src: '/icons/download256.png',
+    //         sizes: '256x256',
+    //         type: 'image/png',
+    //       },
+    //       {
+    //         src: '/icons/download512.png',
+    //         sizes: '512x512',
+    //         type: 'image/png',
+    //       },
+    //     ],
+    //   },
+    //   workbox: {
+    //     maximumFileSizeToCacheInBytes: 5_000_000,
+    //     globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webp,gif}'],
+    //     // Don't handle push notifications in PWA service worker
+    //     skipWaiting: true,
+    //     clientsClaim: true,
+    //     // Don't cache firebase-messaging-sw.js
+    //     navigateFallbackDenylist: [/^\/firebase-messaging-sw\.js$/],
+    //   },
+    //   devOptions: {
+    //     enabled: true,
+    //   } 
+    // }),
     // Add second instance for Firebase messaging service worker
     // VitePWA({
     //   strategies: 'injectManifest',

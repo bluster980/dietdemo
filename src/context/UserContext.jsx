@@ -13,42 +13,38 @@ export const UserProvider = ({ children }) => {
   const [lastMeetingDate, setLastMeetingDate] = useState(null);
   const [fcmToken, setFcmToken] = useState(null); 
 
-  // ✅ ADD THIS: Debug service workers
+ // 🗑️ CLEANUP: Remove VitePWA service worker (keep only Firebase)
   useEffect(() => {
-    const debugServiceWorkers = async () => {
+    const cleanupServiceWorkers = async () => {
       if ('serviceWorker' in navigator) {
         const registrations = await navigator.serviceWorker.getRegistrations();
         
-        console.log('═══════════════════════════════════════');
-        console.log('🔍 SERVICE WORKER DEBUG INFO');
-        console.log('═══════════════════════════════════════');
-        console.log('Total registered service workers:', registrations.length);
+        console.log('🔍 Found', registrations.length, 'service workers');
         
-        registrations.forEach((registration, index) => {
-          console.log(`\n📍 Service Worker #${index + 1}:`);
-          console.log('  Scope:', registration.scope);
-          console.log('  Active:', registration.active?.scriptURL);
-          console.log('  Waiting:', registration.waiting?.scriptURL || 'None');
-          console.log('  Installing:', registration.installing?.scriptURL || 'None');
+        for (const registration of registrations) {
+          const scriptURL = registration.active?.scriptURL || '';
           
-          // Check if it handles push notifications
-          if (registration.pushManager) {
-            registration.pushManager.getSubscription().then(sub => {
-              console.log('  Push subscription:', sub ? 'Active' : 'None');
-            });
+          // Remove VitePWA service worker (/sw.js)
+          if (scriptURL.includes('/sw.js')) {
+            console.log('🗑️ Removing VitePWA service worker:', scriptURL);
+            await registration.unregister();
+            console.log('✅ VitePWA service worker removed!');
+          } else if (scriptURL.includes('firebase-messaging-sw.js')) {
+            console.log('✅ Keeping Firebase service worker:', scriptURL);
           }
-        });
+        }
         
-        console.log('\n═══════════════════════════════════════');
+        // Verify cleanup
+        const remaining = await navigator.serviceWorker.getRegistrations();
+        console.log('📊 Remaining service workers:', remaining.length);
         
-        // Check which SW intercepts push events
-        navigator.serviceWorker.addEventListener('message', (event) => {
-          console.log('📨 Message from SW:', event.data);
-        });
+        if (remaining.length === 1 && remaining[0].active?.scriptURL.includes('firebase-messaging-sw.js')) {
+          console.log('✅ SUCCESS: Only Firebase SW is active now!');
+        }
       }
     };
     
-    debugServiceWorkers();
+    cleanupServiceWorkers();
   }, []);
 
   useEffect(() => {
