@@ -9,6 +9,7 @@ body {
   padding: 0;
   overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
+  background-color: var(--color-background);
 }
 
 body::before {
@@ -453,6 +454,12 @@ html {
   }
 } */
 
+#root{
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  background-color: var(--color-background);
+}
+
 /* iOS Safe Area Support */
 :root {
   /* Fallback values for non-iOS browsers */
@@ -460,6 +467,7 @@ html {
   --safe-area-inset-right: 0px;
   --safe-area-inset-bottom: 0px;
   --safe-area-inset-left: 0px;
+  
 }
 
 /* iOS provides these env() values when viewport-fit=cover is set */
@@ -573,7 +581,7 @@ html {
   padding-top: calc(var(--page-pad) + var(--safe-area-inset-top));
   padding-left: calc(var(--page-pad) + var(--safe-area-inset-left));
   padding-right: calc(var(--page-pad) + var(--safe-area-inset-right));
-  padding-bottom: calc(80px + var(--safe-area-inset-bottom)); /* 80px for nav + home indicator */
+  padding-bottom: 80px; /* 80px for nav + home indicator */
   
   display: flex; 
   flex-direction: column; 
@@ -700,6 +708,9 @@ html {
   padding-bottom: var(--safe-area-inset-bottom);
   padding-left: var(--safe-area-inset-left);
   padding-right: var(--safe-area-inset-right);
+
+  margin: 0;
+  border: none;
 }
 
 
