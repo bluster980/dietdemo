@@ -1,11 +1,31 @@
 /* eslint-disable no-undef */
-import { precacheAndRoute } from 'workbox-precaching';
-
-// Precache all assets
-precacheAndRoute(self.__WB_MANIFEST || []);
-
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js');
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
+
+// Workbox configuration
+if (workbox) {
+  console.log('✅ Workbox loaded');
+  
+  // Precache files (Vite will inject this automatically)
+  workbox.precaching.precacheAndRoute(self.__WB_MANIFEST || []);
+  
+  // Cache strategies
+  workbox.routing.registerRoute(
+    ({request}) => request.destination === 'image',
+    new workbox.strategies.CacheFirst({
+      cacheName: 'images',
+      plugins: [
+        new workbox.expiration.ExpirationPlugin({
+          maxEntries: 60,
+          maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+        }),
+      ],
+    })
+  );
+} else {
+  console.log('❌ Workbox failed to load');
+}
 
 firebase.initializeApp({
   apiKey: "AIzaSyBi5g55CPAX1tGg7Tzi9AlqgAMt3noxjoE",
@@ -46,3 +66,5 @@ self.addEventListener('notificationclick', (event) => {
     clients.openWindow('/')
   );
 });
+
+console.log('✅ Firebase messaging service worker loaded');

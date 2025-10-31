@@ -49,10 +49,11 @@ export default defineConfig({
       workbox: {
         maximumFileSizeToCacheInBytes: 5_000_000,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webp,gif}'],
+        // Don't cache firebase-messaging-sw.js
+        navigateFallbackDenylist: [/^\/firebase-messaging-sw\.js$/],
       },
       devOptions: {
         enabled: true,
-        type: 'module'
       }
     }),
     // Add second instance for Firebase messaging service worker
