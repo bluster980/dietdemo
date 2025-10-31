@@ -57,7 +57,7 @@ export default defineConfig({
       },
       devOptions: {
         enabled: true,
-      }
+      } 
     }),
     // Add second instance for Firebase messaging service worker
     // VitePWA({
