@@ -165,13 +165,14 @@ export default function DiaryResponsive() {
     <div className="df-viewport">
       <div className="df-canvas df-canvas-full">
         <main className="page" 
-        style={{
-            paddingBottom: '80px',
-            minHeight: '100vh',
-            maxHeight: '100vh',
-            overflowY: 'auto',
-            boxSizing: 'border-box'
-          }}>
+        // style={{
+        //     paddingBottom: '80px',
+        //     minHeight: '100vh',
+        //     maxHeight: '100vh',
+        //     overflowY: 'auto',
+        //     boxSizing: 'border-box'
+        //   }}
+          >
           {/* Top bar */}
           <header className="topbar">
             <h1 className="title" style={{ color: "var(--general-charcoal-text)" }}>

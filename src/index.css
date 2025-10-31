@@ -453,6 +453,24 @@ html {
   }
 } */
 
+/* iOS Safe Area Support */
+:root {
+  /* Fallback values for non-iOS browsers */
+  --safe-area-inset-top: 0px;
+  --safe-area-inset-right: 0px;
+  --safe-area-inset-bottom: 0px;
+  --safe-area-inset-left: 0px;
+}
+
+/* iOS provides these env() values when viewport-fit=cover is set */
+@supports (padding-top: env(safe-area-inset-top)) {
+  :root {
+    --safe-area-inset-top: env(safe-area-inset-top);
+    --safe-area-inset-right: env(safe-area-inset-right);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
+    --safe-area-inset-left: env(safe-area-inset-left);
+  }
+}
 
 /* 1) viewport + canvas (locked 412 base, centered) */
 .df-viewport { width: 100vw; min-height: 100dvh; display: flex; justify-content: center; background: var(--bg, #fff); }
@@ -547,8 +565,27 @@ html {
 }
 
 
-/* 3) page layout */
-.page { padding: var(--page-pad); display: flex; flex-direction: column; gap: var(--gap); scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
+/* 3) page layout with iOS safe area support */
+.page { 
+  padding: var(--page-pad);
+  
+  /* Add safe area padding */
+  padding-top: calc(var(--page-pad) + var(--safe-area-inset-top));
+  padding-left: calc(var(--page-pad) + var(--safe-area-inset-left));
+  padding-right: calc(var(--page-pad) + var(--safe-area-inset-right));
+  padding-bottom: calc(80px + var(--safe-area-inset-bottom)); /* 80px for nav + home indicator */
+  
+  display: flex; 
+  flex-direction: column; 
+  gap: var(--gap); 
+  scroll-behavior: smooth; 
+  -webkit-overflow-scrolling: touch;
+  
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
 
 /* Optional: Hide scrollbar for cleaner look */
 .page::-webkit-scrollbar {
@@ -658,7 +695,13 @@ html {
   right: 0;
   z-index: 50;
   background: var(--workout-bg);
+  
+  /* Add safe area padding for home indicator */
+  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
 }
+
 
 
 @supports not (width:1cqw){

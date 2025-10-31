@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from 'react';
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Welcome from './pages/Welcome';
 import Userverification from './pages/Userverification';
