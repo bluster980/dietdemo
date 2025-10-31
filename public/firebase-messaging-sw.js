@@ -18,24 +18,25 @@ const messaging = firebase.messaging();
 
 // ✅ Handle background messages with custom notification
 // This REPLACES Firebase's default notification
-messaging.onBackgroundMessage((payload) => {
-  console.log('📩 Received background message:', payload);
+self.addEventListener('push', (event) => {
+  console.log('📩 Raw push received');
   
-  const notificationTitle = payload.notification?.title || 'Diet Delta';
+  const payload = event.data.json();
+  const notification = payload.notification || {};
+  
+  const notificationTitle = notification.title || 'Diet Delta';
   const notificationOptions = {
-    body: payload.notification?.body || 'You have a new notification',
-    icon: '/icons/download192.png',        // Your app icon (large)
-    badge: '/icons/notificationicon.png',   // Small icon (top-left)
-    data: payload.data,
+    body: notification.body || 'You have a new notification',
+    icon: '/icons/download192.png',
+    badge: '/icons/notificationicon.png',
     tag: 'dietdelta-notification',
     renotify: false,
-    requireInteraction: false,
     vibrate: [200, 100, 200]
   };
-
-  // Show ONLY our custom notification
-  // Firebase's default is automatically suppressed when onBackgroundMessage is defined
-  return self.registration.showNotification(notificationTitle, notificationOptions);
+  
+  event.waitUntil(
+    self.registration.showNotification(notificationTitle, notificationOptions)
+  );
 });
 
 // Handle notification clicks
