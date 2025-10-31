@@ -1,7 +1,7 @@
 // UserContext.jsx
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { getUserFromDb, getTrainerFromDb } from "../utils/supabaseQueries";
-import { requestNotificationPermission, onMessageListener } from "../utils/pushnotifications"; // ← ADD THIS
+import { requestNotificationPermission } from "../utils/pushnotifications"; // ← REMOVE onMessageListener
 
 const UserContext = createContext();
 
@@ -11,9 +11,9 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [lastQnaTime, setLastQnaTime] = useState(null);
   const [lastMeetingDate, setLastMeetingDate] = useState(null);
-  const [fcmToken, setFcmToken] = useState(null); 
+  const [fcmToken, setFcmToken] = useState(null);
 
- // 🗑️ CLEANUP: Remove VitePWA service worker (keep only Firebase)
+  // 🗑️ CLEANUP: Remove VitePWA service worker (keep only Firebase)
   useEffect(() => {
     const cleanupServiceWorkers = async () => {
       if ('serviceWorker' in navigator) {
@@ -24,7 +24,6 @@ export const UserProvider = ({ children }) => {
         for (const registration of registrations) {
           const scriptURL = registration.active?.scriptURL || '';
           
-          // Remove VitePWA service worker (/sw.js)
           if (scriptURL.includes('/sw.js')) {
             console.log('🗑️ Removing VitePWA service worker:', scriptURL);
             await registration.unregister();
@@ -34,7 +33,6 @@ export const UserProvider = ({ children }) => {
           }
         }
         
-        // Verify cleanup
         const remaining = await navigator.serviceWorker.getRegistrations();
         console.log('📊 Remaining service workers:', remaining.length);
         
@@ -51,7 +49,6 @@ export const UserProvider = ({ children }) => {
     const fetchUserData = async () => {
       setIsLoading(true);
 
-      // Try localStorage first, for fast load
       let parsed;
       try {
         const storedUserData = localStorage.getItem("userData");
@@ -65,11 +62,10 @@ export const UserProvider = ({ children }) => {
         console.error("Failed to parse stored userData:", err);
       }
 
-      //  Always fallback to fresh DB fetch (if user_id is present)
       const uid = localStorage.getItem("user_id");
       const token = localStorage.getItem("access_token");
       if ((!parsed || !parsed.user_id) && uid && token) {
-        const { data, error } = await getUserFromDb(uid); // ensure this attaches Authorization + apikey
+        const { data, error } = await getUserFromDb(uid);
         if (data) {
           setUserDataState(data);
           localStorage.setItem("userData", JSON.stringify(data));
@@ -77,7 +73,6 @@ export const UserProvider = ({ children }) => {
           console.warn("Failed to fetch from DB:", error);
         }
       } else if (parsed?.user_id) {
-        // Even if we had cached data, refresh from DB to stay current
         const { data, error } = await getUserFromDb(parsed.user_id);
         if (data) {
           setUserDataState(data);
@@ -92,13 +87,11 @@ export const UserProvider = ({ children }) => {
     fetchUserData();
   }, []);
 
-  // Sync setUserData with localStorage
   const setUserData = (data) => {
     if (!data || typeof data !== "object" || !data.user_id) return;
     setUserDataState(data);
     localStorage.setItem("userData", JSON.stringify(data));
 
-    // ← ADD THIS: Request FCM when user data is set
     if (data.user_id && !fcmToken) {
       requestNotificationPermission(data.user_id)
         .then(token => {
@@ -111,13 +104,11 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-
-
   const refreshUser = useCallback(async () => {
     const uid = localStorage.getItem("user_id");
     const token = localStorage.getItem("access_token");
     if (!uid || !token) return { data: null, error: "missing-credentials" };
-    const { data, error } = await getUserFromDb(uid); // must attach apikey + Authorization
+    const { data, error } = await getUserFromDb(uid);
     if (data) setUserData(data);
     return { data, error };
   }, [fcmToken]);
@@ -126,7 +117,7 @@ export const UserProvider = ({ children }) => {
     const uid = localStorage.getItem("user_id");
     const token = localStorage.getItem("access_token");
     if (!uid || !token) return { data: null, error: "missing-credentials" };
-    const { data, error } = await getTrainerFromDb(uid); // must attach apikey + Authorization
+    const { data, error } = await getTrainerFromDb(uid);
     if (data) setUserData(data);
     return { data, error };
   }, [fcmToken]);
@@ -134,24 +125,24 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const bootstrap = async () => {
       setIsLoading(true);
-      // fast path from cache
       const stored = localStorage.getItem("userData");
       if (stored && stored !== "undefined") {
         try {
           const parsed = JSON.parse(stored);
-          if (parsed?.user_id) setUserDataState(parsed);
-          if (!fcmToken) {
+          if (parsed?.user_id) {
+            setUserDataState(parsed);
+            if (!fcmToken) {
               requestNotificationPermission(parsed.user_id)
                 .then(token => {
                   if (token) setFcmToken(token);
                 })
                 .catch(err => console.error('FCM setup failed:', err));
             }
+          }
         } catch {
           console.error("Failed to parse stored userData:", stored);
         }
       }
-      // always refresh from DB if credentials exist
       await refreshUser();
       await refreshTrainer();
       setIsLoading(false);
@@ -159,22 +150,7 @@ export const UserProvider = ({ children }) => {
     bootstrap();
   }, []);
 
-  useEffect(() => {
-    if (!userData?.user_id) return;
-
-    const unsubscribe = onMessageListener()
-      .then((payload) => {
-        console.log('📩 Received notification:', payload);
-        // Show toast or custom notification UI here
-        // You can use react-hot-toast or your own notification component
-        alert(`${payload.notification.title}\n${payload.notification.body}`);
-      })
-      .catch((err) => console.log('Failed to receive message:', err));
-
-    return () => {
-      // Cleanup if needed
-    };
-  }, [userData?.user_id]);
+  // ❌ REMOVED: Foreground message listener
 
   const calculateCalories = (weight, height, age, gender, profession) => {
     if (!weight || !height || !age || !gender || !profession) {
@@ -218,7 +194,6 @@ export const UserProvider = ({ children }) => {
     }
   }, [lastMeetingDate]);
 
-  // Recalculate calories when userData changes
   useEffect(() => {
     if (
       userData?.weight &&
