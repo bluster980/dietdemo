@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js');
+// importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.5.4/workbox-sw.js');
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/9.0.0/firebase-messaging-compat.js');
 
@@ -40,22 +40,24 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 // Handle background messages
-messaging.onBackgroundMessage((payload) => {
-  console.log('Received background message:', payload);
+// messaging.onBackgroundMessage((payload) => {
+//   console.log('Received background message:', payload);
   
-  const notificationTitle = payload.notification?.title || 'Diet Delta';
-  const notificationOptions = {
-    body: payload.notification?.body || 'You have a new notification',
-    icon: '/icons/download192.png',
-    badge: '/icons/notificationicon.png',
-    data: payload.data,
-    tag: 'dietdelta-notification', // ← Prevents duplicates
-    requireInteraction: false,
-    vibrate: [200, 100, 200]
-  };
+//   const notificationTitle = payload.notification?.title || 'Diet Delta';
+//   const notificationOptions = {
+//     body: payload.notification?.body || 'You have a new notification',
+//     icon: '/icons/download192.png',
+//     badge: '/icons/notificationicon.png',
+//     data: payload.data,
+//     tag: 'dietdelta-notification', // ← Prevents duplicates
+//     requireInteraction: false,
+//     vibrate: [200, 100, 200]
+//   };
 
-  return self.registration.showNotification(notificationTitle, notificationOptions);
-});
+//   return self.registration.showNotification(notificationTitle, notificationOptions);
+// });
+
+console.log('✅ Firebase SW loaded - NO CUSTOM HANDLER');
 
 // Handle notification clicks
 self.addEventListener('notificationclick', (event) => {
@@ -67,4 +69,4 @@ self.addEventListener('notificationclick', (event) => {
   );
 });
 
-console.log('✅ Firebase messaging service worker loaded');
+// console.log('✅ Firebase messaging service worker loaded');
