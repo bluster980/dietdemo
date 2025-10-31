@@ -56,14 +56,14 @@ export default defineConfig({
       }
     }),
     // Add second instance for Firebase messaging service worker
-    VitePWA({
-      strategies: 'injectManifest',
-      srcDir: 'public',
-      filename: 'firebase-messaging-sw.js',
-      injectManifest: {
-        globPatterns: []
-      }
-    })
+    // VitePWA({
+    //   strategies: 'injectManifest',
+    //   srcDir: 'public',
+    //   filename: 'firebase-messaging-sw.js',
+    //   injectManifest: {
+    //     globPatterns: []
+    //   }
+    // })
   ],
   server: {
     host: '0.0.0.0',

@@ -27,11 +27,14 @@ messaging.onBackgroundMessage((payload) => {
   const notificationOptions = {
     body: payload.notification?.body || 'You have a new notification',
     icon: '/icons/download192.png',
-    badge: '/icons/download96.png',
-    data: payload.data
+    badge: '/icons/notificationicon.png',
+    data: payload.data,
+    tag: 'dietdelta-notification', // ← Prevents duplicates
+    requireInteraction: false,
+    vibrate: [200, 100, 200]
   };
 
-  self.registration.showNotification(notificationTitle, notificationOptions);
+  return self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 // Handle notification clicks
