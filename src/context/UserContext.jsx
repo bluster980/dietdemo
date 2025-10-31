@@ -1,6 +1,7 @@
 // UserContext.jsx
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { getUserFromDb, getTrainerFromDb } from "../utils/supabaseQueries";
+import { requestNotificationPermission, onMessageListener } from "../utils/pushnotifications"; // ← ADD THIS
 
 const UserContext = createContext();
 
@@ -10,6 +11,7 @@ export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [lastQnaTime, setLastQnaTime] = useState(null);
   const [lastMeetingDate, setLastMeetingDate] = useState(null);
+  const [fcmToken, setFcmToken] = useState(null); 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -61,7 +63,21 @@ export const UserProvider = ({ children }) => {
     if (!data || typeof data !== "object" || !data.user_id) return;
     setUserDataState(data);
     localStorage.setItem("userData", JSON.stringify(data));
+
+    // ← ADD THIS: Request FCM when user data is set
+    if (data.user_id && !fcmToken) {
+      requestNotificationPermission(data.user_id)
+        .then(token => {
+          if (token) {
+            setFcmToken(token);
+            console.log('✅ FCM setup complete');
+          }
+        })
+        .catch(err => console.error('FCM setup failed:', err));
+    }
   };
+
+
 
   const refreshUser = useCallback(async () => {
     const uid = localStorage.getItem("user_id");
@@ -70,7 +86,7 @@ export const UserProvider = ({ children }) => {
     const { data, error } = await getUserFromDb(uid); // must attach apikey + Authorization
     if (data) setUserData(data);
     return { data, error };
-  }, []);
+  }, [fcmToken]);
 
   const refreshTrainer = useCallback(async () => {
     const uid = localStorage.getItem("user_id");
@@ -79,7 +95,7 @@ export const UserProvider = ({ children }) => {
     const { data, error } = await getTrainerFromDb(uid); // must attach apikey + Authorization
     if (data) setUserData(data);
     return { data, error };
-  }, []);
+  }, [fcmToken]);
 
   useEffect(() => {
     const bootstrap = async () => {
@@ -90,6 +106,13 @@ export const UserProvider = ({ children }) => {
         try {
           const parsed = JSON.parse(stored);
           if (parsed?.user_id) setUserDataState(parsed);
+          if (!fcmToken) {
+              requestNotificationPermission(parsed.user_id)
+                .then(token => {
+                  if (token) setFcmToken(token);
+                })
+                .catch(err => console.error('FCM setup failed:', err));
+            }
         } catch {
           console.error("Failed to parse stored userData:", stored);
         }
@@ -100,7 +123,24 @@ export const UserProvider = ({ children }) => {
       setIsLoading(false);
     };
     bootstrap();
-  }, [refreshUser], [refreshTrainer]);
+  }, []);
+
+  useEffect(() => {
+    if (!userData?.user_id) return;
+
+    const unsubscribe = onMessageListener()
+      .then((payload) => {
+        console.log('📩 Received notification:', payload);
+        // Show toast or custom notification UI here
+        // You can use react-hot-toast or your own notification component
+        alert(`${payload.notification.title}\n${payload.notification.body}`);
+      })
+      .catch((err) => console.log('Failed to receive message:', err));
+
+    return () => {
+      // Cleanup if needed
+    };
+  }, [userData?.user_id]);
 
   const calculateCalories = (weight, height, age, gender, profession) => {
     if (!weight || !height || !age || !gender || !profession) {
@@ -177,6 +217,7 @@ export const UserProvider = ({ children }) => {
         setLastMeetingDate,
         refreshUser,
         refreshTrainer,
+        fcmToken,
       }}
     >
       {children}
