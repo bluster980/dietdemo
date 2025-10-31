@@ -47,15 +47,25 @@ const saveTokenToBackend = async (userId, fcmToken) => {
   try {
     console.log('🚀 Saving FCM token to backend...');
     
-    const jwtToken = localStorage.getItem('access_token'); // Your JWT token key
-    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const jwtToken = localStorage.getItem('access_token');
+    const backendUrl = import.meta.env.VITE_API_BASE_URL;
+    
+    console.log('🔍 Debug info:', {
+      backendUrl,
+      hasJwtToken: !!jwtToken,
+      userId: userId?.substring(0, 8) + '...',
+      tokenLength: fcmToken?.length
+    });
     
     if (!backendUrl) {
-      console.error('❌ VITE_BACKEND_URL is not defined');
-      return;
+      console.error('❌ VITE_API_BASE_URL is not defined in .env');
+      return { success: false, error: 'Backend URL not configured' };
     }
 
-    const response = await fetch(`${backendUrl}/api/fcm/store-token`, {
+    const url = `${backendUrl}/api/fcm/store-token`;
+    console.log('📡 Sending request to:', url);
+
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,6 +78,15 @@ const saveTokenToBackend = async (userId, fcmToken) => {
       })
     });
     
+    console.log('📡 Response status:', response.status, response.statusText);
+    
+    if (!response.ok) {
+      console.error('❌ HTTP error:', response.status);
+      const errorText = await response.text();
+      console.error('❌ Error response:', errorText);
+      return { success: false, error: `HTTP ${response.status}` };
+    }
+    
     const result = await response.json();
     console.log('📦 Backend response:', result);
     
@@ -79,7 +98,13 @@ const saveTokenToBackend = async (userId, fcmToken) => {
     
     return result;
   } catch (error) {
-    console.error('❌ Error saving token to backend:', error);
+    console.error('❌ Network error saving token:', error);
+    console.error('❌ Error details:', {
+      name: error.name,
+      message: error.message,
+      stack: error.stack
+    });
+    return { success: false, error: error.message };
   }
 };
 
