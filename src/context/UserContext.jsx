@@ -13,6 +13,44 @@ export const UserProvider = ({ children }) => {
   const [lastMeetingDate, setLastMeetingDate] = useState(null);
   const [fcmToken, setFcmToken] = useState(null); 
 
+  // ✅ ADD THIS: Debug service workers
+  useEffect(() => {
+    const debugServiceWorkers = async () => {
+      if ('serviceWorker' in navigator) {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        
+        console.log('═══════════════════════════════════════');
+        console.log('🔍 SERVICE WORKER DEBUG INFO');
+        console.log('═══════════════════════════════════════');
+        console.log('Total registered service workers:', registrations.length);
+        
+        registrations.forEach((registration, index) => {
+          console.log(`\n📍 Service Worker #${index + 1}:`);
+          console.log('  Scope:', registration.scope);
+          console.log('  Active:', registration.active?.scriptURL);
+          console.log('  Waiting:', registration.waiting?.scriptURL || 'None');
+          console.log('  Installing:', registration.installing?.scriptURL || 'None');
+          
+          // Check if it handles push notifications
+          if (registration.pushManager) {
+            registration.pushManager.getSubscription().then(sub => {
+              console.log('  Push subscription:', sub ? 'Active' : 'None');
+            });
+          }
+        });
+        
+        console.log('\n═══════════════════════════════════════');
+        
+        // Check which SW intercepts push events
+        navigator.serviceWorker.addEventListener('message', (event) => {
+          console.log('📨 Message from SW:', event.data);
+        });
+      }
+    };
+    
+    debugServiceWorkers();
+  }, []);
+
   useEffect(() => {
     const fetchUserData = async () => {
       setIsLoading(true);

@@ -49,6 +49,9 @@ export default defineConfig({
       workbox: {
         maximumFileSizeToCacheInBytes: 5_000_000,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json,webp,gif}'],
+        // Don't handle push notifications in PWA service worker
+        skipWaiting: true,
+        clientsClaim: true,
         // Don't cache firebase-messaging-sw.js
         navigateFallbackDenylist: [/^\/firebase-messaging-sw\.js$/],
       },
